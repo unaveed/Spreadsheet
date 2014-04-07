@@ -61,8 +61,7 @@ int main() {
         std::cout << "Connection accepted. Using new socketfd : " << new_sd << std::endl;
 
 
-	bool keep_going = true;
-	while (keep_going) {
+	while (true) {
 		ssize_t bytes_recieved;
 		char incoming_data_buffer[1000];
 		bytes_recieved = recv(new_sd, incoming_data_buffer,1000, 0);
@@ -72,8 +71,6 @@ int main() {
 		if (bytes_recieved == -1)
 			std::cout << "recieve error!" << std::endl ;
 
-		if (incoming_data_buffer == "END")
-			keep_going = false;
 		incoming_data_buffer[bytes_recieved] = '\0';
 		std::cout << incoming_data_buffer << std::endl;
 
