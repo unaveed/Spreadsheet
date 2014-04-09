@@ -1,5 +1,10 @@
-all: server.cc
-	g++ server.cc -pthread
+all: stringsocket
+
+stringsocket: stringsocket.o
+	g++ stringsocket.o -pthread -o stringsocket
+
+stringsocket.o: stringsocket.cc
+	g++ -c stringsocket.cc -pthread
 
 clean:
-	rm a.out
+	rm *.o stringsocket
