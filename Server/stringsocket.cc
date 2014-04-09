@@ -18,29 +18,20 @@
 
 #include <errno.h>
 
+#include "globals.h"
+
 //server functions
-int server_start_listen() ;
+int server_start_listen();
 int server_establish_connection(int server_fd);
-int server_send(int fd, string data);
-void *tcp_server_read(void *arg) ;
-void mainloop(int server_fd) ;
+int server_send(int fd, std::string data);
+void *tcp_server_read(void *arg);
+void mainloop(int server_fd);
+int start();
 
-//server constants
-const  char * PORT = "12345" ; // port numbers 1-1024 are probably reserved by your OS
-const int MAXLEN = 1024 ;   // Max lenhgt of a message.
-const int MAXFD = 7 ;       // Maximum file descriptors to use. Equals maximum clients.
-const int BACKLOG = 5 ;     // Number of connections that can wait in que before they be accept()ted
 
-// This needs to be declared volatile because it can be altered by an other thread. Meaning the compiler cannot
-// optimise the code, because it's declared that not only the program can change this variable, but also external
-// programs. In this case, a thread.
-volatile fd_set the_state;
 
-pthread_mutex_t mutex_state = PTHREAD_MUTEX_INITIALIZER;
+int start() {
 
-pthread_mutex_t boardmutex = PTHREAD_MUTEX_INITIALIZER; // mutex locker for the chessboard vector.
-
-int main() {
     std::cout << "Server started." << std::endl; // do not forget endl, or it won't display.
 
     // start the main and make the server listen on port 12345
