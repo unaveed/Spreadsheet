@@ -7,12 +7,6 @@
 #include <cstring> 	// used for memset.
 #include <arpa/inet.h> 	// for inet_ntop function
 #include <netdb.h>
-#include <sys/socket.h>
-#include <pthread.h>
-#include <vector>
-#include <list>
-#include <iterator>
-#include <sstream>
 #include <unistd.h>
 
 #include <errno.h>
