@@ -21,25 +21,33 @@
 #include "globals.h"
 #include "server.h"
 
+
+using namespace std;
+
+
 //server functions
+int start(server &);
 int server_start_listen();
 int server_establish_connection(int server_fd);
 int server_send(int fd, std::string data);
 void *tcp_server_read(void *arg);
 void mainloop(int server_fd);
-int start(server &);
+
+server * main_server;
 
 
 
-int start(server & s) {
-    std::cout << "Server started." << std::endl; // do not forget endl, or it won't display.
+
+int start(server & svr) {
+	main_server = &svr;
+    cout << "Server started." << endl; // do not forget endl, or it won't display.
 
     // start the main and make the server listen on port 12345
     // server_start_listen(12345) will return the server's fd.
 
     int server_fd = server_start_listen() ;
     if (server_fd == -1) {
-        std::cout << "An error occured. Closing program." ;
+        cout << "An error occured. Closing program." ;
         return 1;
     }
 
@@ -76,7 +84,7 @@ int server_start_listen() {
 	ret = bind(server_fd, res->ai_addr, res->ai_addrlen);
 
 	if(ret != 0) {
-		std::cout << "error :" << strerror(errno) << std::endl;
+		cout << "error :" << strerror(errno) << endl;
 		return -1 ;
 	}
 
@@ -114,14 +122,14 @@ int server_establish_connection(int server_fd) {
 		inet_ntop(AF_INET6, &s->sin6_addr, ipstr, sizeof ipstr);
 	}
 
-	std::cout << "Connection accepted from " << ipstr << " using port " << port << std::endl;
+	cout << "Connection accepted from " << ipstr << " using port " << port << endl;
 
     return new_sd;
 }
 
 // This function will send data to the clients fd.
 // data contains the message to be send
-int server_send(int fd, std::string data) {
+int server_send(int fd, string data) {
     int ret;
 
     ret = send(fd, data.c_str(), strlen(data.c_str()),0);
@@ -143,8 +151,12 @@ void *tcp_server_read(void *arg) {
         //read incoming message.
         buflen = read(rfd, buf, sizeof(buf));
         if (buflen <= 0) {
-            std::cout << "client disconnected. Clearing fd. " << rfd << std::endl;
+            cout << "client disconnected. Clearing fd. " << rfd << endl;
             pthread_mutex_lock(&mutex_state);
+
+			// Remove client from list of clients
+			main_server->remove_client(rfd);
+
             FD_CLR(rfd, &the_state);      // free fd's from  clients
             pthread_mutex_unlock(&mutex_state);
             close(rfd);
@@ -154,12 +166,13 @@ void *tcp_server_read(void *arg) {
         // send the data to the other connected clients
         pthread_mutex_lock(&mutex_state);
 
+		/*
 		// Send message out to all users
 		for (wfd = 3; wfd < MAXFD; ++wfd) {
 			if (FD_ISSET(wfd, &the_state) && (rfd != wfd)) {
 				// add the users FD to the message to give it an unique ID.
-				std::string userfd;
-				std::stringstream out;
+				string userfd;
+				stringstream out;
 				out << wfd;
 				userfd = out.str();
 				userfd = userfd + ": ";
@@ -168,7 +181,17 @@ void *tcp_server_read(void *arg) {
                 server_send(wfd, buf);
             }
         }
-		memset(&buf[0], 0, buflen);	// Clear the buffer
+		*/
+
+		// Create the message to send
+		string message;
+		for (int i = 0; i < buflen; i++)
+			message += buf[i];
+
+		main_server->message_received(rfd, message);
+
+		// Clear the buffer
+		memset(&buf[0], 0, buflen);
 
         pthread_mutex_unlock(&mutex_state);
     }
@@ -191,9 +214,13 @@ void mainloop(int server_fd) {
         rfd = server_establish_connection(server_fd);
 
         if (rfd >= 0) {
-            std::cout << "Client connected. Using file desciptor " << rfd << std::endl;
+            cout << "Client connected. Using file desciptor " << rfd << endl;
+
+			// Add client to the list of clients
+			main_server->add_client(rfd);
+
             if (rfd > MAXFD) {
-                std::cout << "To many clients trying to connect." << std::endl;
+                cout << "To many clients trying to connect." << endl;
                 close(rfd);
                 continue;
             }
