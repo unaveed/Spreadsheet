@@ -26,22 +26,16 @@ void Messages::send_message(){
 	// TODO: Send the string to the socket
 }
 void Messages::receive_message(){
+	std::cout << "Valid: " << this->valid_protocol(input) << std::endl;
     // Hold values of tokens as string as split
     std::string token;
-	
+
 	// Tracks how many times the delimiter appears in a string
-    int escCount = 0;
-	size_t index = 0;
-	std::string temp = input;
-	// Find how many escape characters are in the message
-	while((index = temp.find(delimiter)) != std::string::npos){
-		temp.erase(0, index + delimiter.size());
-		escCount++;
-	}
+	int escCount = delimiter_count(input, delimiter);
 
 	// For cases where strings contain commands and contents 
 	if(escCount > 0){
-		index = 0;
+		size_t index = 0;
 		// Keep track of location in the loop
 		int count = 1;
 		while((index = input.find(delimiter)) != std::string::npos){
@@ -67,7 +61,7 @@ void Messages::receive_message(){
 	}
 	// In cases where only a command is sent without contents,
 	// store the command
-	else{
+	else {
 		command = input.substr(0, input.find('\n'));
 		content = "Place holder"; // Change to empty string after debugging	
 	}
@@ -75,17 +69,89 @@ void Messages::receive_message(){
 	// TODO: Send information to the server 
 }
 
+/** Checks if the string parameter is valid according
+  * to the protocol. Returns true/false based on whether
+  * it meets the requirement.
+ **/
 bool Messages::valid_protocol(std::string input){
+	int escCount = delimiter_count(input, delimiter);
 	
+	std::string token;
+	size_t index;
+	
+	// Check for valid messages with [esc] delimiters
+	if(escCount > 0){
+		index = input.find(delimiter);
+		token = input.substr(0, index);
+		
+		if(token == "UPDATE")
+			return true;
+		else if (token == "ENTER")
+			return true;
+		else if (token == "SYNC")
+			return true;
+		else if (token == "UNDO")
+			return true;
+		else if (token == "SAVE")
+			return true;
+		else if (token == "FILELIST")
+			return true;
+		else if (token == "ERROR")
+			return true;
+		else if (token == "PASSWORD")
+			return true;
+		else if (token == "OPEN")
+			return true;
+		else if (token == "CREATE")
+			return true;
+		else
+			return false;
+	}
+	// Check for valid messages without [esc] delimiters
+	else {
+		index = input.find("\n");
+		token = input.substr(0, index);
+
+		if(token == "RESYNC")
+			return true;
+		else if (token == "DISCONNECT")
+			return true;
+		else if (token == "INVALID")
+			return true;
+		else if (token == "SAVED")
+			return true;
+		else 
+			return false;
+	}
 }
+
+/** Counts the number of times a given delimiter 
+  * appears in the parameter string input. Returns
+  * the count.
+ **/
+int Messages::delimiter_count(std::string input, std::string delimiter){
+	size_t index;
+	int result = 0;
+
+	// Find how many escape characters are in the message
+	while((index = input.find(delimiter)) != std::string::npos){
+		input.erase(0, index + delimiter.size());
+		result++;
+	}
+	return result;
+}
+
+/** Return the value of the command **/
 std::string Messages::get_command(){
     return command;
 }
+
+/** Return the value of the cell contents **/
 std::string Messages::get_content(){
     return content;
 }
 
-/** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
+//** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
 int main(){
 	Messages *m3 = new Messages("INVALID\n");
 	m3->receive_message();
@@ -93,8 +159,10 @@ int main(){
 	std::cout << m3->get_command() << std::endl;
 	std::cout << m3->get_content() << std::endl;
 
-
-	Messages *message = new Messages("CREATE[esc]spreadsheet_name\n");
+	std::string comm = "BOFFIN";
+	std::string cont = "[esc]spreadsheet_name\n";
+	std::string line = comm.append(cont);
+	Messages *message = new Messages(line);
     message->receive_message();
 	std::cout << "\nCREATE command" << std::endl;
     std::cout << message->get_command() << std::endl;
@@ -124,4 +192,4 @@ int main(){
 
 	return 0;
 }
-**/
+

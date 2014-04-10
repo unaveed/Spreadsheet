@@ -1,11 +1,11 @@
 all: server.o messages.o
 	g++ -o a.out server.o messages.o
 
-server.o: server.cpp server.h 
-	g++ -c server.cpp 
+server.o: server.cc server.h 
+	g++ -c server.cc 
 
-messages.o: messages.cpp messages.h
-	g++ -c messages.cpp
+messages.o: messages.cc messages.h
+	g++ -c messages.cc
 
 clean:
 	rm -rf *.o a.out 

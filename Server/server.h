@@ -9,6 +9,7 @@ class Server {
 	private:
 		std::stack<std::string> undoStack;
 		int port;
+		int version;
 	public:
 		Server(int);
 		void undo();
