@@ -19,6 +19,7 @@
 #include <errno.h>
 
 #include "globals.h"
+#include "server.h"
 
 //server functions
 int server_start_listen();
@@ -26,12 +27,11 @@ int server_establish_connection(int server_fd);
 int server_send(int fd, std::string data);
 void *tcp_server_read(void *arg);
 void mainloop(int server_fd);
-int start();
+int start(server &);
 
 
 
-int start() {
-
+int start(server & s) {
     std::cout << "Server started." << std::endl; // do not forget endl, or it won't display.
 
     // start the main and make the server listen on port 12345
@@ -69,11 +69,9 @@ int server_start_listen() {
 
 
 	server_fd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
-	//if(server_fd < 0) throw some error;
 
 	//prevent "Error Address already in use"
 	ret = setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
-	// if(ret < 0) throw some error;
 
 	ret = bind(server_fd, res->ai_addr, res->ai_addrlen);
 
@@ -83,12 +81,8 @@ int server_start_listen() {
 	}
 
 	ret = listen(server_fd, BACKLOG);
-	//if(ret < 0) throw some error;
-
-
 
 	return server_fd;
-
 }
 
 // This function will establish a connection between the server and the
@@ -99,32 +93,30 @@ int server_establish_connection(int server_fd) {
     char ipstr[INET6_ADDRSTRLEN];
     int port;
 
-
     int new_sd;
     struct sockaddr_storage remote_info ;
     socklen_t addr_size;
 
     addr_size = sizeof(addr_size);
     new_sd = accept(server_fd, (struct sockaddr *) &remote_info, &addr_size);
-    //if (fd < 0) throw some error here;
 
     getpeername(new_sd, (struct sockaddr*)&remote_info, &addr_size);
 
    // deal with both IPv4 and IPv6:
-if (remote_info.ss_family == AF_INET) {
-    struct sockaddr_in *s = (struct sockaddr_in *)&remote_info;
-    port = ntohs(s->sin_port);
-    inet_ntop(AF_INET, &s->sin_addr, ipstr, sizeof ipstr);
-} else { // AF_INET6
-    struct sockaddr_in6 *s = (struct sockaddr_in6 *)&remote_info;
-    port = ntohs(s->sin6_port);
-    inet_ntop(AF_INET6, &s->sin6_addr, ipstr, sizeof ipstr);
-}
+	if (remote_info.ss_family == AF_INET) {
+		struct sockaddr_in *s = (struct sockaddr_in *)&remote_info;
+		port = ntohs(s->sin_port);
+		inet_ntop(AF_INET, &s->sin_addr, ipstr, sizeof ipstr);
+	}
+	else { // AF_INET6
+		struct sockaddr_in6 *s = (struct sockaddr_in6 *)&remote_info;
+		port = ntohs(s->sin6_port);
+		inet_ntop(AF_INET6, &s->sin6_addr, ipstr, sizeof ipstr);
+	}
 
-std::cout << "Connection accepted from "  << ipstr <<  " using port " << port << std::endl;
+	std::cout << "Connection accepted from " << ipstr << " using port " << port << std::endl;
 
     return new_sd;
-
 }
 
 // This function will send data to the clients fd.
@@ -133,12 +125,12 @@ int server_send(int fd, std::string data) {
     int ret;
 
     ret = send(fd, data.c_str(), strlen(data.c_str()),0);
-    //if(ret != strlen(data.c_str()) throw some error;
+
     return 0;
 }
 
-/// This function runs in a thread for every client, and reads incoming data.
-/// It also writes the incoming data to all other clients.
+// This function runs in a thread for every client, and reads incoming data.
+// It also writes the incoming data to all other clients.
 void *tcp_server_read(void *arg) {
     int rfd;
 
@@ -186,7 +178,7 @@ void *tcp_server_read(void *arg) {
 // This loop will wait for a client to connect. When the client connects, it creates a
 // new thread for the client and starts waiting again for a new client.
 void mainloop(int server_fd) {
-    pthread_t threads[MAXFD]; //create 10 handles for threads.
+    pthread_t threads[MAXFD]; //create handles for threads.
 
     FD_ZERO(&the_state); // FD_ZERO clears all the filedescriptors in the file descriptor set fds.
 
