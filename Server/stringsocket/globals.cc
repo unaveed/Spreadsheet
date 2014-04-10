@@ -1,3 +1,7 @@
+/*
+ * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
+ */
+
 #include <sys/socket.h>
 #include <sstream>
 

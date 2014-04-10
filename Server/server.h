@@ -1,3 +1,7 @@
+/*
+ * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
+ */
+
 #include <set>
 
 #ifndef SERVER_H

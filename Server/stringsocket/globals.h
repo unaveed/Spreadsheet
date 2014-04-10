@@ -1,3 +1,7 @@
+/*
+ * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
+ */
+
 #ifndef GLOBALS_H
 #define GLOBALS_H
 

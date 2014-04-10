@@ -1,7 +1,6 @@
-// ********************************************************************************
-// ********  Compiling : g++ stringsocket.cc -pthread                        ******
-// ********************************************************************************
-
+/*
+ * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
+ */
 
 
 #include <iostream>
@@ -19,7 +18,7 @@
 #include <errno.h>
 
 #include "globals.h"
-#include "server.h"
+#include "../server.h"
 
 
 using namespace std;

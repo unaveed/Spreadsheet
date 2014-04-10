@@ -1,3 +1,7 @@
+/*
+ * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
+ */
+
 #include <iostream>
 #include <set>
 
@@ -9,7 +13,6 @@ using namespace std;
 int main() {
 	server s;
 	s.run_server();
-	cout << "Hello!" << endl;
 }
 
 server::server() {
