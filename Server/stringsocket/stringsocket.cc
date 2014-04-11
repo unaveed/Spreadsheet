@@ -139,7 +139,7 @@ void *tcp_server_read(void *arg) {
     int buflen;
     int wfd;
 
-    rfd = (int)arg;
+    rfd = *((int *)arg);
     for(;;) {
         //read incoming message.
         buflen = read(rfd, buf, sizeof(buf));
