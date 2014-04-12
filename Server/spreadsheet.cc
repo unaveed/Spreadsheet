@@ -4,6 +4,7 @@
 #include <string>
 
 #include "spreadsheet.h"
+#include "DependencyGraph/DependencyGraph.h"
 
 using namespace std;
 
@@ -18,6 +19,10 @@ spreadsheet::~spreadsheet() {
 	delete clients;
 	delete cells;
 	delete undo_stack;
+}
+
+void spreadsheet::load_spreadsheet() {
+	// TODO: Implement
 }
 
 void spreadsheet::make_change(std::string) {

@@ -15,6 +15,7 @@ class spreadsheet {
 		std::map<std::string, std::string> *cells;
 		std::stack<std::string> *undo_stack;
 		int version;
+		void load_spreadsheet();
 	public:
 		spreadsheet();
 		~spreadsheet();
