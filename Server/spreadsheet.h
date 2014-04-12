@@ -11,13 +11,15 @@
  */
 class spreadsheet {
 	private:
-		std::set<int> *clients;
-		std::map<std::string, std::string> *cells;
-		std::stack<std::string> *undo_stack;
-		int version;
-		void load_spreadsheet();
+		std::set<int> *clients;						// All of the clients currently using this spreadsheet
+		std::map<std::string, std::string> *cells;	// All of the cells with their contents
+		std::stack<std::string> *undo_stack;		// All changes that have been made
+		int version;		// Version of the spreadsheet
+		char * filename;	// Current name of the file
+		void save();		// Saves the spreadsheet to the file with the stored filename in xml format
+		void open();		// Fills the data structures and variables with the spreadsheet information
 	public:
-		spreadsheet();
+		spreadsheet(char *);	// Takes the name of the file to open
 		~spreadsheet();
 		void make_change(std::string);	// Make change to spreadsheet, making all of the necessary checks
 		void add_client(int);			// Add a client to the working spreadsheet
