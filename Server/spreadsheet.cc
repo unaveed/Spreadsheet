@@ -81,6 +81,16 @@ void spreadsheet::save() {
 		cout << "Unable to open file." << endl;
 }
 
+void spreadsheet::undo(){
+	// Check for non-empty stack
+	if(!undo_stack->empty()){
+		std::string edit = undo_stack->top();
+		undo_stack->pop();
+		Messages *mess = new Messages("ENTER", edit);
+		mess->send_message();
+	}
+}
+
 void spreadsheet::make_change(std::string) {
 	version++;
 }
@@ -95,8 +105,4 @@ void spreadsheet::remove_client(int client) {
 
 int spreadsheet::get_version() {
 	return version;
-}
-
-void spreadsheet::undo() {
-	// TODO: Implement
 }
