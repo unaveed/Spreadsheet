@@ -31,6 +31,7 @@ server * main_server;
 
 
 
+// Cite: http://codebase.eu/source/code-cplusplus/multithreaded-socket-server/
 int start(server & svr) {
 	main_server = &svr;
     cout << "Server started." << endl; // do not forget endl, or it won't display.
@@ -231,3 +232,4 @@ void mainloop(int server_fd) {
         }
     }
 }
+// End cite
