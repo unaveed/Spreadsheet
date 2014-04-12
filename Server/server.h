@@ -10,6 +10,7 @@
 class server {
 	private:
 		std::set<int> *clients;
+		std::string password;
 
 	public:
 		server();
@@ -17,7 +18,10 @@ class server {
 		void run_server();
 		void send_message_all(std::string);
 		void send_message_client(std::string, int);
-		void message_received(int, std::string);
+		void message_received(int, std::string, std::string);
+		std::string execute_command(std::string, std::string);
+		std::string lookup(std::string);
+		std::string lookup(std::string, std::string);
 		void add_client(int);
 		void remove_client(int);
 };

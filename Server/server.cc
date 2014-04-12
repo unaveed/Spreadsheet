@@ -17,6 +17,7 @@ int main() {
 
 server::server() {
 	clients = new set<int>;
+	password = "12345";
 }
 
 server::~server() {
@@ -45,12 +46,28 @@ void server::send_message_client(string message, int client) {
 /*
  * Called when a message has been received from a client.
  */
-void server::message_received(int client, string message) {
+void server::message_received(int client, string command, string message) {
 	cout << message << endl;
+	
+	execute_command(command, message);
 	send_message_all(message);
 	send_message_client(message, client);
 }
 
+std::string server::execute_command(std::string command, std::string message) {
+	if(message == "")
+		return lookup(command);
+	else
+		return lookup(command, message);
+}
+
+std::string server::lookup(std::string command) {
+	return "hello";
+}
+
+std::string server::lookup(std::string command, std::string message) {
+	return "hello";
+}
 /*
  * Adds a client to the set of clients.
  */
