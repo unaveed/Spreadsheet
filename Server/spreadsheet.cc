@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include "spreadsheet.h"
 #include "DependencyGraph/DependencyGraph.h"
@@ -28,13 +29,13 @@ spreadsheet::~spreadsheet() {
 
 void spreadsheet::open() {
 	string line;
-	string version, name, contents;
+	string name, contents;
 	ifstream file(filename);
 	if (file.is_open()) {
 		getline(file, line);	// <spreadsheet>
 		getline(file, line);	// <version>
 		getline(file, line);	// Version
-		version = line;
+		istringstream (line) >> version;	// Version
 		getline(file, line);	// </version>
 		while (getline(file, line)) {
 			if (line == "</spreadsheet>")

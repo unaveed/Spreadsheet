@@ -14,10 +14,10 @@ class spreadsheet {
 		std::set<int> *clients;						// All of the clients currently using this spreadsheet
 		std::map<std::string, std::string> *cells;	// All of the cells with their contents
 		std::stack<std::string> *undo_stack;		// All changes that have been made
-		std::string version;	// Version of the spreadsheet
-		char * filename;		// Current name of the file
-		void save();			// Saves the spreadsheet to the file with the stored filename in xml format
-		void open();			// Fills the data structures and variables with the spreadsheet information
+		int version;		// Version of the spreadsheet
+		char * filename;	// Current name of the file
+		void save();		// Saves the spreadsheet to the file with the stored filename in xml format
+		void open();		// Fills the data structures and variables with the spreadsheet information
 	public:
 		spreadsheet(char *);	// Takes the name of the file to open
 		~spreadsheet();
