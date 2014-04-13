@@ -1,31 +1,20 @@
+/*
+ * Written by Umair Naveed, Celeste Hollenbeck, Gregory Anderson, Jesus Zarate
+ */
 #include "messages.h"
 
-Messages::Messages(std::string incommingLine)
-{
-    this->input = incommingLine;
-    this->delimiter = "[esc]";
+Messages::Messages(){
+	this->delimiter = "\e";
 }
-Messages::Messages(std::string _command, std::string _content){
-	this->command = _command;
-	this->content = _content;
-	this->delimiter = "[esc]";
-}
-void Messages::send_message(){
-	std::string result;
-	for(int i = 0; i < command.size(); i++)
-		command[i] = toupper(command[i]);
-	
-	result.append(command);
-	result.append(delimiter);
-	result.append(content);
-	result.append("\n");
-	
-	// For debugging only	
-	std::cout << result << std::endl;
 
-	// TODO: Send the string to the socket
-}
-void Messages::receive_message(){
+ /*
+  * Parses the incoming string into a command and 
+  * message. If the command is valid, both the
+  * message and command are sent to the server
+  * for processing. Blank messages are sent to
+  * the server for commands without contents.
+  */
+void Messages::receive_message(std::string input){
 	std::cout << "Valid: " << this->valid_protocol(input) << std::endl;
     // Hold values of tokens as string as split
     std::string token;
@@ -69,10 +58,54 @@ void Messages::receive_message(){
 	// TODO: Send information to the server 
 }
 
-/** Checks if the string parameter is valid according
+ /* 
+  * Receives cell name and cell contents made
+  * from a successful edit. Modifies the string
+  * so that it adheres to the protocol and can
+  * be sent to all clients.
+  */
+void Messages::edit(std::string contents) {
+	
+}
+
+ /* 
+  * Builds an UPDATE command with every cell and it's 
+  * contents based off the sheet parameter. Sends the
+  * contents the the client.
+  */
+void Messages::sync(std::map<std::string, std::string> &sheet, int client) {
+	
+}
+
+ /*
+  * Receives version number and the contents of
+  * the last change. String is formatted to adhere
+  * to the protocol and sent to all clients.
+  */
+void Messages::undo(std::string contents) {
+	
+}
+
+ /* 
+  * Sends a message to the client comfirming that 
+  * save was successful.
+  */
+void Messages::save(int client) {
+
+}
+
+/* 
+ * Sends error message to the the client
+ */
+void Messages::error(std::string message, int client) {
+	
+}
+
+ /* 
+  * Checks if the string parameter is valid according
   * to the protocol. Returns true/false based on whether
   * it meets the requirement.
- **/
+  */
 bool Messages::valid_protocol(std::string input){
 	int escCount = delimiter_count(input, delimiter);
 	
@@ -125,10 +158,11 @@ bool Messages::valid_protocol(std::string input){
 	}
 }
 
-/** Counts the number of times a given delimiter 
+ /* 
+  * Counts the number of times a given delimiter 
   * appears in the parameter string input. Returns
   * the count.
- **/
+  */
 int Messages::delimiter_count(std::string input, std::string delimiter){
 	size_t index;
 	int result = 0;
@@ -141,23 +175,11 @@ int Messages::delimiter_count(std::string input, std::string delimiter){
 	return result;
 }
 
-/** Return the value of the command **/
-std::string Messages::get_command(){
-    return command;
-}
-
-/** Return the value of the cell contents **/
-std::string Messages::get_content(){
-    return content;
-}
-
-//** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
+/** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
 int main(){
 	Messages *m3 = new Messages("INVALID\n");
 	m3->receive_message();
 	std::cout << "INVLAID command, no content" << std::endl;
-	std::cout << m3->get_command() << std::endl;
-	std::cout << m3->get_content() << std::endl;
 
 	std::string comm = "BOFFIN";
 	std::string cont = "[esc]spreadsheet_name\n";
@@ -165,21 +187,14 @@ int main(){
 	Messages *message = new Messages(line);
     message->receive_message();
 	std::cout << "\nCREATE command" << std::endl;
-    std::cout << message->get_command() << std::endl;
-    std::cout << message->get_content() << std::endl;
 
 	Messages *m1 = new Messages("ERROR[esc]error_message\n");
 	m1->receive_message();
 	std::cout << "\nERROR command" << std::endl;
-	std::cout << m1->get_command() << std::endl;
-	std::cout << m1->get_content() << std::endl;
     
-	
 	Messages *m2 = new Messages("ENTER[esc]cell_name[esc]cell_content [esc]spreadsheet_name\n");
 	m2->receive_message();
 	std::cout << "\nENTER command" << std::endl;
-	std::cout << m2->get_command() << std::endl;
-	std::cout << m2->get_content() << std::endl;
 	
 	Messages *m4 = new Messages("enter", "cell_name[esc]cell_content");
 	m4->send_message();
@@ -192,4 +207,7 @@ int main(){
 
 	return 0;
 }
-
+**/
+int main (){
+	return 0;
+}

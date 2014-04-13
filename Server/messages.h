@@ -2,18 +2,18 @@
 #define MESSAGES_H
 #include <iostream>
 #include <string>
+#include <map>
 
 class Messages
 {
 public:
-    Messages(std::string);
-	Messages(std::string, std::string);
-    void send_message();
-    void receive_message();
-    
-	/** Maybe these should be private? **/	
-	std::string get_command();
-    std::string get_content();
+	Messages();
+    void receive_message(std::string);
+	void edit(std::string);
+	void sync(std::map<std::string, std::string> &, int);
+	void undo(std::string);
+	void save(int);
+	void error(std::string, int);
 private:
     std::string input;
     std::string delimiter;
