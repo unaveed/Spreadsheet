@@ -10,7 +10,7 @@ namespace SS {
     // PARAGRAPHS 2 and 3 modified for PS5.
     /// <summary>
     /// An AbstractSpreadsheet object represents the state of a simple spreadsheet.  A 
-    /// spreadsheet consists of an infinite number of named cells.
+    /// spreadsheet consists of an up-to-but-not-including-infinite number of named cells.
     /// 
     /// A string is a cell name if and only if it consists of one or more letters,
     /// followed by one or more digits AND it satisfies the predicate IsValid.
@@ -57,6 +57,7 @@ namespace SS {
 
         private DependencyGraph dg;				// Maps the dependencies
         private Dictionary<string, Cell> cells;	// Dictionary<name, Cell>
+        // public Dictionary<string, Cell> cells; //=============C test
         private bool changed;					// Keeps track of whether or not the spreadsheet has been changed since last save
 
 		/// <summary>
@@ -86,7 +87,8 @@ namespace SS {
         public Spreadsheet(string file, Func<string, bool> isValid, Func<string, string> normalize, string version)
             : this(isValid, normalize, version) {
 			try {
-				using (XmlReader reader = XmlReader.Create(file)) {
+				using (XmlReader reader = XmlReader.Create(file)) 
+                {
 					string name = null;
 					string contents = null;
 					while (reader.Read()) {
