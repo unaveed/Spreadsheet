@@ -4,7 +4,7 @@
 #include "messages.h"
 
 Messages::Messages(){
-	this->delimiter = "\e";
+	this->delimiter = "[esc]";
 }
 
  /*
@@ -37,22 +37,35 @@ void Messages::receive_message(std::string input,
 				// Get the command and contents for strings with only one delimiter
 				if (escCount == 1){
 					command = token;
-					input.erase(0, index + delimiter.size());
+					input.erase(0, index + delimiter.length());
 					content = input;
+					input.erase(0, input.length());
 				}
 				// Get the command and contents for strings with severl delimters 
 				else {
-					if(count == 1)
+					// The loop is at the command portion of the string
+					if(count == 1) 
 						command = token;
-					else
+					// The loop is at the first part of the message 
+					else if(count == 2)
+						content = token;
+					// The loop is at a portion of the string where
+					// the inlcusion of delimiters is required
+					else {
+						content.append(delimiter);	
 						content.append(token);
+					}
 					input.erase(0, index + delimiter.size());
 				}
 				count++;
 			}
 			// Check if the input string still has content
-			if(input.length() > 2) 
+			if(input.length() > 2) {
+				// For cases with multiple delimiters, add delmiter
+				if(escCount > 1)
+					content.append(delimiter);
 				content.append(input);
+			}
 
 			// Strip new line off of the message
 			if(content[content.size() - 1] == '\n')
@@ -228,7 +241,7 @@ int main(){
 	std::cout << "Message should == Place Holder: " << message << std::endl;
 
 	std::string comm = "BOFFIN";
-	std::string cont = "\espreadsheet_name\n";
+	std::string cont = "[esc]spreadsheet_name\n";
 	std::string line = comm.append(cont);
 	Messages *msg = new Messages();
 	command = "";
@@ -239,14 +252,14 @@ int main(){
 	Messages *m1 = new Messages();
 	command = "";
 	message = "";
-	m1->receive_message("ERROR\eerror_message\n", command, message);
+	m1->receive_message("ERROR[esc]error_message\n", command, message);
 	std::cout << "Command should be ERROR: " << command << std::endl;
 	std::cout << "Message should be error_message: " << message << std::endl;
     
 	Messages *m2 = new Messages();
 	command = "";
 	message = "";
-	m2->receive_message("ENTER\ecell_name\ecell_content\espreadsheet_name\n", command, message);
+	m2->receive_message("ENTER[esc]cell_name[esc]cell_content[esc]spreadsheet_name\n", command, message);
 	std::cout << "ENTER command: " << command << std::endl;
 	std::cout << "Message should have cell names and contents: " << message << std::endl;
 
