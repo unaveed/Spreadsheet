@@ -14,48 +14,61 @@ Messages::Messages(){
   * for processing. Blank messages are sent to
   * the server for commands without contents.
   */
-void Messages::receive_message(std::string input){
-	std::cout << "Valid: " << this->valid_protocol(input) << std::endl;
-    // Hold values of tokens as string as split
-    std::string token;
+void Messages::receive_message(std::string input, 
+							   std::string &command, 
+							   std::string &content){
+	std::cout << "\nValid: " << this->valid_protocol(input) << std::endl;
 
-	// Tracks how many times the delimiter appears in a string
-	int escCount = delimiter_count(input, delimiter);
+	if(valid_protocol(input)) {
+		
+		// Hold values of tokens as string as split
+		std::string token;
 
-	// For cases where strings contain commands and contents 
-	if(escCount > 0){
-		size_t index = 0;
-		// Keep track of location in the loop
-		int count = 1;
-		while((index = input.find(delimiter)) != std::string::npos){
-			token = input.substr(0, index);
-			// Get the command and contents for strings with only one delimiter
-			if (escCount == 1){
-				command = token;
-				input.erase(0, index + delimiter.size());
-				content = input;
-			}
-			// Get the command and contents for strings with severl delimters 
-			else {
-				if(count == 1)
+		// Tracks how many times the delimiter appears in a string
+		int escCount = delimiter_count(input, delimiter);
+
+		// For cases where strings contain commands and contents 
+		if(escCount > 0){
+			size_t index = 0;
+			// Keep track of location in the loop
+			int count = 1;
+			while((index = input.find(delimiter)) != std::string::npos){
+				token = input.substr(0, index);
+				// Get the command and contents for strings with only one delimiter
+				if (escCount == 1){
 					command = token;
-				else
-					content.append(token);
-				input.erase(0, index + delimiter.size());
+					input.erase(0, index + delimiter.size());
+					content = input;
+				}
+				// Get the command and contents for strings with severl delimters 
+				else {
+					if(count == 1)
+						command = token;
+					else
+						content.append(token);
+					input.erase(0, index + delimiter.size());
+				}
+				count++;
 			}
-			count++;
-		}
-		if(content[content.size() - 1] == '\n')
-			content.erase(content.size() - 1);
-	}
-	// In cases where only a command is sent without contents,
-	// store the command
-	else {
-		command = input.substr(0, input.find('\n'));
-		content = "Place holder"; // Change to empty string after debugging	
-	}
+			// Check if the input string still has content
+			if(input.length() > 2) 
+				content.append(input);
 
-	// TODO: Send information to the server 
+			// Strip new line off of the message
+			if(content[content.size() - 1] == '\n')
+				content.erase(content.size() - 1);
+		}
+		// In cases where only a command is sent without contents,
+		// store the command
+		else {
+			command = input.substr(0, input.find('\n'));
+			content = "Place holder"; // Change to empty string after debugging	
+		}
+	}
+	else {
+		command = "ERROR";
+		content = "invalid command";
+	}
 }
 
  /* 
@@ -65,7 +78,12 @@ void Messages::receive_message(std::string input){
   * be sent to all clients.
   */
 void Messages::edit(std::string contents) {
-	
+	std::string message = "UPDATE";
+	message.append(delimiter);
+	message.append(contents);
+
+	// TODO: send to all clients
+	// server_send(message);
 }
 
  /* 
@@ -74,7 +92,19 @@ void Messages::edit(std::string contents) {
   * contents the the client.
   */
 void Messages::sync(std::map<std::string, std::string> &sheet, int client) {
+	std::string message = "UPDATE";
+	message.append(delimiter);
+
+	typedef std::map<std::string, std::string>::iterator it_type;
+	for(it_type it = sheet.begin(); it != sheet.end(); it++) {
+		message.append(it->first);
+		message.append(delimiter);
+		message.append(it->second);
+	}
+	message.append("\n");
 	
+	// TODO: Send to the client
+	// server_send_client(message, client);
 }
 
  /*
@@ -82,8 +112,15 @@ void Messages::sync(std::map<std::string, std::string> &sheet, int client) {
   * the last change. String is formatted to adhere
   * to the protocol and sent to all clients.
   */
-void Messages::undo(std::string contents) {
-	
+void Messages::undo(std::string version, std::string contents) {
+	std::string message = "UPDATE";
+	message.append(delimiter);
+	message.append(version);
+	message.append(contents);
+	message.append("\n");
+
+	// TODO: Send to all clients
+	// server_send(message);
 }
 
  /* 
@@ -91,14 +128,21 @@ void Messages::undo(std::string contents) {
   * save was successful.
   */
 void Messages::save(int client) {
-
+	// TODO: Send to client
+	// server_send_client("SAVED\n", client);
 }
 
 /* 
  * Sends error message to the the client
  */
-void Messages::error(std::string message, int client) {
-	
+void Messages::error(std::string content, int client) {
+	std::string message = "ERROR";
+	message.append(delimiter);
+	message.append(content);
+	message.append("\n");
+
+	// TODO: Send message to client
+	// server_send_client(message, client);
 }
 
  /* 
@@ -175,39 +219,36 @@ int Messages::delimiter_count(std::string input, std::string delimiter){
 	return result;
 }
 
-/** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
+//** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
 int main(){
-	Messages *m3 = new Messages("INVALID\n");
-	m3->receive_message();
-	std::cout << "INVLAID command, no content" << std::endl;
+	Messages *m3 = new Messages();
+	std::string command, message;
+	m3->receive_message("INVALID\n", command, message);
+	std::cout << "Command should == INVALID: " << command << std::endl;
+	std::cout << "Message should == Place Holder: " << message << std::endl;
 
 	std::string comm = "BOFFIN";
-	std::string cont = "[esc]spreadsheet_name\n";
+	std::string cont = "\espreadsheet_name\n";
 	std::string line = comm.append(cont);
-	Messages *message = new Messages(line);
-    message->receive_message();
-	std::cout << "\nCREATE command" << std::endl;
+	Messages *msg = new Messages();
+	command = "";
+	message = "";
+    msg->receive_message(line, command, message);
+	std::cout << "Command should be error: " << command << std::endl;
 
-	Messages *m1 = new Messages("ERROR[esc]error_message\n");
-	m1->receive_message();
-	std::cout << "\nERROR command" << std::endl;
+	Messages *m1 = new Messages();
+	command = "";
+	message = "";
+	m1->receive_message("ERROR\eerror_message\n", command, message);
+	std::cout << "Command should be ERROR: " << command << std::endl;
+	std::cout << "Message should be error_message: " << message << std::endl;
     
-	Messages *m2 = new Messages("ENTER[esc]cell_name[esc]cell_content [esc]spreadsheet_name\n");
-	m2->receive_message();
-	std::cout << "\nENTER command" << std::endl;
-	
-	Messages *m4 = new Messages("enter", "cell_name[esc]cell_content");
-	m4->send_message();
+	Messages *m2 = new Messages();
+	command = "";
+	message = "";
+	m2->receive_message("ENTER\ecell_name\ecell_content\espreadsheet_name\n", command, message);
+	std::cout << "ENTER command: " << command << std::endl;
+	std::cout << "Message should have cell names and contents: " << message << std::endl;
 
-	delete message;
-	delete m1;
-	delete m2;
-	delete m3;
-	delete m4;
-
-	return 0;
-}
-**/
-int main (){
 	return 0;
 }
