@@ -4,7 +4,7 @@
 #include "messages.h"
 
 Messages::Messages(){
-	this->delimiter = "[esc]";
+	this->delimiter = "\e";
 }
 
  /*
