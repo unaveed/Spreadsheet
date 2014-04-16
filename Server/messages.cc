@@ -232,7 +232,7 @@ int Messages::delimiter_count(std::string input, std::string delimiter){
 	return result;
 }
 
-//** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
+/** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
 int main(){
 	Messages *m3 = new Messages();
 	std::string command, message;
@@ -265,3 +265,4 @@ int main(){
 
 	return 0;
 }
+**/

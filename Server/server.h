@@ -14,6 +14,8 @@ class server {
 		std::string password;
 		std::map< std::string, std::string> *spreadsheets;
 		std::map<int, std::string> *clientSpreadsheets;
+		std::string get_spreadsheet(int);
+		void execute_command(int, std::string, std::string);
 	public:
 		server();
 		~server();
