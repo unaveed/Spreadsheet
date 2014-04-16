@@ -3,6 +3,7 @@
  */
 
 #include <set>
+#include <map>
 
 #ifndef SERVER_H
 #define SERVER_H
@@ -11,7 +12,10 @@ class server {
 	private:
 		std::set<int> *clients;
 		std::string password;
-
+		std::map< std::string, std::string> *spreadsheets;
+		std::map<int, std::string> *clientSpreadsheets;
+		std::string get_spreadsheet(int);
+		void execute_command(int, std::string, std::string);
 	public:
 		server();
 		~server();
@@ -22,6 +26,8 @@ class server {
 		std::string execute_command(std::string, std::string);
 		std::string lookup(std::string);
 		std::string lookup(std::string, std::string);
+		void message_received(int, std::string);
+		std::string get_files();	
 		void add_client(int);
 		void remove_client(int);
 };
