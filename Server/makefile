@@ -10,7 +10,6 @@ CCFILES=server.cc\
 LIBS=	-pthread
 
 all:
-	#g++ -o server server.cc stringsocket/globals.cc stringsocket/stringsocket.cc -pthread
 	g++ -o server $(CCFILES) $(LIBS)
 
 clean:
