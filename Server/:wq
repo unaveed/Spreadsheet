@@ -35,6 +35,14 @@ void server::run_server() {
 }
 
 /*
+ * Sends a message to all clients of a specific spreadsheet.
+ */
+void server::send_message_all(string message) {
+	for (set<int>::iterator it = clients->begin(); it != clients->end(); ++it) 
+		server_send(*it, message);
+}
+
+/*
  * Sends a message to a specific client.
  */
 void server::send_message_client(string message, int client) {

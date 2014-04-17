@@ -91,7 +91,7 @@ void Messages::receive_message(std::string input,
   * so that it adheres to the protocol and can
   * be sent to all clients.
   */
-void Messages::edit(std::string version, std::string name, std::string contents) {
+void Messages::edit(std::set<int> & clients, std::string version, std::string name, std::string contents) {
 	std::string message = "UPDATE";
 	for(int i = 0; i < 4; i++) {
 		if(i == 1)
@@ -107,7 +107,7 @@ void Messages::edit(std::string version, std::string name, std::string contents)
 		message.append(delimiter);
 	}
 
-	main_server.server_send(message);
+	main_server.send_message(clients, message);
 }
 
  /* 
