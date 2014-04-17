@@ -88,6 +88,9 @@ void spreadsheet::undo(){
 		std::string edit = undo_stack->top();
 		undo_stack->pop();
 
+		stringstream ss;
+		ss << version;
+
 		//Messages *mess = new Messages("ENTER", edit);
 		//mess->send_message();
 	}

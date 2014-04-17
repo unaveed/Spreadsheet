@@ -90,7 +90,7 @@ void Messages::receive_message(std::string input,
   * so that it adheres to the protocol and can
   * be sent to all clients.
   */
-void Messages::edit(std::string contents) {
+void Messages::edit(std::string version, std::string name, std::string contents) {
 	std::string message = "UPDATE";
 	message.append(delimiter);
 	message.append(contents);

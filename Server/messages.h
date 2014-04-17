@@ -9,7 +9,7 @@ class Messages
 public:
 	Messages();
     void receive_message(std::string, std::string &, std::string &);
-	void edit(std::string);
+	void edit(std::string, std::string, std::string);
 	void sync(std::map<std::string, std::string> &, int);
 	void undo(std::string, std::string);
 	void save(int);
