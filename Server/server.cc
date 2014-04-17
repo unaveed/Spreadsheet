@@ -51,7 +51,7 @@ void server::send_message_client(string message, int client) {
 
 void server::send_message(set<int> & client, string message) {
 	for (set<int>::iterator it = client.begin(); it != client.end(); ++it)
-		server_send(&it, message);
+		server_send(*it, message);
 }
 
 /*
