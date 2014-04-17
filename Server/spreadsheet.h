@@ -4,6 +4,8 @@
 
 #ifndef SPREADSHEET_H
 #define SPREADSHEET_H
+#include <map>
+#include <stack>
 
 /*
  * Represents a working spreadsheet.  It has information on current clients working on it,

@@ -4,6 +4,8 @@
 
 #include <set>
 #include <map>
+#include "spreadsheet.h"
+#include "messages.h"
 
 #ifndef SERVER_H
 #define SERVER_H
@@ -12,8 +14,9 @@ class server {
 	private:
 		std::set<int> *clients;
 		std::string password;
-		std::map< std::string, std::string> *spreadsheets;
+		std::map< std::string, spreadsheet*> spreadsheets;
 		std::map<int, std::string> *clientSpreadsheets;
+		Messages *m;
 		std::string get_spreadsheet(int);
 		void execute_command(int, std::string, std::string);
 	public:

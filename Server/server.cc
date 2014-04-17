@@ -7,20 +7,22 @@
 #include "server.h"
 #include <dirent.h>
 #include "messages.h"
+#include <string>
+#include <cstring>
 
 using namespace std;
 
 int main() {
 	server s;
-	//s.message_received(5, "PASSWORD[esc]124345\n");
 	s.run_server();
 }
 
 server::server() {
 	password = "12345";
 	clients = new set<int>;
-	spreadsheets = new map<string, string>;
-	clientSpreadsheets = new map<int, std::string>;
+	spreadsheets = new map<string, spreadsheet*>;
+	clientSpreadsheets = new map<int, string>;
+	m = new Messages();
 }
 
 server::~server() {
@@ -37,9 +39,8 @@ void server::run_server() {
  * Sends a message to all clients of a specific spreadsheet.
  */
 void server::send_message_all(string message) {
-	for (set<int>::iterator it = clients->begin(); it != clients->end(); ++it) {
+	for (set<int>::iterator it = clients->begin(); it != clients->end(); ++it) 
 		server_send(*it, message);
-	}
 }
 
 /*
@@ -56,7 +57,6 @@ void server::message_received(int client, string input) {
 	cout << input << endl;
 	string command, message;
 
-	Messages *m = new Messages();
 	m->receive_message(input, command, message);
 
 	string filelist;
@@ -68,49 +68,54 @@ void server::message_received(int client, string input) {
 		if(message == password){
 			filelist = "FILELIST\e";
 			filelist.append( get_files() );
-			// server_send_client(filelist, client);
+		
+			// Send list of files to the client
+			send_message_client(filelist, client);
 			
 			// Add client to the list of clients
 			add_client(client);
 		}
 		// Send invalid password to socket
-		else {
-			cout << "danger will robinson" << endl;
-			// server_send_client("INVALID\n", client);	
-		}
+		else 
+			send_message_client("INVALID\n", client);	
 	}
 	else if(command == "CREATE") {
 		filelist = get_files();
+
 		// File with the given name already exists
-		if(filelist.find(message) >= 0) {
-			// server_send_client("ERROR\eFile already exists\n", client);
-		}
+		if(filelist.find(message) >= 0) 
+			send_message_client("ERROR\eFile already exists\n", client);
+		
 		else {
-			// TODO: Create a new spreadsheet, add client to spreadsheet, and add it to the list of spreadsheets
-			// spreadsheet *s = new spreadsheet(message);
-			spreadsheets->insert(pair<string, string> (message, "spreadsheet object here") );
+			// Create a new spreadsheet, add client to spreadsheet
+			// and add it to the list of spreadsheets
+			char *cstr = new char[message.length() + 1];
+			strcpy(cstr, message.c_str());
+		
+			spreadsheet *ss = new spreadsheet(cstr);
+			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
-			
 		}
 	}
 	else if(command == "OPEN") {
 		filelist = get_files();
 		// Check if file exists
 		if(filelist.find(message) >= 0) {
-			// TODO: Create a spreadsheet that has a parameter to take in a filename, add
-			// spreadsheet to the map, and client to the spreadsheet
-			// spreadsheet *s = new spreadsheet(message);
-			spreadsheets->insert(pair<string, string> (message, "spreadsheet object here") );
+			// Create a spreadsheet and add spreadsheet to the
+			// map and client to the spreadsheet
+			char *cstr = new char[message.length() + 1];
+			strcpy(cstr, message.c_str());
+			
+			spreadsheet *ss = new spreadsheet(cstr);
+			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
 		// Send error message to client requesting file that does exist
-		else {
-			// server_send_client("ERROR\eFile does not exist\n");
-		}
+		else 
+			send_message_client("ERROR\eFile does not exist\n", client);
 	}
-	else {
+	else 
 		execute_command(client, command, message);
-	}
 }
 
 /*
@@ -178,21 +183,18 @@ void server::remove_client(int client) {
  */
 void server::execute_command(int client, string command, string message) {
 	string sheet = get_spreadsheet(client);
-	//spreadsheet *s = spreadsheets[sheet];
+	spreadsheet *s = spreadsheets[sheet];
 	
-	if(command == "ENTER") {
-		//s->make_change(message);
-	}
-	if(command == "UNDO") {
-		//s->undo();	
-	}
-	if(command == "SAVE") {
-		//s->save();	
-	}
+	if(command == "ENTER") 
+		s->make_change(message);
+	if(command == "UNDO") 
+		s->undo();	
+	if(command == "SAVE") 
+		s->save();	
 	if(command == "RESYNC") {
 		// TODO: resync with spreadsheet
 	}
-	//spreadsheets[sheet] = s;
+	spreadsheets[sheet] = s;
 }
 
 /* 
