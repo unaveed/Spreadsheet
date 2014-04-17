@@ -16,7 +16,6 @@ class server {
 		std::string password;
 		std::map< std::string, spreadsheet* > *spreadsheets;
 		std::map<int, std::string> *clientSpreadsheets;
-		Messages *m;
 		std::string get_spreadsheet(int);
 		void execute_command(int, std::string, std::string);
 	public:
@@ -25,10 +24,8 @@ class server {
 		void run_server();
 		void send_message_all(std::string);
 		void send_message_client(std::string, int);
+		void send_message(std::set<int> &, std::string);
 		void message_received(int, std::string, std::string);
-		std::string execute_command(std::string, std::string);
-		std::string lookup(std::string);
-		std::string lookup(std::string, std::string);
 		void message_received(int, std::string);
 		std::string get_files();	
 		void add_client(int);

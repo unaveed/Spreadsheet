@@ -22,7 +22,6 @@ server::server() {
 	clients = new set<int>;
 	spreadsheets = new map<string, spreadsheet* >;
 	clientSpreadsheets = new map<int, string>;
-	m = new Messages();
 }
 
 server::~server() {
@@ -50,13 +49,19 @@ void server::send_message_client(string message, int client) {
 	server_send(client, message);
 }
 
+void server::send_message(set<int> & client, string message) {
+	for (set<int>::iterator it = client.begin(); it != client.end(); ++it)
+		server_send(&it, message);
+}
+
 /*
  * Called when a message has been received from a client.
  */
 void server::message_received(int client, string input) {
 	cout << input << endl;
 	string command, message;
-
+	
+	Messages *m = new Messages(*this);
 	m->receive_message(input, command, message);
 
 	string filelist;

@@ -3,8 +3,9 @@
  */
 #include "messages.h"
 
-Messages::Messages(){
+Messages::Messages(server & svr){
 	this->delimiter = "\e";
+	this->main_server = svr;
 }
 
  /*
@@ -92,11 +93,21 @@ void Messages::receive_message(std::string input,
   */
 void Messages::edit(std::string version, std::string name, std::string contents) {
 	std::string message = "UPDATE";
-	message.append(delimiter);
-	message.append(contents);
+	for(int i = 0; i < 4; i++) {
+		if(i == 1)
+			message.append(version);
+		if(i == 2)
+			message.append(name);
+		if(i == 3) {
+			message.append(contents);
+			message.append("\n");
+			break;
+		}
 
-	// TODO: send to all clients
-	// server_send(message);
+		message.append(delimiter);
+	}
+
+	main_server.server_send(message);
 }
 
  /* 
