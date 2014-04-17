@@ -20,7 +20,7 @@ int main() {
 server::server() {
 	password = "12345";
 	clients = new set<int>;
-	spreadsheets = new map<string, spreadsheet*>;
+	spreadsheets = new map<string, spreadsheet* >;
 	clientSpreadsheets = new map<int, string>;
 	m = new Messages();
 }
@@ -183,7 +183,7 @@ void server::remove_client(int client) {
  */
 void server::execute_command(int client, string command, string message) {
 	string sheet = get_spreadsheet(client);
-	spreadsheet *s = spreadsheets[sheet];
+	spreadsheet *s = (*spreadsheets)[sheet];
 	
 	if(command == "ENTER") 
 		s->make_change(message);
@@ -194,7 +194,7 @@ void server::execute_command(int client, string command, string message) {
 	if(command == "RESYNC") {
 		// TODO: resync with spreadsheet
 	}
-	spreadsheets[sheet] = s;
+	(*spreadsheets)[sheet] = s;
 }
 
 /* 

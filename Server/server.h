@@ -14,7 +14,7 @@ class server {
 	private:
 		std::set<int> *clients;
 		std::string password;
-		std::map< std::string, spreadsheet*> spreadsheets;
+		std::map< std::string, spreadsheet* > *spreadsheets;
 		std::map<int, std::string> *clientSpreadsheets;
 		Messages *m;
 		std::string get_spreadsheet(int);

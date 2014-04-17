@@ -18,8 +18,6 @@ class spreadsheet {
 		std::stack<std::string> *undo_stack;		// All changes that have been made
 		int version;		// Version of the spreadsheet
 		char * filename;	// Current name of the file
-		void save();		// Saves the spreadsheet to the file with the stored filename in xml format
-		void open();		// Fills the data structures and variables with the spreadsheet information
 	public:
 		spreadsheet(char *);	// Takes the name of the file to open
 		~spreadsheet();
@@ -28,6 +26,8 @@ class spreadsheet {
 		void remove_client(int);		// Remove a client from the working spreadsheet
 		int get_version();				// Returns the spreadsheet version
 		void undo();					// Performs the undo operation
+		void save();		// Saves the spreadsheet to the file with the stored filename in xml format
+		void open();		// Fills the data structures and variables with the spreadsheet information
 };
 
 #endif

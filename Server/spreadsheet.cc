@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "messages.h"
 #include "spreadsheet.h"
 #include "DependencyGraph/DependencyGraph.h"
 
@@ -86,8 +87,9 @@ void spreadsheet::undo(){
 	if(!undo_stack->empty()){
 		std::string edit = undo_stack->top();
 		undo_stack->pop();
-		Messages *mess = new Messages("ENTER", edit);
-		mess->send_message();
+
+		//Messages *mess = new Messages("ENTER", edit);
+		//mess->send_message();
 	}
 }
 
