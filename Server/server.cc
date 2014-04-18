@@ -66,7 +66,7 @@ void server::message_received(int client, string input) {
 		if(message == password){
 			filelist = "FILELIST";
 			filelist.append(delimiter);
-			filelist.append( get_files() );
+			filelist.append( get_files(true) );
 		
 			// Send list of files to the client
 			send_message_client(filelist, client);
@@ -79,7 +79,7 @@ void server::message_received(int client, string input) {
 			send_message_client("INVALID\n", client);	
 	}
 	else if(command == "CREATE") {
-		filelist = get_files();
+		filelist = get_files(false);
 
 		// File with the given name already exists
 		if(filelist.find(message) >= 0) 
@@ -121,7 +121,8 @@ void server::message_received(int client, string input) {
  * Retrieves the available spreadsheet files from
  * the current directory and returns them as a string
  */
-string server::get_files() {
+string server::get_files(bool clean) {
+	string folder = "files/";
 	string files = "";
 	DIR *d;
 	struct dirent *dir;
@@ -136,7 +137,12 @@ string server::get_files() {
 		string fileName;
 		
 		while ((dir = readdir(d)) != NULL) {
-			fileName = string(dir->d_name);	
+			if(!clean){
+				fileName = folder;
+				fileName.append(string(dir->d_name));
+			}
+			else
+				fileName = string(dir->d_name);	
 		
 			// Check for file names that are large enough to be spreadsheet files
 			if(fileName.length() > 3) {

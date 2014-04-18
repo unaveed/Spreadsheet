@@ -28,7 +28,7 @@ class server {
 		void send_message(std::set<int> &, std::string);
 		void message_received(int, std::string, std::string);
 		void message_received(int, std::string);
-		std::string get_files();	
+		std::string get_files(bool);	
 		void add_client(int);
 		void remove_client(int);
 };
