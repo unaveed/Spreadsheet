@@ -115,7 +115,7 @@ void Messages::edit(std::set<int> & clients, std::string version, std::string na
   * contents based off the sheet parameter. Sends the
   * contents the the client.
   */
-void Messages::sync(std::map<std::string, std::string> &sheet, int client) {
+void Messages::sync(std::set<int> & clients, std::map<std::string, std::string> &sheet) {
 	std::string message = "UPDATE";
 	message.append(delimiter);
 
@@ -127,8 +127,7 @@ void Messages::sync(std::map<std::string, std::string> &sheet, int client) {
 	}
 	message.append("\n");
 	
-	// TODO: Send to the client
-	// server_send_client(message, client);
+	main_server.send_message(clients, message);
 }
 
  /*
@@ -136,37 +135,34 @@ void Messages::sync(std::map<std::string, std::string> &sheet, int client) {
   * the last change. String is formatted to adhere
   * to the protocol and sent to all clients.
   */
-void Messages::undo(std::string version, std::string contents) {
+void Messages::undo(std::set<int> & clients, std::string version, std::string contents) {
 	std::string message = "UPDATE";
 	message.append(delimiter);
 	message.append(version);
 	message.append(contents);
 	message.append("\n");
 
-	// TODO: Send to all clients
-	// server_send(message);
+	main_server.send_message(clients, message);
 }
 
  /* 
   * Sends a message to the client comfirming that 
   * save was successful.
   */
-void Messages::save(int client) {
-	// TODO: Send to client
-	// server_send_client("SAVED\n", client);
+void Messages::save(std::set<int> & clients) {
+	main_server.send_message(clients, "SAVED\n");
 }
 
 /* 
  * Sends error message to the the client
  */
-void Messages::error(std::string content, int client) {
+void Messages::error(std::set<int> & clients, std::string content) {
 	std::string message = "ERROR";
 	message.append(delimiter);
 	message.append(content);
 	message.append("\n");
 
-	// TODO: Send message to client
-	// server_send_client(message, client);
+	main_server.send_message(clients, message);
 }
 
  /* 

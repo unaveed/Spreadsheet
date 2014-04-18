@@ -13,6 +13,7 @@
 class server {
 	private:
 		std::set<int> *clients;
+		std::string delimiter;
 		std::string password;
 		std::map< std::string, spreadsheet* > *spreadsheets;
 		std::map<int, std::string> *clientSpreadsheets;

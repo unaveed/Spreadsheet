@@ -1,19 +1,25 @@
-/*
- * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
- */
+// ********************************************************************************
+// ********  Compiling : g++ stringsocket.cc -pthread                        ******
+// ********************************************************************************
+
 
 
 #include <iostream>
 #include <cstring> 	// used for memset.
 #include <arpa/inet.h> 	// for inet_ntop function
 #include <netdb.h>
+#include <sys/socket.h>
+#include <pthread.h>
+#include <vector>
+#include <list>
+#include <iterator>
+#include <sstream>
 #include <unistd.h>
 
 #include <errno.h>
 
 #include "globals.h"
 #include "../server.h"
-
 
 using namespace std;
 
@@ -31,7 +37,6 @@ server * main_server;
 
 
 
-// Cite: http://codebase.eu/source/code-cplusplus/multithreaded-socket-server/
 int start(server & svr) {
 	main_server = &svr;
     cout << "Server started." << endl; // do not forget endl, or it won't display.
@@ -140,7 +145,7 @@ void *tcp_server_read(void *arg) {
     int buflen;
     int wfd;
 
-    rfd = *((int *)arg);
+    rfd = *((int *)&arg);
     for(;;) {
         //read incoming message.
         buflen = read(rfd, buf, sizeof(buf));
@@ -232,4 +237,3 @@ void mainloop(int server_fd) {
         }
     }
 }
-// End cite

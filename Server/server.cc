@@ -14,11 +14,13 @@ using namespace std;
 
 int main() {
 	server s;
+	s.message_received(3, "PASSWORD\e12345\n");
 	s.run_server();
 }
 
 server::server() {
 	password = "12345";
+	delimiter = "\e";
 	clients = new set<int>;
 	spreadsheets = new map<string, spreadsheet* >;
 	clientSpreadsheets = new map<int, string>;
@@ -50,7 +52,6 @@ void server::send_message(set<int> & client, string message) {
  * Called when a message has been received from a client.
  */
 void server::message_received(int client, string input) {
-	cout << input << endl;
 	string command, message;
 	
 	Messages *m = new Messages(*this);
@@ -63,7 +64,8 @@ void server::message_received(int client, string input) {
 		// Create spreadsheet and send it's
 		// contents to the client
 		if(message == password){
-			filelist = "FILELIST\e";
+			filelist = "FILELIST";
+			filelist.append(delimiter);
 			filelist.append( get_files() );
 		
 			// Send list of files to the client
@@ -126,8 +128,8 @@ string server::get_files() {
 	// Flag that allows escape characters can be added after first spreadsheet file 
 	int addDelimiter = 0;
 
-	// Look in the current directory for files
-	d = opendir(".");
+	// Look in the directory names 'files' for files
+	d = opendir("files/");
 
 	if(d) {
 		// Holds the name of the file
@@ -143,7 +145,7 @@ string server::get_files() {
 				if(segment == ".ss") {
 					// If first spreadsheet file added, add escape characters
 					if(addDelimiter > 0)  {
-						files.append("\e");
+						files.append(delimiter);
 						files.append(fileName);
 					}
 					else {
@@ -155,6 +157,7 @@ string server::get_files() {
 		}
 		closedir(d);
 		files.append("\n");
+		cout << files << endl;
 	}
 	return files; 
 }

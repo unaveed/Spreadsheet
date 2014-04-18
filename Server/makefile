@@ -12,5 +12,8 @@ LIBS=	-pthread
 all:
 	g++ -o server $(CCFILES) $(LIBS)
 
+debug:
+	g++ -g -o server $(CCFILES) $(LIBS)
+
 clean:
 	rm server
