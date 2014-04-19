@@ -12,7 +12,7 @@
 
 using namespace std;
 
-spreadsheet::spreadsheet(char * _filename) {
+spreadsheet::spreadsheet(const char * _filename) {
 	clients    = new set<int>;
 	cells      = new map<string, string>;
 	undo_stack = new stack<string>;
@@ -90,9 +90,6 @@ void spreadsheet::undo(){
 
 		stringstream ss;
 		ss << version;
-
-		//Messages *mess = new Messages("ENTER", edit);
-		//mess->send_message();
 	}
 }
 

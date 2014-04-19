@@ -19,6 +19,7 @@ class server {
 		std::map<int, std::string> *clientSpreadsheets;
 		std::string get_spreadsheet(int);
 		void execute_command(int, std::string, std::string);
+		void save_spreadsheets();
 	public:
 		server();
 		~server();

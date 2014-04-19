@@ -17,9 +17,9 @@ class spreadsheet {
 		std::map<std::string, std::string> *cells;	// All of the cells with their contents
 		std::stack<std::string> *undo_stack;		// All changes that have been made
 		int version;		// Version of the spreadsheet
-		char * filename;	// Current name of the file
+		const char * filename;	// Current name of the file
 	public:
-		spreadsheet(char *);	// Takes the name of the file to open
+		spreadsheet(const char *);	// Takes the name of the file to open
 		~spreadsheet();
 		void make_change(std::string);	// Make change to spreadsheet, making all of the necessary checks
 		void add_client(int);			// Add a client to the working spreadsheet

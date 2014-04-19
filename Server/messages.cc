@@ -76,7 +76,7 @@ void Messages::receive_message(std::string input,
 		// store the command
 		else {
 			command = input.substr(0, input.find('\n'));
-			content = "Place holder"; // Change to empty string after debugging	
+			content = ""; // Change to empty string after debugging	
 		}
 	}
 	else {
@@ -117,10 +117,10 @@ void Messages::edit(std::set<int> & clients, std::string version, std::string na
   */
 void Messages::sync(std::set<int> & clients, std::map<std::string, std::string> &sheet) {
 	std::string message = "UPDATE";
-	message.append(delimiter);
 
 	typedef std::map<std::string, std::string>::iterator it_type;
 	for(it_type it = sheet.begin(); it != sheet.end(); it++) {
+		message.append(delimiter);
 		message.append(it->first);
 		message.append(delimiter);
 		message.append(it->second);
@@ -135,14 +135,8 @@ void Messages::sync(std::set<int> & clients, std::map<std::string, std::string> 
   * the last change. String is formatted to adhere
   * to the protocol and sent to all clients.
   */
-void Messages::undo(std::set<int> & clients, std::string version, std::string contents) {
-	std::string message = "UPDATE";
-	message.append(delimiter);
-	message.append(version);
-	message.append(contents);
-	message.append("\n");
-
-	main_server.send_message(clients, message);
+void Messages::undo(std::set<int> & clients, std::string version, std::string name, std::string contents) {
+	edit(clients, version, name, contents);
 }
 
  /* 

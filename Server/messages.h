@@ -12,7 +12,7 @@ public:
     void receive_message(std::string, std::string &, std::string &);
 	void edit(std::set<int> &, std::string, std::string, std::string);
 	void sync(std::set<int> &, std::map<std::string, std::string> &);
-	void undo(std::set<int> &, std::string, std::string);
+	void undo(std::set<int> &, std::string, std::string, std::string);
 	void save(std::set<int> &);
 	void error(std::set<int> &, std::string);
 private:

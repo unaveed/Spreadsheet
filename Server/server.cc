@@ -11,11 +11,15 @@
 #include <cstring>
 
 using namespace std;
-
-int main() {
+//TODO: Make an autosave
+// TODO: Make a save_spreadsheets method
+int main(int argc, char * argv[]) {
 	server s;
-	s.message_received(3, "PASSWORD\e12345\n");
 	s.run_server();
+
+	if(argc > 1) {
+				
+	}
 }
 
 server::server() {
@@ -88,8 +92,7 @@ void server::message_received(int client, string input) {
 		else {
 			// Create a new spreadsheet, add client to spreadsheet
 			// and add it to the list of spreadsheets
-			char *cstr = new char[message.length() + 1];
-			strcpy(cstr, message.c_str());
+			const char * cstr = message.c_str(); 
 		
 			spreadsheet *ss = new spreadsheet(cstr);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
@@ -97,13 +100,13 @@ void server::message_received(int client, string input) {
 		}
 	}
 	else if(command == "OPEN") {
-		filelist = get_files();
+		filelist = get_files(true);
+		string sheetFiles = get_files(false);
 		// Check if file exists
 		if(filelist.find(message) >= 0) {
 			// Create a spreadsheet and add spreadsheet to the
 			// map and client to the spreadsheet
-			char *cstr = new char[message.length() + 1];
-			strcpy(cstr, message.c_str());
+			const char * cstr = message.c_str(); 
 			
 			spreadsheet *ss = new spreadsheet(cstr);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
@@ -119,7 +122,10 @@ void server::message_received(int client, string input) {
 
 /*
  * Retrieves the available spreadsheet files from
- * the current directory and returns them as a string
+ * the current directory and returns them as a string.
+ * Clean determines whether only the file name will be
+ * saved to the string (when true) or the file name with
+ * the path will be saved to the string (when false).
  */
 string server::get_files(bool clean) {
 	string folder = "files/";
@@ -137,10 +143,12 @@ string server::get_files(bool clean) {
 		string fileName;
 		
 		while ((dir = readdir(d)) != NULL) {
+			// Adds path in front of file name
 			if(!clean){
 				fileName = folder;
 				fileName.append(string(dir->d_name));
 			}
+			// Only contains the file name
 			else
 				fileName = string(dir->d_name);	
 		
@@ -201,6 +209,18 @@ void server::execute_command(int client, string command, string message) {
 		// TODO: resync with spreadsheet
 	}
 	(*spreadsheets)[sheet] = s;
+}
+
+/*
+ * Calls on every spreadsheet in the 
+ * spreadsheets map to save their files
+ */
+void server::save_spreadsheets() {
+	map<string, spreadsheet*>::iterator it;
+	for(it = spreadsheets->begin(); it != spreadsheets->end(); ++it){
+		// Calls the save method for every spreadsheet
+		// it->second.save();				
+	}
 }
 
 /* 
