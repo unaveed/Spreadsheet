@@ -7,6 +7,10 @@
 #include <cstring> 	// used for memset.
 #include <arpa/inet.h> 	// for inet_ntop function
 #include <netdb.h>
+#include <sys/socket.h>
+#include <pthread.h>
+#include <iterator>
+#include <sstream>
 #include <unistd.h>
 
 #include <errno.h>
@@ -140,7 +144,7 @@ void *tcp_server_read(void *arg) {
     int buflen;
     int wfd;
 
-    rfd = *((int *)arg);
+    rfd = *((int *)&arg);
     for(;;) {
         //read incoming message.
         buflen = read(rfd, buf, sizeof(buf));
@@ -211,7 +215,7 @@ void mainloop(int server_fd) {
             cout << "Client connected. Using file desciptor " << rfd << endl;
 
 			// Add client to the list of clients
-			main_server->add_client(rfd);
+			//main_server->add_client(rfd);
 
             if (rfd > MAXFD) {
                 cout << "To many clients trying to connect." << endl;
