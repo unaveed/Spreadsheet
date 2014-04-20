@@ -1,12 +1,12 @@
 #ifndef MESSAGES_H
 #define MESSAGES_H
+
 #include <iostream>
 #include <string>
 #include <map>
 #include "server.h"
 
-class Messages
-{
+class Messages {
 public:
 	Messages(server &);
     void receive_message(std::string, std::string &, std::string &);

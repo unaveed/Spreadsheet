@@ -11,6 +11,7 @@
 #include "messages.h"
 #include "spreadsheet.h"
 #include "DependencyGraph/DependencyGraph.h"
+#include "DependencyGraph/CircularDependency.h"
 
 using namespace std;
 
@@ -135,7 +136,9 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 	// Check for circular dependency
 	try {
 		temp->insert(name);
-		GetCellsToRecalculate(*temp);
+		CircularDependency *c = new CircularDependency(dg);
+		c->GetCellsToRecalculate(temp);
+		delete c;
 	}
 	catch (char * e) {
 		// Revert to old contents

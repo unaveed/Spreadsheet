@@ -2,12 +2,13 @@
  * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
  */
 
+#ifndef DEPENDENCYGRAPH_H
+#define DEPENDENCYGRAPH_H
+
 #include <string>
 #include <map>
 #include <set>
 
-#ifndef DEPENDENCYGRAPH_H
-#define DEPENDENCYGRAPH_H
 
 class DependencyGraph {
 	public:
