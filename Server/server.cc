@@ -75,8 +75,10 @@ void server::send_message_client(string message, int client) {
 }
 
 void server::send_message(set<int> & client, string message) {
-	for (set<int>::iterator it = client.begin(); it != client.end(); ++it)
+	for (set<int>::iterator it = client.begin(); it != client.end(); ++it) {
 		server_send(*it, message);
+		cout << "Client: " << *it << endl;
+	}
 }
 
 /*
@@ -240,10 +242,12 @@ void server::execute_command(int client, string command, string message) {
 		m->split_edit(message, version, cellName, contents);
 		s->make_change(client, cellName, contents, version);
 	}
-	if(command == "UNDO") 
+	if(command == "UNDO") {
 		s->undo();	
-	if(command == "SAVE") 
+	}
+	if(command == "SAVE") {
 		s->save();	
+	}
 	if(command == "RESYNC") {
 		s->sync(client);	
 	}

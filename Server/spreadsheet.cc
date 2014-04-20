@@ -25,6 +25,8 @@ spreadsheet::spreadsheet(const char * _filename, Messages * _message) {
 	message	   = _message;
 	dg         = new DependencyGraph();
 
+	cout << "Filename: " << filename << endl;
+
 	open();
 }
 
@@ -87,7 +89,7 @@ void spreadsheet::save() {
 		for (map<string, string>::iterator it = cells->begin(); it != cells->end(); ++it) {
 			file << "<cell>\n";
 			file << "<name>\n" << it->first << "\n" << "</name>\n";
-			file << "<contents>\n" << it->second << "\n" << "</contents>\n";
+			file << "<contents>\n" << it->second  << "</contents>\n";
 			file << "</cell>\n";
 		}
 		file << "</spreadsheet>";

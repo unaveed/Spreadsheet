@@ -19,8 +19,6 @@ Messages::Messages(server & svr){
 void Messages::receive_message(std::string input, 
 							   std::string &command, 
 							   std::string &content){
-	std::cout << "\nValid: " << this->valid_protocol(input) << std::endl;
-
 	if(valid_protocol(input)) {
 		
 		// Hold values of tokens as string as split
@@ -107,6 +105,8 @@ void Messages::edit(std::set<int> & clients, std::string version, std::string na
 
 		message.append(delimiter);
 	}
+
+	std::cout << "Change: " << message << std::endl;
 
 	main_server->send_message(clients, message);
 }
