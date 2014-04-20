@@ -6,16 +6,14 @@
 #include <map>
 #include <set>
 
-//#include "server.h"
-
-class server;
+#include "server.h"
 
 class Messages {
 	private:
 		std::string delimiter;
 		std::string command;
 		std::string content;
-		server main_server;
+		server *main_server;
 		bool valid_protocol(std::string);
 		int delimiter_count(std::string, std::string);
 	public:
