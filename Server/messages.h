@@ -14,7 +14,7 @@ public:
 	void sync(int, std::map<std::string, std::string> &);
 	void undo(std::set<int> &, std::string, std::string, std::string);
 	void save(std::set<int> &);
-	void error(std::set<int> &, std::string);
+	void error(int, std::string);
 	void split_edit(std::string, std::string &, std::string &, std::string &);
 private:
     std::string delimiter;
