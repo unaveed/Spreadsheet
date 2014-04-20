@@ -6,7 +6,7 @@
 
 Messages::Messages(server & svr){
 	this->delimiter = "\e";
-	this->main_server = svr;
+	this->main_server = &svr;
 }
 
  /*
@@ -108,7 +108,7 @@ void Messages::edit(std::set<int> & clients, std::string version, std::string na
 		message.append(delimiter);
 	}
 
-	main_server.send_message(clients, message);
+	main_server->send_message(clients, message);
 }
 
  /* 
@@ -128,7 +128,7 @@ void Messages::sync(int client, std::map<std::string, std::string> &sheet) {
 	}
 	message.append("\n");
 	
-	main_server.send_message_client(message, client);
+	main_server->send_message_client(message, client);
 }
 
  /*
@@ -145,7 +145,7 @@ void Messages::undo(std::set<int> & clients, std::string version, std::string na
   * save was successful.
   */
 void Messages::save(std::set<int> & clients) {
-	main_server.send_message(clients, "SAVED\n");
+	main_server->send_message(clients, "SAVED\n");
 }
 
 /* 
@@ -157,7 +157,7 @@ void Messages::error(int client, std::string content) {
 	message.append(content);
 	message.append("\n");
 
-	main_server.send_message_client(message, client);
+	main_server->send_message_client(message, client);
 }
 
 void Messages::split_edit(std::string message, std::string &version, std::string &name, std::string &contents) {
