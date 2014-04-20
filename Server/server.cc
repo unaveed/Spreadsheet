@@ -95,9 +95,6 @@ void server::message_received(int client, string input) {
 			filelist = "FILELIST";
 			filelist.append(delimiter);
 			filelist.append( get_files(true) );
-			cout << "Valid password received." << endl;
-			filelist = "FILELIST\e";
-			filelist.append( get_files() );
 		
 			// Send list of files to the client
 			send_message_client(filelist, client);
