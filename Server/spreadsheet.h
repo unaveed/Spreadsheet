@@ -44,6 +44,7 @@ class spreadsheet {
 		void save();		// Saves the spreadsheet to the file with the stored filename in xml format
 		void open();		// Fills the data structures and variables with the spreadsheet information
 		void sync(int client);
+		std::string buildString(std::string formula);
 };
 
 #endif

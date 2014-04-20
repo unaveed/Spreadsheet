@@ -25,7 +25,6 @@ spreadsheet::spreadsheet(const char * _filename, Messages * _message) {
 	message	   = _message;
 	dg         = new DependencyGraph();
 
-	cout << "Filename: " << filename << endl;
 
 	open();
 }
@@ -38,10 +37,16 @@ spreadsheet::~spreadsheet() {
 }
 
 void spreadsheet::make_change(int client, string name, string contents, string vers) {
+	// TODO: Check if version is current
+	stringstream sv;
+	sv << version;
+	if (sv.str() != vers)
+		cout << "make_change: need to sync" << endl;
+
 	// Check if contents is a formula
 	if (contents[0] == '=') {
 		if (!SetCellContents(name, contents)) {
-			message->error(client, contents);
+			message->error(client, buildString(contents));
 			return;
 		}
 	}
@@ -56,7 +61,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	stringstream ss;
 	ss << version;
 
-	message->edit(*clients, ss.str(), name, contents);
+	message->edit(*clients, ss.str(), name, buildString(contents));
 }
 
 /*
@@ -75,7 +80,7 @@ void spreadsheet::undo() {
 		stringstream ss;
 		ss << version;
 
-		message->undo(*clients, ss.str(), name, contents);
+		message->undo(*clients, ss.str(), name, buildString(contents));
 	}
 }
 
@@ -100,7 +105,24 @@ void spreadsheet::save() {
 }
 
 void spreadsheet::sync(int client) {
-	message->sync(client, *cells);
+	stringstream ss;
+	ss << version;
+	message->sync(client, ss.str(), *cells);
+}
+
+/*
+ * Takes the contents of a cell and puts it together in regular format.  For example, if
+ * the contents are a formula delimited by colons, it will put it back to regular format
+ * without the colons.
+ */
+string spreadsheet::buildString(string contents) {
+	if (contents[0] != '=')
+		return contents;
+	string s;
+	vector<string> tokens = GetTokens(contents, ':');
+	for (vector<string>::iterator it = tokens.begin(); it != tokens.end(); ++it)
+		s.append(*it);
+	return s;
 }
 
 /*
@@ -212,6 +234,7 @@ void spreadsheet::open() {
 	string line;
 	string name, contents;
 	ifstream file(filename);
+	// File already exists
 	if (file.is_open()) {
 		getline(file, line);	// <spreadsheet>
 		getline(file, line);	// <version>
@@ -238,6 +261,17 @@ void spreadsheet::open() {
 
 		file.close();
 	}
-	else
-		cout << "Unable to open file." << endl;
+	// File doesn't exist, create it
+	else {
+		ofstream newfile(filename);
+		if (newfile.is_open()) {
+			newfile << "<spreadsheet>\n";
+			newfile << "<version>\n";
+			newfile << version << "\n";
+			newfile << "</version>\n";
+			newfile << "</spreadsheet>";
+
+			newfile.close();
+		}
+	}
 }

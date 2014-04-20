@@ -2,7 +2,12 @@
  * Written by Umair Naveed, Celeste Hollenbeck, Gregory Anderson, Jesus Zarate
  */
 
+#include <vector>
+#include <sstream>
+
 #include "messages.h"
+
+using namespace std;
 
 Messages::Messages(server & svr){
 	this->delimiter = "\e";
@@ -16,13 +21,13 @@ Messages::Messages(server & svr){
   * for processing. Blank messages are sent to
   * the server for commands without contents.
   */
-void Messages::receive_message(std::string input, 
-							   std::string &command, 
-							   std::string &content){
+void Messages::receive_message(string input, 
+							   string &command, 
+							   string &content){
 	if(valid_protocol(input)) {
 		
 		// Hold values of tokens as string as split
-		std::string token;
+		string token;
 
 		// Tracks how many times the delimiter appears in a string
 		int escCount = delimiter_count(input, delimiter);
@@ -32,7 +37,7 @@ void Messages::receive_message(std::string input,
 			size_t index = 0;
 			// Keep track of location in the loop
 			int count = 1;
-			while((index = input.find(delimiter)) != std::string::npos){
+			while((index = input.find(delimiter)) != string::npos){
 				token = input.substr(0, index);
 				// Get the command and contents for strings with only one delimiter
 				if (escCount == 1){
@@ -90,8 +95,8 @@ void Messages::receive_message(std::string input,
   * so that it adheres to the protocol and can
   * be sent to all clients.
   */
-void Messages::edit(std::set<int> & clients, std::string version, std::string name, std::string contents) {
-	std::string message = "UPDATE";
+void Messages::edit(set<int> & clients, string version, string name, string contents) {
+	string message = "UPDATE";
 	for(int i = 0; i < 4; i++) {
 		if(i == 1)
 			message.append(version);
@@ -106,7 +111,9 @@ void Messages::edit(std::set<int> & clients, std::string version, std::string na
 		message.append(delimiter);
 	}
 
-	std::cout << "Change: " << message << std::endl;
+	// GREG
+	cout << "Change: " << message << endl;
+	// END GREG
 
 	main_server->send_message(clients, message);
 }
@@ -116,15 +123,17 @@ void Messages::edit(std::set<int> & clients, std::string version, std::string na
   * contents based off the sheet parameter. Sends the
   * contents the the client.
   */
-void Messages::sync(int client, std::map<std::string, std::string> &sheet) {
-	std::string message = "UPDATE";
+void Messages::sync(int client, string version, map<string, string> &sheet) {
+	string message = "UPDATE";
 
-	typedef std::map<std::string, std::string>::iterator it_type;
+	typedef map<string, string>::iterator it_type;
 	for(it_type it = sheet.begin(); it != sheet.end(); it++) {
 		message.append(delimiter);
-		message.append(it->first);
+		message.append(version);	// version
 		message.append(delimiter);
-		message.append(it->second);
+		message.append(it->first);	// cell name
+		message.append(delimiter);
+		message.append(buildString(it->second));	// contents
 	}
 	message.append("\n");
 	
@@ -136,7 +145,7 @@ void Messages::sync(int client, std::map<std::string, std::string> &sheet) {
   * the last change. String is formatted to adhere
   * to the protocol and sent to all clients.
   */
-void Messages::undo(std::set<int> & clients, std::string version, std::string name, std::string contents) {
+void Messages::undo(set<int> & clients, string version, string name, string contents) {
 	edit(clients, version, name, contents);
 }
 
@@ -144,15 +153,15 @@ void Messages::undo(std::set<int> & clients, std::string version, std::string na
   * Sends a message to the client comfirming that 
   * save was successful.
   */
-void Messages::save(std::set<int> & clients) {
+void Messages::save(set<int> & clients) {
 	main_server->send_message(clients, "SAVED\n");
 }
 
 /* 
  * Sends error message to the the client
  */
-void Messages::error(int client, std::string content) {
-	std::string message = "ERROR";
+void Messages::error(int client, string content) {
+	string message = "ERROR";
 	message.append(delimiter);
 	message.append(content);
 	message.append("\n");
@@ -160,7 +169,7 @@ void Messages::error(int client, std::string content) {
 	main_server->send_message_client(message, client);
 }
 
-void Messages::split_edit(std::string message, std::string &version, std::string &name, std::string &contents) {
+void Messages::split_edit(string message, string &version, string &name, string &contents) {
 	size_t index = 0;
 	for(int i = 0; i < 3; i++) {
 		if(i == 0) {
@@ -184,10 +193,10 @@ void Messages::split_edit(std::string message, std::string &version, std::string
   * to the protocol. Returns true/false based on whether
   * it meets the requirement.
   */
-bool Messages::valid_protocol(std::string input){
+bool Messages::valid_protocol(string input){
 	int escCount = delimiter_count(input, delimiter);
 	
-	std::string token;
+	string token;
 	size_t index;
 	
 	// Check for valid messages with [esc] delimiters
@@ -241,48 +250,77 @@ bool Messages::valid_protocol(std::string input){
   * appears in the parameter string input. Returns
   * the count.
   */
-int Messages::delimiter_count(std::string input, std::string delimiter){
+int Messages::delimiter_count(string input, string delimiter){
 	size_t index;
 	int result = 0;
 
 	// Find how many escape characters are in the message
-	while((index = input.find(delimiter)) != std::string::npos){
+	while((index = input.find(delimiter)) != string::npos){
 		input.erase(0, index + delimiter.size());
 		result++;
 	}
 	return result;
 }
 
+/*
+ * Takes the contents of a cell and puts it together in regular format.  For example, if
+ * the contents are a formula delimited by colons, it will put it back to regular format
+ * without the colons.
+ */
+string Messages::buildString(string contents) {
+	if (contents[0] != '=')
+		return contents;
+	string s;
+	vector<string> tokens = GetTokens(contents, ':');
+	for (vector<string>::iterator it = tokens.begin(); it != tokens.end(); ++it)
+		s.append(*it);
+	return s;
+}
+
+vector<string> Messages::GetTokens(const string &formula, char delim) {
+	vector<string> elems;
+	split(formula, delim, elems);
+	return elems;
+}
+
+vector<string> & Messages::split(const string &s, char delim, vector<string> &elems) {
+    stringstream ss(s);
+    string item;
+    while (getline(ss, item, delim))
+        elems.push_back(item);
+    return elems;
+}
+
 /** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
 int main(){
 	Messages *m3 = new Messages();
-	std::string command, message;
+	string command, message;
 	m3->receive_message("INVALID\n", command, message);
-	std::cout << "Command should == INVALID: " << command << std::endl;
-	std::cout << "Message should == Place Holder: " << message << std::endl;
+	cout << "Command should == INVALID: " << command << endl;
+	cout << "Message should == Place Holder: " << message << endl;
 
-	std::string comm = "BOFFIN";
-	std::string cont = "[esc]spreadsheet_name\n";
-	std::string line = comm.append(cont);
+	string comm = "BOFFIN";
+	string cont = "[esc]spreadsheet_name\n";
+	string line = comm.append(cont);
 	Messages *msg = new Messages();
 	command = "";
 	message = "";
     msg->receive_message(line, command, message);
-	std::cout << "Command should be error: " << command << std::endl;
+	cout << "Command should be error: " << command << endl;
 
 	Messages *m1 = new Messages();
 	command = "";
 	message = "";
 	m1->receive_message("ERROR[esc]error_message\n", command, message);
-	std::cout << "Command should be ERROR: " << command << std::endl;
-	std::cout << "Message should be error_message: " << message << std::endl;
+	cout << "Command should be ERROR: " << command << endl;
+	cout << "Message should be error_message: " << message << endl;
     
 	Messages *m2 = new Messages();
 	command = "";
 	message = "";
 	m2->receive_message("ENTER[esc]cell_name[esc]cell_content[esc]spreadsheet_name\n", command, message);
-	std::cout << "ENTER command: " << command << std::endl;
-	std::cout << "Message should have cell names and contents: " << message << std::endl;
+	cout << "ENTER command: " << command << endl;
+	cout << "Message should have cell names and contents: " << message << endl;
 
 	return 0;
 }

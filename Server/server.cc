@@ -33,7 +33,6 @@ void *StartServer(void *arguments) {
 }
 
 
-// TODO: Make a save_spreadsheets method
 int main() {
 	server s;	
 //	pthread_t threads[1];
@@ -75,10 +74,8 @@ void server::send_message_client(string message, int client) {
 }
 
 void server::send_message(set<int> & client, string message) {
-	for (set<int>::iterator it = client.begin(); it != client.end(); ++it) {
+	for (set<int>::iterator it = client.begin(); it != client.end(); ++it)
 		server_send(*it, message);
-		cout << "Client: " << *it << endl;
-	}
 }
 
 /*
@@ -97,6 +94,7 @@ void server::message_received(int client, string input) {
 		// Create spreadsheet and send it's
 		// contents to the client
 		if(message == password){
+			cout << "Client " << client << " authenticated." << endl;
 			filelist = "FILELIST";
 			filelist.append(delimiter);
 			filelist.append( get_files(true) );
@@ -124,12 +122,6 @@ void server::message_received(int client, string input) {
 			// and add it to the list of spreadsheets
 			const char * cstr = message.c_str(); 
 			
-			/* DELETE ONCE PROGRAM SUCCESSFULLY COMPILES
-			spreadsheet *ss = new spreadsheet(cstr, m);
-			char *cstr = new char[message.length() + 1];
-			strcpy(cstr, message.c_str());
-			*/
-		
 			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
 			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
@@ -145,7 +137,6 @@ void server::message_received(int client, string input) {
 			// map and client to the spreadsheet
 			const char * cstr = message.c_str(); 
 			
-			//spreadsheet *ss = new spreadsheet(cstr, m);
 			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
 			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
