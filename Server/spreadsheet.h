@@ -30,7 +30,6 @@ class spreadsheet {
 		std::vector<std::string> GetTokens(const std::string &formula, char delim);
 		std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems);
 		std::vector<std::string> GetVariables(std::string formula);
-		int GetCellsToRecalculate(std::set<std::string> names);
 		void remove_dependency(std::string name);
 		bool SetCellContents(std::string, std::string);	// Sets the contents of the cell to the contents
 
