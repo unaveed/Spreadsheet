@@ -9,8 +9,10 @@ CCFILES=server.cc\
 
 LIBS=	-pthread
 
+TEMP = /usr/local/lib/libboost_*.a -I/usr/local/include/
+
 all:
-	g++ -o server $(CCFILES) $(LIBS)
+	g++ -o server $(CCFILES) $(LIBS) $(TEMP)
 
 clean:
 	rm server

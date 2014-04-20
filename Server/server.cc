@@ -22,6 +22,7 @@ server::server() {
 	clients = new set<int>;
 	spreadsheets = new map<string, spreadsheet* >;
 	clientSpreadsheets = new map<int, string>;
+	m = new Messages();
 }
 
 server::~server() {
@@ -60,8 +61,6 @@ void server::send_message(set<int> & client, string message) {
 void server::message_received(int client, string input) {
 	cout << input << endl;
 	string command, message;
-	
-	Messages *m = new Messages(*this);
 	m->receive_message(input, command, message);
 
 	string filelist;
@@ -71,6 +70,7 @@ void server::message_received(int client, string input) {
 		// Create spreadsheet and send it's
 		// contents to the client
 		if(message == password){
+			cout << "Valid password received." << endl;
 			filelist = "FILELIST\e";
 			filelist.append( get_files() );
 		
@@ -97,7 +97,7 @@ void server::message_received(int client, string input) {
 			char *cstr = new char[message.length() + 1];
 			strcpy(cstr, message.c_str());
 		
-			spreadsheet *ss = new spreadsheet(cstr);
+			spreadsheet *ss = new spreadsheet(cstr, new Messages);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -111,7 +111,7 @@ void server::message_received(int client, string input) {
 			char *cstr = new char[message.length() + 1];
 			strcpy(cstr, message.c_str());
 			
-			spreadsheet *ss = new spreadsheet(cstr);
+			spreadsheet *ss = new spreadsheet(cstr, new Messages);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -119,7 +119,7 @@ void server::message_received(int client, string input) {
 		else 
 			send_message_client("ERROR\eFile does not exist\n", client);
 	}
-	else 
+	else
 		execute_command(client, command, message);
 }
 
