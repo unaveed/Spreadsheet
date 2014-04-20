@@ -53,7 +53,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	stringstream ss;
 	ss << version;
 
-	message->edit(clients, ss.str(), name, contents);
+	message->edit(*clients, ss.str(), name, contents);
 }
 
 /*
@@ -72,7 +72,7 @@ void spreadsheet::undo() {
 		stringstream ss;
 		ss << version;
 
-		message->undo(clients, version, name, contents);
+		message->undo(*clients, ss.str(), name, contents);
 	}
 }
 
@@ -97,7 +97,7 @@ void spreadsheet::save() {
 }
 
 void spreadsheet::sync(int client) {
-	message->sync(clients, cells);
+	message->sync(client, *cells);
 }
 
 /*
