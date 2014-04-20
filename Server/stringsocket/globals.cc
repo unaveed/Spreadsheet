@@ -7,7 +7,7 @@
 
 char * PORT = "12345"; // port numbers 1-1024 are probably reserved by your OS
 int MAXLEN = 1024;   // Max lenhgt of a message.
-int MAXFD = 7;       // Maximum file descriptors to use. Equals maximum clients.
+int MAXFD = 20;       // Maximum file descriptors to use. Equals maximum clients.
 int BACKLOG = 5;     // Number of connections that can wait in que before they be accepted
 
 volatile fd_set the_state;

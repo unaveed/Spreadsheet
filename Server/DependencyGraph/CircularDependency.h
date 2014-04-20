@@ -1,8 +1,7 @@
 #include "DependencyGraph.h"
 #include <string>
 
-class CircularDependency
-{
+class CircularDependency {
 public:
 	CircularDependency(DependencyGraph* DG);
 	~CircularDependency(void);

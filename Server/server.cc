@@ -82,8 +82,6 @@ void server::send_message(set<int> & client, string message) {
  */
 void server::message_received(int client, string input) {
 	string command, message;
-	
-	Messages *m = new Messages(*this);
 	m->receive_message(input, command, message);
 
 	string filelist;
@@ -96,6 +94,9 @@ void server::message_received(int client, string input) {
 			filelist = "FILELIST";
 			filelist.append(delimiter);
 			filelist.append( get_files(true) );
+			cout << "Valid password received." << endl;
+			filelist = "FILELIST\e";
+			filelist.append( get_files() );
 		
 			// Send list of files to the client
 			send_message_client(filelist, client);
@@ -120,6 +121,10 @@ void server::message_received(int client, string input) {
 			const char * cstr = message.c_str(); 
 
 			spreadsheet *ss = new spreadsheet(cstr, m);
+			char *cstr = new char[message.length() + 1];
+			strcpy(cstr, message.c_str());
+		
+			spreadsheet *ss = new spreadsheet(cstr, new Messages);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -134,6 +139,7 @@ void server::message_received(int client, string input) {
 			const char * cstr = message.c_str(); 
 			
 			spreadsheet *ss = new spreadsheet(cstr, m);
+			spreadsheet *ss = new spreadsheet(cstr, new Messages);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -141,7 +147,7 @@ void server::message_received(int client, string input) {
 		else 
 			send_message_client("ERROR\eFile does not exist\n", client);
 	}
-	else 
+	else
 		execute_command(client, command, message);
 }
 

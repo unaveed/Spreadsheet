@@ -218,6 +218,8 @@ void mainloop(int server_fd) {
 			// Add client to the list of clients
 			main_server->add_client(rfd);
 	
+			//main_server->add_client(rfd);
+
             if (rfd > MAXFD) {
                 cout << "To many clients trying to connect." << endl;
                 close(rfd);

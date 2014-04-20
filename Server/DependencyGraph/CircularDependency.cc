@@ -5,19 +5,15 @@
 #include <vector>
 #include <exception>
 
-CircularDependency::CircularDependency(DependencyGraph* DG)
-{
+CircularDependency::CircularDependency(DependencyGraph* DG) {
 	dg = DG;
 }
 
-CircularDependency::~CircularDependency(void)
-{
+CircularDependency::~CircularDependency(void) {
 }
 
-class myexception: public std::exception
-{
-	virtual const char* CircDep() const throw()
-	{
+class myexception: public std::exception {
+	virtual const char* CircDep() const throw() {
 		return "Circular Dependency Encounterd";
 	}
 } CircularException;
@@ -40,7 +36,6 @@ class myexception: public std::exception
 /// The direct dependents of A1 are B1 and C1
 /// </summary>        CircularDependency
 std::set<std::string>* CircularDependency::GetDirectDependents(std::string name) {
-
 	return &dg->GetDependees(name);
 }
 
@@ -69,8 +64,7 @@ std::set<std::string>* CircularDependency::GetDirectDependents(std::string name)
 /// Please note that this method depends on the abstract GetDirectDependents.
 /// It won't work until GetDirectDependents is implemented correctly.
 /// </summary>
-std::vector<std::string>* CircularDependency::GetCellsToRecalculate(std::set<std::string>* names)
-{
+std::vector<std::string>* CircularDependency::GetCellsToRecalculate(std::set<std::string>* names) {
 	//LinkedList<String> changed = new LinkedList<String>();
 	std::vector<std::string> *changed = new std::vector<std::string>;
 
@@ -78,11 +72,9 @@ std::vector<std::string>* CircularDependency::GetCellsToRecalculate(std::set<std
 	std::set<std::string> *visited = new std::set<std::string>;
 
 	//foreach (String name in names)
-	for(std::set<std::string>::iterator name = names->begin(); name != names->end(); ++name)
-	{
+	for(std::set<std::string>::iterator name = names->begin(); name != names->end(); ++name) {
 		//if (!visited.Contains(name))
-		if(visited->find(*name) == visited->end)
-		{
+		if(visited->find(*name) == visited->end) {
 			Visit(*name, *name, visited, changed);
 		}
 	}
@@ -93,21 +85,16 @@ std::vector<std::string>* CircularDependency::GetCellsToRecalculate(std::set<std
 /// <summary>
 /// A helper for the GetCellsToRecalculate method.
 /// </summary>
-void CircularDependency::Visit(std::string start, std::string name, std::set<std::string>* visited, std::vector<std::string>* changed)
-{
+void CircularDependency::Visit(std::string start, std::string name, std::set<std::string>* visited, std::vector<std::string>* changed) {
 	visited->insert(name);
 
 	std::set<std::string>* DirectDependents = GetDirectDependents(name);
 
-	for(std::set<std::string>::iterator n = DirectDependents->begin(); n != DirectDependents->end(); ++n)
-	{
-
-		if(*n == start)
-		{
+	for(std::set<std::string>::iterator n = DirectDependents->begin(); n != DirectDependents->end(); ++n) {
+		if(*n == start) {
 			throw CircularException;
 		}
-		else if(visited->find(*n) == visited->end())
-		{
+		else if(visited->find(*n) == visited->end()) {
 			Visit(start, *n, visited, changed);
 		}
 	}
