@@ -93,7 +93,7 @@ void spreadsheet::undo(){
 	}
 }
 
-void spreadsheet::make_change(std::string) {
+void spreadsheet::make_change(int client, std::string a, std::string b, std::string c) {
 	version++;
 }
 

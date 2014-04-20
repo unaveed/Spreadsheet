@@ -21,7 +21,7 @@ class spreadsheet {
 	public:
 		spreadsheet(const char *);	// Takes the name of the file to open
 		~spreadsheet();
-		void make_change(std::string);	// Make change to spreadsheet, making all of the necessary checks
+		void make_change(int, std::string, std::string, std::string);	// Make change to spreadsheet, making all of the necessary checks
 		void add_client(int);			// Add a client to the working spreadsheet
 		void remove_client(int);		// Remove a client from the working spreadsheet
 		int get_version();				// Returns the spreadsheet version

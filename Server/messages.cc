@@ -115,7 +115,7 @@ void Messages::edit(std::set<int> & clients, std::string version, std::string na
   * contents based off the sheet parameter. Sends the
   * contents the the client.
   */
-void Messages::sync(std::set<int> & clients, std::map<std::string, std::string> &sheet) {
+void Messages::sync(int client, std::map<std::string, std::string> &sheet) {
 	std::string message = "UPDATE";
 
 	typedef std::map<std::string, std::string>::iterator it_type;
@@ -127,7 +127,7 @@ void Messages::sync(std::set<int> & clients, std::map<std::string, std::string> 
 	}
 	message.append("\n");
 	
-	main_server.send_message(clients, message);
+	main_server.send_message_client(message, client);
 }
 
  /*
@@ -157,6 +157,25 @@ void Messages::error(std::set<int> & clients, std::string content) {
 	message.append("\n");
 
 	main_server.send_message(clients, message);
+}
+
+void Messages::split_edit(std::string message, std::string &version, std::string &name, std::string &contents) {
+	size_t index = 0;
+	for(int i = 0; i < 3; i++) {
+		if(i == 0) {
+			index = message.find(delimiter);
+			version = message.substr(0, index);
+			message.erase(0, index + delimiter.length());
+		}
+		if(i == 1) {
+			index = message.find(delimiter);
+			name = message.substr(0, index);
+			message.erase(0, index + delimiter.length());
+		}
+		else 
+			contents = message;	
+	}
+
 }
 
  /* 

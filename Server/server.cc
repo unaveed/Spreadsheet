@@ -9,17 +9,42 @@
 #include "messages.h"
 #include <string>
 #include <cstring>
+#include <pthread.h>
 
 using namespace std;
-//TODO: Make an autosave
-// TODO: Make a save_spreadsheets method
-int main(int argc, char * argv[]) {
-	server s;
-	s.run_server();
 
-	if(argc > 1) {
-				
+void *StartServer(void *arguments) {
+	string d = *((string *) &arguments);
+
+	string input;
+	getline(cin, input);	
+
+	if(input == "exit") {
+		cout << "It worked" << endl;
+		pthread_exit(NULL);
 	}
+	else { 
+		cout << "You entered: " << input << endl;	
+		StartServer(&arguments);
+	}
+
+}
+
+
+// TODO: Make a save_spreadsheets method
+int main() {
+	server s;	
+//	pthread_t threads[1];
+	
+	// Start a new thread to listen for input
+	//int rc = pthread_create(&threads[0], NULL, StartServer, (void *) &check);
+	//pthread_create(&threads[0], NULL, StartStuff, (void *) &s);
+	
+	s.run_server();
+	
+
+	// Close thread
+//	pthread_exit(NULL);
 }
 
 server::server() {
@@ -30,14 +55,14 @@ server::server() {
 	clientSpreadsheets = new map<int, string>;
 }
 
+void server::run_server() {
+	start(*this);
+}
+
 server::~server() {
 	delete clients;
 	delete spreadsheets;
 	delete clientSpreadsheets;
-}
-
-void server::run_server() {
-	start(*this);
 }
 
 /*
@@ -93,8 +118,8 @@ void server::message_received(int client, string input) {
 			// Create a new spreadsheet, add client to spreadsheet
 			// and add it to the list of spreadsheets
 			const char * cstr = message.c_str(); 
-		
-			spreadsheet *ss = new spreadsheet(cstr);
+
+			spreadsheet *ss = new spreadsheet(cstr, m);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -108,7 +133,7 @@ void server::message_received(int client, string input) {
 			// map and client to the spreadsheet
 			const char * cstr = message.c_str(); 
 			
-			spreadsheet *ss = new spreadsheet(cstr);
+			spreadsheet *ss = new spreadsheet(cstr, m);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -196,11 +221,15 @@ void server::remove_client(int client) {
  * based on the command. 
  */
 void server::execute_command(int client, string command, string message) {
+	Messages *m = new Messages(*this);	
 	string sheet = get_spreadsheet(client);
 	spreadsheet *s = (*spreadsheets)[sheet];
 	
-	if(command == "ENTER") 
-		s->make_change(message);
+	if(command == "ENTER") {
+		string cellName, contents, version;
+		m->split_edit(message, version, cellName, contents);
+		s->make_change(client, cellName, contents, version);
+	}
 	if(command == "UNDO") 
 		s->undo();	
 	if(command == "SAVE") 
