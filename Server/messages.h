@@ -8,6 +8,7 @@
 
 #include "server.h"
 
+
 class Messages {
 	private:
 		std::string delimiter;

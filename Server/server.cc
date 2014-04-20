@@ -111,9 +111,10 @@ void server::message_received(int client, string input) {
 	}
 	else if(command == "CREATE") {
 		filelist = get_files(false);
-
+		
+		size_t found = filelist.find(message);
 		// File with the given name already exists
-		if(filelist.find(message) >= 0) 
+		if(found != std::string::npos) 
 			send_message_client("ERROR\eFile already exists\n", client);
 		
 		else {
