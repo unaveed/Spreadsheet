@@ -119,12 +119,14 @@ void server::message_received(int client, string input) {
 			// Create a new spreadsheet, add client to spreadsheet
 			// and add it to the list of spreadsheets
 			const char * cstr = message.c_str(); 
-
+			
+			/* DELETE ONCE PROGRAM SUCCESSFULLY COMPILES
 			spreadsheet *ss = new spreadsheet(cstr, m);
 			char *cstr = new char[message.length() + 1];
 			strcpy(cstr, message.c_str());
+			*/
 		
-			spreadsheet *ss = new spreadsheet(cstr, new Messages);
+			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -138,8 +140,8 @@ void server::message_received(int client, string input) {
 			// map and client to the spreadsheet
 			const char * cstr = message.c_str(); 
 			
-			spreadsheet *ss = new spreadsheet(cstr, m);
-			spreadsheet *ss = new spreadsheet(cstr, new Messages);
+			//spreadsheet *ss = new spreadsheet(cstr, m);
+			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -241,7 +243,7 @@ void server::execute_command(int client, string command, string message) {
 	if(command == "SAVE") 
 		s->save();	
 	if(command == "RESYNC") {
-		// TODO: resync with spreadsheet
+		s->sync(client);	
 	}
 	(*spreadsheets)[sheet] = s;
 }
