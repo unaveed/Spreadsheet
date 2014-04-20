@@ -24,10 +24,6 @@ class spreadsheet {
 		std::stack<std::string> *undo_stack_cells;			// All changes that have been made (cell contents)
 		int version;		// Version of the spreadsheet
 		const char * filename;	// Current name of the file
-	public:
-		spreadsheet(const char *);	// Takes the name of the file to open
-		~spreadsheet();
-		void make_change(int, std::string, std::string, std::string);	// Make change to spreadsheet, making all of the necessary checks
 		Messages * message;	// Object used to communicate with the clients
 		DependencyGraph * dg;	// Dependency graph used to detect circular dependencies
 
@@ -37,7 +33,6 @@ class spreadsheet {
 		int GetCellsToRecalculate(std::set<std::string> names);
 		void remove_dependency(std::string name);
 		bool SetCellContents(std::string, std::string);	// Sets the contents of the cell to the contents
-		std::string GetCellContents(std::string);	// Returns the cell contents of the given cell
 
 	public:
 		spreadsheet(const char *, Messages *);	// Takes the name of the file to open
