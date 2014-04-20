@@ -7,8 +7,11 @@
 
 #include <set>
 #include <map>
-#include "spreadsheet.h"
-#include "messages.h"
+//#include "spreadsheet.h"
+//#include "messages.h"
+
+class Messages;
+class spreadsheet;
 
 
 class server {
