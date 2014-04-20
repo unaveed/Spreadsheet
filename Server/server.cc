@@ -131,6 +131,7 @@ void server::message_received(int client, string input) {
 			*/
 		
 			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
+			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
@@ -146,6 +147,7 @@ void server::message_received(int client, string input) {
 			
 			//spreadsheet *ss = new spreadsheet(cstr, m);
 			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
+			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
 		}
