@@ -11,6 +11,7 @@
 
 #include "server.h"
 #include "messages.h"
+#include "spreadsheet.h"
 
 using namespace std;
 
