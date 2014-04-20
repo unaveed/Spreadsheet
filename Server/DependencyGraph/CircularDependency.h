@@ -1,6 +1,10 @@
 #include "DependencyGraph.h"
 #include <string>
+#include <vector>
+#include <set>
 
+#ifndef CIRCULARDEPENDENCY
+#define CIRCULARDEPENDENCY
 class CircularDependency {
 public:
 	CircularDependency(DependencyGraph* DG);
@@ -14,4 +18,4 @@ public:
 private:
 	DependencyGraph *dg;
 };
-
+#endif

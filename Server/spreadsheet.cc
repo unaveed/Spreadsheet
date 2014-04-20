@@ -163,10 +163,6 @@ void spreadsheet::remove_dependency(string name) {
 	}
 }
 
-string spreadsheet::GetCellContents(string name) {
-	return (*cells)[name];
-}
-
 /*
  * Takes a formula and breaks it into a list of cells.  Each token in the formula must
  * have a colon in between every other token.

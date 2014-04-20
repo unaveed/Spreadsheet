@@ -150,7 +150,7 @@ void Messages::save(std::set<int> & clients) {
 /* 
  * Sends error message to the the client
  */
-void Messages::error(client, std::string content) {
+void Messages::error(int client, std::string content) {
 	std::string message = "ERROR";
 	message.append(delimiter);
 	message.append(content);

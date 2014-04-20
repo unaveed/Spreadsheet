@@ -1,5 +1,5 @@
-#include "CircularDependency.h"
 #include "DependencyGraph.h"
+#include "CircularDependency.h"
 #include <set>
 #include <string>
 #include <vector>
@@ -12,11 +12,13 @@ CircularDependency::CircularDependency(DependencyGraph* DG) {
 CircularDependency::~CircularDependency(void) {
 }
 
+/*
 class myexception: public std::exception {
 	virtual const char* CircDep() const throw() {
-		return "Circular Dependency Encounterd";
+		return "Circular Dependency Encountered";
 	}
 } CircularException;
+*/
 
 /// <summary>
 /// If name is null, throws an ArgumentNullException.
@@ -74,7 +76,7 @@ std::vector<std::string>* CircularDependency::GetCellsToRecalculate(std::set<std
 	//foreach (String name in names)
 	for(std::set<std::string>::iterator name = names->begin(); name != names->end(); ++name) {
 		//if (!visited.Contains(name))
-		if(visited->find(*name) == visited->end) {
+		if(visited->find(*name) != visited->end()) {
 			Visit(*name, *name, visited, changed);
 		}
 	}
@@ -92,7 +94,8 @@ void CircularDependency::Visit(std::string start, std::string name, std::set<std
 
 	for(std::set<std::string>::iterator n = DirectDependents->begin(); n != DirectDependents->end(); ++n) {
 		if(*n == start) {
-			throw CircularException;
+			//throw CircularException;
+			throw -1;
 		}
 		else if(visited->find(*n) == visited->end()) {
 			Visit(start, *n, visited, changed);
