@@ -150,13 +150,13 @@ void Messages::save(std::set<int> & clients) {
 /* 
  * Sends error message to the the client
  */
-void Messages::error(std::set<int> & clients, std::string content) {
+void Messages::error(client, std::string content) {
 	std::string message = "ERROR";
 	message.append(delimiter);
 	message.append(content);
 	message.append("\n");
 
-	main_server.send_message(clients, message);
+	main_server.send_message_client(message, client);
 }
 
 void Messages::split_edit(std::string message, std::string &version, std::string &name, std::string &contents) {
