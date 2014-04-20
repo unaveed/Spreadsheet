@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <set>
+
 #include "server.h"
 
 class Messages {

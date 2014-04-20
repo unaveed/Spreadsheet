@@ -4,12 +4,13 @@
 
 #include <iostream>
 #include <set>
-#include "server.h"
 #include <dirent.h>
-#include "messages.h"
 #include <string>
 #include <cstring>
 #include <pthread.h>
+
+#include "server.h"
+#include "messages.h"
 
 using namespace std;
 
