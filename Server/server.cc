@@ -54,7 +54,6 @@ server::server() {
 	clients = new set<int>;
 	spreadsheets = new map<string, spreadsheet* >;
 	clientSpreadsheets = new map<int, string>;
-	m = new Messages(*this);
 }
 
 void server::run_server() {
@@ -84,6 +83,8 @@ void server::send_message(set<int> & client, string message) {
  */
 void server::message_received(int client, string input) {
 	string command, message;
+	
+	Messages *m = new Messages(*this);
 	m->receive_message(input, command, message);
 
 	string filelist;
@@ -228,6 +229,7 @@ void server::remove_client(int client) {
  * based on the command. 
  */
 void server::execute_command(int client, string command, string message) {
+	Messages *m = new Messages(*this);	
 	string sheet = get_spreadsheet(client);
 	spreadsheet *s = (*spreadsheets)[sheet];
 	
