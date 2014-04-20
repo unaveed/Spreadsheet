@@ -2,13 +2,14 @@
  * Written by Greg Anderson, Umair Naveed, Jesus Zarate, and Celeste Hollenbeck.
  */
 
+#ifndef SERVER_H
+#define SERVER_H
+
 #include <set>
 #include <map>
 #include "spreadsheet.h"
 #include "messages.h"
 
-#ifndef SERVER_H
-#define SERVER_H
 
 class server {
 	private:

@@ -4,6 +4,7 @@
 
 #ifndef SPREADSHEET_H
 #define SPREADSHEET_H
+
 #include <map>
 #include <stack>
 #include <vector>
