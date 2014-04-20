@@ -5,7 +5,9 @@ CCFILES=server.cc\
 		spreadsheet.cc\
 		stringsocket/globals.cc\
 		stringsocket/stringsocket.cc\
-		DependencyGraph/DependencyGraph.cc
+		DependencyGraph/DependencyGraph.cc\
+		DependencyGraph/CircularDependency.cc
+
 
 LIBS=	-pthread
 

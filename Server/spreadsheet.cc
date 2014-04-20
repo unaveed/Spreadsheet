@@ -14,7 +14,6 @@
 
 using namespace std;
 
-spreadsheet::spreadsheet(const char * _filename) {
 spreadsheet::spreadsheet(const char * _filename, Messages * _message) {
 	clients    = new set<int>;
 	cells      = new map<string, string>;
@@ -101,8 +100,6 @@ void spreadsheet::sync(int client) {
 	message->sync(clients, cells);
 }
 
-		stringstream ss;
-		ss << version;
 /*
  * Adds a client to the list of clients.
  */
@@ -155,8 +152,6 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 	return true;
 }
 
-void spreadsheet::make_change(int client, std::string a, std::string b, std::string c) {
-	version++;
 /*
  * Removes all dependencies attached to this cell.
  */
