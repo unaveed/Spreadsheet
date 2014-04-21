@@ -684,7 +684,10 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
 
             List<string> tokens = new List<string>(GetTokens(CellCont));
 
-            CellCont = makeProtocolContent(tokens);
+            if (CellCont[0].Equals('='))
+            {
+                CellCont = makeProtocolContent(tokens);
+            }
 
             //Send the edit to the server
             //ENTER[esc]version_number[esc]cell_name[esc]cell_content\n 
