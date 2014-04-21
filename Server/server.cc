@@ -75,8 +75,10 @@ void server::send_message_client(string message, int client) {
 }
 
 void server::send_message(set<int> & client, string message) {
-	for (set<int>::iterator it = client.begin(); it != client.end(); ++it)
+	for (set<int>::iterator it = client.begin(); it != client.end(); ++it) {
 		server_send(*it, message);
+		cout << "Client: " << *it << endl;
+	}
 }
 
 /*
@@ -85,7 +87,6 @@ void server::send_message(set<int> & client, string message) {
 void server::message_received(int client, string input) {
 	string command, message;
 	
-	cout << "Incoming message: " << input << endl;
 	Messages *m = new Messages(*this);
 	m->receive_message(input, command, message);
 
@@ -219,7 +220,6 @@ string server::get_files(bool clean) {
 		}
 		closedir(d);
 		files.append("\n");
-		cout << files << endl;
 	}
 	return files; 
 }
@@ -244,7 +244,7 @@ void server::remove_client(int client) {
  * based on the command. 
  */
 void server::execute_command(int client, string command, string message) {
-	cout << "Execute command is: " << command << endl;	
+	cout << "Executed command is: " << command << endl;	
 	
 	Messages *m = new Messages(*this);	
 	string sheet = get_spreadsheet(client);

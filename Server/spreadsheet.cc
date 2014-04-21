@@ -43,7 +43,6 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	sv << version;
 	if (sv.str() != vers) {
 		cout << "spreadsheet.cc: make_change: need to sync" << endl;
-		cout << "serverVersion:" << sv.str() << " clientVersion:" << vers << endl;
 	}
 
 	// Check if contents is a formula
@@ -59,9 +58,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	undo_stack_cells->push(name);
 	undo_stack_contents->push(contents);
 
-	// Increment the version (and convert to a string for the message)
 	version++;
-	cout << "spreadsheet.cc: version=" << getVersion() << endl;
 
 	message->edit(*clients, getVersion(), name, buildString(contents));
 }
@@ -108,6 +105,7 @@ string spreadsheet::buildString(string contents) {
  */
 void spreadsheet::add_client(int client) {
 	clients->insert(client);
+	cout << "spreadsheet.cc: clients.size()=" << clients->size() << endl;
 	sync(client);
 }
 
@@ -137,6 +135,7 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 
 	// Store old contents and clear previous dependencies
 	string oldContents = (*cells)[name];
+	(*cells)[name] = contents;
 	if (oldContents != "") {
 		remove_dependency(name);
 	}
@@ -156,7 +155,6 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 		c->GetCellsToRecalculate(temp);
 	}
 	catch (int e) {
-		cout << "spreadsheet.cc: Caught exception" << endl;
 		// Revert to old contents
 
 		// Check if old contents was a formula
