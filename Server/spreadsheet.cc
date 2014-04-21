@@ -43,6 +43,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	sv << version;
 	if (sv.str() != vers) {
 		cout << "spreadsheet.cc: make_change: need to sync" << endl;
+		sync(client);
 	}
 
 	// Check if contents is a formula
@@ -105,7 +106,6 @@ string spreadsheet::buildString(string contents) {
  */
 void spreadsheet::add_client(int client) {
 	clients->insert(client);
-	cout << "spreadsheet.cc: clients.size()=" << clients->size() << endl;
 	sync(client);
 }
 
