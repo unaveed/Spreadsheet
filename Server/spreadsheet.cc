@@ -232,7 +232,7 @@ void spreadsheet::save() {
 		for (map<string, string>::iterator it = cells->begin(); it != cells->end(); ++it) {
 			file << "<cell>\n";
 			file << "<name>\n" << it->first << "\n" << "</name>\n";
-			if (it->second.find("\n") >= 0)
+			if (it->second.find("\n") != string::npos)
 				it->second.erase(it->second.size()-1);
 			file << "<contents>\n" << it->second << "\n" << "</contents>\n";
 			file << "</cell>\n";
