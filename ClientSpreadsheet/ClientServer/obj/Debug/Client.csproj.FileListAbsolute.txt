@@ -1,0 +1,7 @@
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\bin\Debug\ClientServer.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\bin\Debug\ClientServer.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\bin\Debug\StringSocket.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\bin\Debug\StringSocket.xml
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\obj\Debug\ClientServer.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\obj\Debug\ClientServer.pdb

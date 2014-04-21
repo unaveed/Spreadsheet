@@ -1,0 +1,13 @@
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\bin\Debug\AvailableFiles.exe.config
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\bin\Debug\AvailableFiles.exe
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\bin\Debug\AvailableFiles.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\bin\Debug\ClientServer.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\bin\Debug\StringSocket.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\bin\Debug\ClientServer.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\bin\Debug\StringSocket.xml
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.csprojResolveAssemblyReference.cache
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.Form1.resources
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.Properties.Resources.resources
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.csproj.GenerateResource.Cache
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.exe
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.pdb

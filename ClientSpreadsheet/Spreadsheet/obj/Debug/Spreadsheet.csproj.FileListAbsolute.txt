@@ -1,0 +1,10 @@
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\bin\Debug\Spreadsheet.XML
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\bin\Debug\Spreadsheet.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\bin\Debug\Spreadsheet.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\bin\Debug\DependencyGraph.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\bin\Debug\Formula.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\bin\Debug\DependencyGraph.xml
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\bin\Debug\Formula.xml
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\obj\Debug\Spreadsheet.csprojResolveAssemblyReference.cache
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\obj\Debug\Spreadsheet.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadsheet\obj\Debug\Spreadsheet.pdb

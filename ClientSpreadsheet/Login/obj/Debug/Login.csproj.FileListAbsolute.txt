@@ -1,0 +1,15 @@
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\Login.exe.config
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\Login.exe
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\Login.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\AvailableFiles.exe
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\ClientServer.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\StringSocket.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\AvailableFiles.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\ClientServer.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\bin\Debug\StringSocket.xml
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\obj\Debug\Login.csprojResolveAssemblyReference.cache
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\obj\Debug\Login.Form1.resources
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\obj\Debug\Login.Properties.Resources.resources
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\obj\Debug\Login.csproj.GenerateResource.Cache
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\obj\Debug\Login.exe
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Login\obj\Debug\Login.pdb

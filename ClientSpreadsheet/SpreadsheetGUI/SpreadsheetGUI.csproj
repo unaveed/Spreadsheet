@@ -57,6 +57,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hashmap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -83,13 +84,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Spreadsheet\Spreadsheet.csproj">
-      <Project>{56eb475d-a2de-41a1-8206-095089aa8b1b}</Project>
-      <Name>Spreadsheet</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\new-file-icon.png" />
@@ -108,6 +103,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Actions-application-exit-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AvailableFiles\AvailableFiles.csproj">
+      <Project>{0b0085b3-1d6c-4b7f-aae7-23b339ac9b50}</Project>
+      <Name>AvailableFiles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClientServer\Client.csproj">
+      <Project>{e2523481-2bb2-4240-9923-6ac5f0d306e7}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Login\Login.csproj">
+      <Project>{d9a2d558-b0e5-49db-9a71-f5bf825618f0}</Project>
+      <Name>Login</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spreadsheet\Spreadsheet.csproj">
+      <Project>{56eb475d-a2de-41a1-8206-095089aa8b1b}</Project>
+      <Name>Spreadsheet</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

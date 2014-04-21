@@ -1,0 +1,10 @@
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\bin\Debug\Comm.exe.config
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\bin\Debug\Comm.exe
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\bin\Debug\Comm.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\bin\Debug\ClientServer.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\bin\Debug\StringSocket.dll
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\bin\Debug\ClientServer.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\bin\Debug\StringSocket.xml
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\obj\Debug\Comm.exe
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\obj\Debug\Comm.pdb
+C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Comm\obj\Debug\Communication.csprojResolveAssemblyReference.cache

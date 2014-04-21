@@ -5,13 +5,12 @@ using System.Text;
 using SpreadsheetUtilities;
 using System.Text.RegularExpressions;
 using System.Xml;
-using System.Timers;
 
 namespace SS {
     // PARAGRAPHS 2 and 3 modified for PS5.
     /// <summary>
     /// An AbstractSpreadsheet object represents the state of a simple spreadsheet.  A 
-    /// spreadsheet consists of an up-to-but-not-including-infinite number of named cells.
+    /// spreadsheet consists of an infinite number of named cells.
     /// 
     /// A string is a cell name if and only if it consists of one or more letters,
     /// followed by one or more digits AND it satisfies the predicate IsValid.
@@ -58,14 +57,7 @@ namespace SS {
 
         private DependencyGraph dg;				// Maps the dependencies
         private Dictionary<string, Cell> cells;	// Dictionary<name, Cell>
-        // public Dictionary<string, Cell> cells; //=============C test
         private bool changed;					// Keeps track of whether or not the spreadsheet has been changed since last save
-
-        Timer time = new Timer(); // Clock for autosave
-        
-//        private int t = 0; // For debugging
-        private bool named = false; // Whether the file has a name
-        private string fileName = ""; // Keep track of sheet name (for autosave)
 
 		/// <summary>
 		/// Creates a new Spreadsheet object.  This constructor sets the validity function
@@ -84,19 +76,6 @@ namespace SS {
             : base(isValid, normalize, version) {
             dg = new DependencyGraph();
             cells = new Dictionary<string, Cell>();
-            time.Interval = 1000; // Set to 30000 for 30 seconds!!
-            time.Elapsed += new ElapsedEventHandler(time_elapsed);
-            time.Start();
-        }
-
-        /* Saves the file every time the increment on the clock elapses */
-        private void time_elapsed(object sender, ElapsedEventArgs e)
-        {
-            //t += 1;  // This was just for debugging
-            if (named.Equals(true))
-            {
-                this.Save(fileName); // Save the file
-            }
         }
   
 		/// <summary>
@@ -106,13 +85,8 @@ namespace SS {
 		/// </summary>
         public Spreadsheet(string file, Func<string, bool> isValid, Func<string, string> normalize, string version)
             : this(isValid, normalize, version) {
-
-            fileName = file;
-            named = true; // Spreadsheet has a name
-
 			try {
-				using (XmlReader reader = XmlReader.Create(file)) 
-                {
+				using (XmlReader reader = XmlReader.Create(file)) {
 					string name = null;
 					string contents = null;
 					while (reader.Read()) {
@@ -336,7 +310,6 @@ namespace SS {
                     else if (o is double) {
                         SetCellContents(name, Convert.ToDouble(o));
                     }
-
                 }
                 else
                     SetCellContents(name, "");
@@ -607,6 +580,16 @@ namespace SS {
             }
         }
 
+         public String NormalizeNValidate(String contents){
+             
+             if (contents.StartsWith("=")) {
+                 contents.Remove(0);
+                 new Formula(contents.Substring(1), Normalize, IsValid);
+                 contents = Normalize(contents);
+             }
+             return contents;
+        }
+
     }
 
 	/// <summary>
@@ -653,5 +636,6 @@ namespace SS {
             return;
         }
 
+       
     }
 }

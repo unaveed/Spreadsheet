@@ -43,11 +43,13 @@ namespace SpreadsheetGUI {
             form.FormClosed += (o, e) => { if (--formCount <= 0) ExitThread(); };
 
             // Run the form
+            if (form.IsDisposed) {
+                return;
+            }
             form.Show();
         }
 
     }
-
 
     static class Program {
         /// <summary>

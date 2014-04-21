@@ -11,20 +11,20 @@ namespace SpreadsheetUnitTests {
     [TestClass]
     public class MyUnitTests {
 
-  /*      [TestMethod]
+        [TestMethod]
         public void NewTest1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("A1", "3");
-            currentSheet.SetContentsOfCell("B1", "=A1");
-            Assert.AreEqual(currentSheet.GetCellValue("B1"), 3.0);
-            currentSheet.SetContentsOfCell("A1", "");
-            Assert.IsTrue(currentSheet.GetCellValue("B1") is FormulaError);
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("A1", "3");
+            sheet.SetContentsOfCell("B1", "=A1");
+            Assert.AreEqual(sheet.GetCellValue("B1"), 3.0);
+            sheet.SetContentsOfCell("A1", "");
+            Assert.IsTrue(sheet.GetCellValue("B1") is FormulaError);
         }
 
 
         /***************************** GRADING TESTS *********************************/
         // Simple tests that return FormulaErrors
-     /*   [TestMethod()]
+        [TestMethod()]
         public void Test16() {
             Formula f = new Formula("2+X1");
             Assert.IsInstanceOfType(f.Evaluate(s => { throw new ArgumentException("Unknown variable"); }), typeof(FormulaError));
@@ -350,117 +350,117 @@ namespace SpreadsheetUnitTests {
 
         /****************************** TESTS PS5 CODE *******************************/
 
-    /*    [TestMethod]
+        [TestMethod]
         public void TestSave1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "12.03");
-            currentSheet.Save("test1.xml");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "12.03");
+            sheet.Save("test1.xml");
         }
 
         [TestMethod]
         public void TestSave2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "12.03");
-            currentSheet.SetContentsOfCell("b2", "hello world!");
-            currentSheet.SetContentsOfCell("c3", "=4+17-3");
-            currentSheet.SetContentsOfCell("d4", "=x3");
-            currentSheet.Save("test2.xml");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "12.03");
+            sheet.SetContentsOfCell("b2", "hello world!");
+            sheet.SetContentsOfCell("c3", "=4+17-3");
+            sheet.SetContentsOfCell("d4", "=x3");
+            sheet.Save("test2.xml");
         }
 
         [TestMethod]
         public void TestRead1() {
             string path = "read1.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "1.5");
-            currentSheet.SetContentsOfCell("b2", "2.6");
-            currentSheet.SetContentsOfCell("c3", "3.7");
-            currentSheet.SetContentsOfCell("d4", "4.8");
-            currentSheet.SetContentsOfCell("e5", "5.9");
-            currentSheet.Save(path);
-            currentSheet = new SS.Spreadsheet(path, x => true, s => s, "default");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "1.5");
+            sheet.SetContentsOfCell("b2", "2.6");
+            sheet.SetContentsOfCell("c3", "3.7");
+            sheet.SetContentsOfCell("d4", "4.8");
+            sheet.SetContentsOfCell("e5", "5.9");
+            sheet.Save(path);
+            sheet = new Spreadsheet(path, x => true, s => s, "default");
         }
 
         [TestMethod]
         public void TestRead2() {
             string path = "read2.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "1.5");
-            currentSheet.SetContentsOfCell("b2", "2.6");
-            currentSheet.SetContentsOfCell("c3", "3.7");
-            currentSheet.SetContentsOfCell("d4", "4.8");
-            currentSheet.SetContentsOfCell("e5", "5.9");
-            currentSheet.Save(path);
-            HashSet<string> original = (HashSet<string>)currentSheet.GetNamesOfAllNonemptyCells();
-            currentSheet = new SS.Spreadsheet(path, x => true, s => s, "default");
-            HashSet<string> output = (HashSet<string>)currentSheet.GetNamesOfAllNonemptyCells();
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "1.5");
+            sheet.SetContentsOfCell("b2", "2.6");
+            sheet.SetContentsOfCell("c3", "3.7");
+            sheet.SetContentsOfCell("d4", "4.8");
+            sheet.SetContentsOfCell("e5", "5.9");
+            sheet.Save(path);
+            HashSet<string> original = (HashSet<string>)sheet.GetNamesOfAllNonemptyCells();
+            sheet = new Spreadsheet(path, x => true, s => s, "default");
+            HashSet<string> output = (HashSet<string>)sheet.GetNamesOfAllNonemptyCells();
             Assert.IsTrue(original.SetEquals(output));
         }
 
         [TestMethod]
         public void TestRead3() {
             string path = "read3.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "=1.5+4");
-            currentSheet.SetContentsOfCell("b2", "=a2-2.6");
-            currentSheet.SetContentsOfCell("c3", "=3.7*e5");
-            currentSheet.SetContentsOfCell("d4", "hil");
-            currentSheet.SetContentsOfCell("e5", "5.9");
-            currentSheet.Save(path);
-            HashSet<string> original = (HashSet<string>)currentSheet.GetNamesOfAllNonemptyCells();
-            SS.Spreadsheet sheet2 = new SS.Spreadsheet(path, x => true, s => s, "default");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "=1.5+4");
+            sheet.SetContentsOfCell("b2", "=a2-2.6");
+            sheet.SetContentsOfCell("c3", "=3.7*e5");
+            sheet.SetContentsOfCell("d4", "hil");
+            sheet.SetContentsOfCell("e5", "5.9");
+            sheet.Save(path);
+            HashSet<string> original = (HashSet<string>)sheet.GetNamesOfAllNonemptyCells();
+            Spreadsheet sheet2 = new Spreadsheet(path, x => true, s => s, "default");
             foreach (string s in original) {
-                Assert.IsTrue(currentSheet.GetCellContents(s).Equals(sheet2.GetCellContents(s)));
-                Assert.IsTrue(currentSheet.GetCellValue(s).Equals(sheet2.GetCellValue(s)));
+                Assert.IsTrue(sheet.GetCellContents(s).Equals(sheet2.GetCellContents(s)));
+                Assert.IsTrue(sheet.GetCellValue(s).Equals(sheet2.GetCellValue(s)));
             }
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestGetCellValue1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
+            Spreadsheet sheet = new Spreadsheet();
             string s = null;
-            currentSheet.GetCellValue(s);
+            sheet.GetCellValue(s);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestGetCellValue2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.GetCellValue("84");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.GetCellValue("84");
         }
 
         [TestMethod]
         public void TestSavedVersion1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "hello");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "hello");
             string path = "savedVersion1.xml";
-            currentSheet.Save(path);
+            sheet.Save(path);
             string version = "default";
-            Assert.AreEqual(version, currentSheet.GetSavedVersion(path));
+            Assert.AreEqual(version, sheet.GetSavedVersion(path));
         }
 
         [TestMethod]
         public void TestSavedVersion2() {
             string version = "10.2091.23";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet(x => true, s => s, version);
-            currentSheet.SetContentsOfCell("a1", "hello");
+            Spreadsheet sheet = new Spreadsheet(x => true, s => s, version);
+            sheet.SetContentsOfCell("a1", "hello");
             string path = "savedVersion2.xml";
-            currentSheet.Save(path);
-            Assert.AreEqual(version, currentSheet.GetSavedVersion(path));
+            sheet.Save(path);
+            Assert.AreEqual(version, sheet.GetSavedVersion(path));
         }
 
         [TestMethod]
         [ExpectedException(typeof(SpreadsheetReadWriteException))]
         public void TestSavedVersion3() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.GetSavedVersion("thisisnotafile.txt");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.GetSavedVersion("thisisnotafile.txt");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestSetCellContents1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
 
             obj.Invoke("SetCellContents", null, 10.0);
         }
@@ -468,8 +468,8 @@ namespace SpreadsheetUnitTests {
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestSetCellContents2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
 
             obj.Invoke("SetCellContents", null, "Hello");
         }
@@ -477,8 +477,8 @@ namespace SpreadsheetUnitTests {
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestSetCellContents3() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
 
             obj.Invoke("SetCellContents", null, new Formula("5+6"));
         }
@@ -486,8 +486,8 @@ namespace SpreadsheetUnitTests {
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestSetCellContents4() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
 
             obj.Invoke("SetCellContents", "88", 10.0);
         }
@@ -495,8 +495,8 @@ namespace SpreadsheetUnitTests {
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestSetCellContents5() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
 
             obj.Invoke("SetCellContents", "88", "hello");
         }
@@ -504,8 +504,8 @@ namespace SpreadsheetUnitTests {
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestSetCellContents6() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
 
             obj.Invoke("SetCellContents", "88", new Formula("5+6"));
         }
@@ -513,308 +513,308 @@ namespace SpreadsheetUnitTests {
         [TestMethod]
         public void TestGetChanged1() {
             string path = "GetChanged1.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            Assert.IsTrue(!currentSheet.Changed);
-            currentSheet.SetContentsOfCell("a1", "hello");
-            Assert.IsTrue(currentSheet.Changed);
-            currentSheet.Save(path);
-            Assert.IsTrue(!currentSheet.Changed);
+            Spreadsheet sheet = new Spreadsheet();
+            Assert.IsTrue(!sheet.Changed);
+            sheet.SetContentsOfCell("a1", "hello");
+            Assert.IsTrue(sheet.Changed);
+            sheet.Save(path);
+            Assert.IsTrue(!sheet.Changed);
         }
 
         [TestMethod]
         [ExpectedException(typeof(SpreadsheetReadWriteException))]
         public void TestBadXml1() {
             string path = "BadXml1.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet(path, x => true, s => s, "default");
+            Spreadsheet sheet = new Spreadsheet(path, x => true, s => s, "default");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SpreadsheetReadWriteException))]
         public void TestBadXml2() {
             string path = "BadXml2.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet(path, x => true, s => s, "default");
+            Spreadsheet sheet = new Spreadsheet(path, x => true, s => s, "default");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SpreadsheetReadWriteException))]
         public void TestBadXml3() {
             string path = "BadXml3.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet(path, x => true, s => s, "default");
+            Spreadsheet sheet = new Spreadsheet(path, x => true, s => s, "default");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SpreadsheetReadWriteException))]
         public void TestBadXml4() {
             string path = "BadXml4.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet(path, x => true, s => s, "default");
+            Spreadsheet sheet = new Spreadsheet(path, x => true, s => s, "default");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SpreadsheetReadWriteException))]
         public void TestBadXml5() {
             string path = "BadXml5.xml";
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet(path, x => true, s => s, "default");
+            Spreadsheet sheet = new Spreadsheet(path, x => true, s => s, "default");
         }
 
         /***************************** TESTS ALL METHODS *****************************/
 
-     /*   [TestMethod]
+        [TestMethod]
         public void TestAddCells1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "5.0");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "5.0");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("_", "hello");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("_", "hello");
         }
 
         [TestMethod]
         public void TestAddCells3() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("b2", "=5 + x4");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("b2", "=5 + x4");
         }
 
         [TestMethod]
         public void TestAddCells4() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
+            Spreadsheet sheet = new Spreadsheet();
             HashSet<string> correct = new HashSet<string> { "b2" };
-            HashSet<string> output = (HashSet<string>)currentSheet.SetContentsOfCell("b2", "=5 + x4");
+            HashSet<string> output = (HashSet<string>)sheet.SetContentsOfCell("b2", "=5 + x4");
             Assert.IsTrue(correct.SetEquals(output));
         }
 
         [TestMethod]
         public void TestAddCells6() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
+            Spreadsheet sheet = new Spreadsheet();
             HashSet<string> correct = new HashSet<string> { "b2" };
-            HashSet<string> output = (HashSet<string>)currentSheet.SetContentsOfCell("b2", "2.3");
+            HashSet<string> output = (HashSet<string>)sheet.SetContentsOfCell("b2", "2.3");
             Assert.IsTrue(correct.SetEquals(output));
         }
 
         [TestMethod]
         public void TestAddCells7() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
+            Spreadsheet sheet = new Spreadsheet();
             HashSet<string> correct = new HashSet<string> { "X" };
-            HashSet<string> output = (HashSet<string>)currentSheet.SetContentsOfCell("X", "hello");
+            HashSet<string> output = (HashSet<string>)sheet.SetContentsOfCell("X", "hello");
             Assert.IsTrue(correct.SetEquals(output));
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells9() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell(null, "0.0");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell(null, "0.0");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells10() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("", "0.0");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("", "0.0");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells11() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("83", "0.0");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("83", "0.0");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells12() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell(null, "=5");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell(null, "=5");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells13() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("", "=5");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("", "=5");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells14() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("83", "=5");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("83", "=5");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells15() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell(null, "hello");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell(null, "hello");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells16() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("", "hello");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("", "hello");
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestAddCells17() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("83", "hello");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("83", "hello");
         }
 
         [TestMethod]
         public void TestAddCells18() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "0.0");
-            currentSheet.SetContentsOfCell("a1", "hello");
-            currentSheet.SetContentsOfCell("a1", "=5");
-            currentSheet.SetContentsOfCell("a1", "17.23");
-            currentSheet.SetContentsOfCell("a1", "hi");
-            currentSheet.SetContentsOfCell("a1", "=13+x3");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "0.0");
+            sheet.SetContentsOfCell("a1", "hello");
+            sheet.SetContentsOfCell("a1", "=5");
+            sheet.SetContentsOfCell("a1", "17.23");
+            sheet.SetContentsOfCell("a1", "hi");
+            sheet.SetContentsOfCell("a1", "=13+x3");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestAddCells19() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
+            Spreadsheet sheet = new Spreadsheet();
             string s = null;
-            currentSheet.SetContentsOfCell("a1", s);
+            sheet.SetContentsOfCell("a1", s);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestAddCells20() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
+            Spreadsheet sheet = new Spreadsheet();
             string f = null;
-            currentSheet.SetContentsOfCell("a1", f);
+            sheet.SetContentsOfCell("a1", f);
         }
 
         [TestMethod]
         [ExpectedException(typeof(CircularException))]
         public void TestCircularDependency1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "=b1");
-            currentSheet.SetContentsOfCell("b1", "=a1");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "=b1");
+            sheet.SetContentsOfCell("b1", "=a1");
         }
 
         [TestMethod]
         [ExpectedException(typeof(CircularException))]
         public void TestCircularDependency2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "=b1");
-            currentSheet.SetContentsOfCell("b1", "=c1");
-            currentSheet.SetContentsOfCell("c1", "=a1");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "=b1");
+            sheet.SetContentsOfCell("b1", "=c1");
+            sheet.SetContentsOfCell("c1", "=a1");
         }
 
         [TestMethod]
         [ExpectedException(typeof(CircularException))]
         public void TestCircularDependency3() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "=b1");
-            currentSheet.SetContentsOfCell("b1", "=c1 + d1 - e1");
-            currentSheet.SetContentsOfCell("d1", "=f1");
-            currentSheet.SetContentsOfCell("f1", "=e1");
-            currentSheet.SetContentsOfCell("e1", "=g1");
-            currentSheet.SetContentsOfCell("g1", "=a1");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "=b1");
+            sheet.SetContentsOfCell("b1", "=c1 + d1 - e1");
+            sheet.SetContentsOfCell("d1", "=f1");
+            sheet.SetContentsOfCell("f1", "=e1");
+            sheet.SetContentsOfCell("e1", "=g1");
+            sheet.SetContentsOfCell("g1", "=a1");
         }
 
         [TestMethod]
         [ExpectedException(typeof(CircularException))]
         public void TestCircularDependency4() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "=b1");
-            currentSheet.SetContentsOfCell("b1", "=c1");
-            currentSheet.SetContentsOfCell("c1", "=b1");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "=b1");
+            sheet.SetContentsOfCell("b1", "=c1");
+            sheet.SetContentsOfCell("c1", "=b1");
         }
 
         [TestMethod]
         public void TestGetNamesOfAllNonemptyCells1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "0.0");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "0.0");
             HashSet<string> correct = new HashSet<string> { "a1" };
-            HashSet<string> output = (HashSet<string>)currentSheet.GetNamesOfAllNonemptyCells();
+            HashSet<string> output = (HashSet<string>)sheet.GetNamesOfAllNonemptyCells();
             Assert.IsTrue(correct.SetEquals(output));
         }
 
         [TestMethod]
         public void TestGetNamesOfAllNonemptyCells2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "0.0");
-            currentSheet.SetContentsOfCell("b2", "hello");
-            currentSheet.SetContentsOfCell("c3", "=5 + 6");
-            currentSheet.SetContentsOfCell("d4", "5.5");
-            currentSheet.SetContentsOfCell("e5", "new cell");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "0.0");
+            sheet.SetContentsOfCell("b2", "hello");
+            sheet.SetContentsOfCell("c3", "=5 + 6");
+            sheet.SetContentsOfCell("d4", "5.5");
+            sheet.SetContentsOfCell("e5", "new cell");
             HashSet<string> correct = new HashSet<string> { "a1", "b2", "c3", "d4", "e5" };
-            HashSet<string> output = (HashSet<string>)currentSheet.GetNamesOfAllNonemptyCells();
+            HashSet<string> output = (HashSet<string>)sheet.GetNamesOfAllNonemptyCells();
             Assert.IsTrue(correct.SetEquals(output));
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestGetCellContents1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.GetCellContents(null);
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.GetCellContents(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestGetCellContents2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.GetCellContents("");
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.GetCellContents("");
         }
 
         [TestMethod]
         public void TestGetCellContents3() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            Assert.AreEqual("", currentSheet.GetCellContents("a1"));
+            Spreadsheet sheet = new Spreadsheet();
+            Assert.AreEqual("", sheet.GetCellContents("a1"));
         }
 
         [TestMethod]
         public void TestGetCellContents4() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "0.0");
-            Assert.AreEqual(0.0, currentSheet.GetCellContents("a1"));
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "0.0");
+            Assert.AreEqual(0.0, sheet.GetCellContents("a1"));
         }
 
         [TestMethod]
         public void TestGetCellContents5() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a57", "hello");
-            Assert.AreEqual("hello", currentSheet.GetCellContents("a57"));
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a57", "hello");
+            Assert.AreEqual("hello", sheet.GetCellContents("a57"));
         }
 
         [TestMethod]
         public void TestGetCellContents6() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            currentSheet.SetContentsOfCell("a1", "5.27");
-            currentSheet.SetContentsOfCell("b2", "6.000");
-            currentSheet.SetContentsOfCell("c3", "hello");
-            currentSheet.SetContentsOfCell("d4", "=5 - 4 + x2");
-            currentSheet.SetContentsOfCell("e5", "=a1 - b2");
-            Assert.AreEqual(5.27, currentSheet.GetCellContents("a1"));
-            Assert.AreEqual(6.0, currentSheet.GetCellContents("b2"));
-            Assert.AreEqual("hello", currentSheet.GetCellContents("c3"));
-            Assert.AreEqual(new Formula("5 - 4 + x2"), currentSheet.GetCellContents("d4"));
-            Assert.AreEqual(new Formula("a1 - b2"), currentSheet.GetCellContents("e5"));
+            Spreadsheet sheet = new Spreadsheet();
+            sheet.SetContentsOfCell("a1", "5.27");
+            sheet.SetContentsOfCell("b2", "6.000");
+            sheet.SetContentsOfCell("c3", "hello");
+            sheet.SetContentsOfCell("d4", "=5 - 4 + x2");
+            sheet.SetContentsOfCell("e5", "=a1 - b2");
+            Assert.AreEqual(5.27, sheet.GetCellContents("a1"));
+            Assert.AreEqual(6.0, sheet.GetCellContents("b2"));
+            Assert.AreEqual("hello", sheet.GetCellContents("c3"));
+            Assert.AreEqual(new Formula("5 - 4 + x2"), sheet.GetCellContents("d4"));
+            Assert.AreEqual(new Formula("a1 - b2"), sheet.GetCellContents("e5"));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestPrivateMethod2() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
-            currentSheet.SetContentsOfCell("a1", "=b1 + c1");
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
+            sheet.SetContentsOfCell("a1", "=b1 + c1");
             string s = null;
             obj.Invoke("GetDirectDependents", s);
         }
 
         [TestMethod]
         public void TestPrivateMethod3() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
-            currentSheet.SetContentsOfCell("a1", "=b1 + c1");
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
+            sheet.SetContentsOfCell("a1", "=b1 + c1");
             HashSet<string> correct = new HashSet<string>();
             HashSet<string> output = (HashSet<string>)obj.Invoke("GetDirectDependents", "x0");
             Assert.IsTrue(correct.SetEquals(output));
@@ -823,28 +823,28 @@ namespace SpreadsheetUnitTests {
         [TestMethod]
         [ExpectedException(typeof(InvalidNameException))]
         public void TestPrivateMethod4() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
-            PrivateObject obj = new PrivateObject(currentSheet);
-            currentSheet.SetContentsOfCell("a1", "=b1 + c1");
+            Spreadsheet sheet = new Spreadsheet();
+            PrivateObject obj = new PrivateObject(sheet);
+            sheet.SetContentsOfCell("a1", "=b1 + c1");
             obj.Invoke("GetDirectDependents", "739");
         }
 
         /***************************** STRESS TESTS *****************************/
 
-    /*    [TestMethod]
+        [TestMethod]
         public void StressTest1() {
-            SS.Spreadsheet currentSheet = new SS.Spreadsheet();
+            Spreadsheet sheet = new Spreadsheet();
 
             int SIZE = 1000;
             // Add a ton of items
             for (int i = 0; i < SIZE; i++)
-                currentSheet.SetContentsOfCell("a" + i, 1.0 + i + "");
+                sheet.SetContentsOfCell("a" + i, 1.0 + i + "");
 
             for (int i = 0; i < SIZE; i++)
-                currentSheet.SetContentsOfCell("b" + i, "hi" + i);
+                sheet.SetContentsOfCell("b" + i, "hi" + i);
 
             for (int i = 0; i < SIZE; i++)
-                currentSheet.SetContentsOfCell("c" + i, "=5+" + i);
+                sheet.SetContentsOfCell("c" + i, "=5+" + i);
 
             // Make correct HashSet
             HashSet<string> correct = new HashSet<string>();
@@ -856,18 +856,18 @@ namespace SpreadsheetUnitTests {
                 correct.Add("c" + i);
 
             // Get all of the names of the cells
-            HashSet<string> output = (HashSet<string>)currentSheet.GetNamesOfAllNonemptyCells();
+            HashSet<string> output = (HashSet<string>)sheet.GetNamesOfAllNonemptyCells();
 
             // Confirm that the names in the spreadsheet are correct
             Assert.IsTrue(correct.SetEquals(output));
 
             // Check the cell contents of all the cells
             for (int i = 0; i < SIZE; i++)
-                Assert.AreEqual(1.0 + i, currentSheet.GetCellContents("a" + i));
+                Assert.AreEqual(1.0 + i, sheet.GetCellContents("a" + i));
             for (int i = 0; i < SIZE; i++)
-                Assert.AreEqual("hi" + i, currentSheet.GetCellContents("b" + i));
+                Assert.AreEqual("hi" + i, sheet.GetCellContents("b" + i));
             for (int i = 0; i < SIZE; i++)
-                Assert.AreEqual(new Formula("5+" + i), currentSheet.GetCellContents("c" + i));
+                Assert.AreEqual(new Formula("5+" + i), sheet.GetCellContents("c" + i));
 
             // You did it!
             Assert.IsTrue(true);
@@ -876,7 +876,7 @@ namespace SpreadsheetUnitTests {
 
         /************************************ GRADING TESTS *******************************/
 
-/*
+
         private TestContext testContextInstance;
 
         /// <summary>
@@ -926,10 +926,10 @@ namespace SpreadsheetUnitTests {
         [TestMethod()]
         [ExpectedException(typeof(InvalidNameException))]
         public void Test100() {
-            SS.Spreadsheet s = new SS.Spreadsheet();
+            Spreadsheet s = new Spreadsheet();
             s.GetCellContents(null);
         }
-/*
+
         [TestMethod()]
         [ExpectedException(typeof(InvalidNameException))]
         public void Test200() {
@@ -1410,21 +1410,21 @@ namespace SpreadsheetUnitTests {
             #endregion
 
             // Verifies cells and their values, which must alternate.
-            public void VV(AbstractSpreadsheet currentSheet, params object[] constraints) {
+            public void VV(AbstractSpreadsheet sheet, params object[] constraints) {
                 for (int i = 0; i < constraints.Length; i += 2) {
                     if (constraints[i + 1] is double) {
-                        Assert.AreEqual((double)constraints[i + 1], (double)currentSheet.GetCellValue((string)constraints[i]), 1e-9);
+                        Assert.AreEqual((double)constraints[i + 1], (double)sheet.GetCellValue((string)constraints[i]), 1e-9);
                     }
                     else {
-                        Assert.AreEqual(constraints[i + 1], currentSheet.GetCellValue((string)constraints[i]));
+                        Assert.AreEqual(constraints[i + 1], sheet.GetCellValue((string)constraints[i]));
                     }
                 }
             }
 
 
             // For setting a spreadsheet cell.
-            public IEnumerable<string> Set(AbstractSpreadsheet currentSheet, string name, string contents) {
-                List<string> result = new List<string>(currentSheet.SetContentsOfCell(name, contents));
+            public IEnumerable<string> Set(AbstractSpreadsheet sheet, string name, string contents) {
+                List<string> result = new List<string>(sheet.SetContentsOfCell(name, contents));
                 return result;
             }
 
@@ -1996,75 +1996,8 @@ namespace SpreadsheetUnitTests {
                 catch (Exception e) {
                     result = e;
                 }
- 
-            } 
+            }
         }
- */
-        // Test the FILELIST command
-        [TestMethod()]
-        public void TestMessageClass01()
-        {
-            SS.Spreadsheet s = new SS.Spreadsheet();
-            string messg = "FILELIST:hello:world\n";
-            Spreadsheet.Message m = new Spreadsheet.Message(s);
-            m.receive_message(messg);
-            List<string> files = new List<string>();
-            files = m.get_fileNames();
-            Assert.IsTrue(files.Count.Equals(2));
-            Assert.IsTrue(files[0].Equals("hello"));
-            Assert.IsTrue(files[1].Equals("world"));
-        }
-
-        /*
-        // Test that the '\n' is removed from the message
-        [TestMethod()]
-        public void TestMessageClass01a()
-        {
-            string messg = "CREATE:a_test_file\n";
-            SS.Spreadsheet s = new SS.Spreadsheet();
-            Spreadsheet.Message m = new Spreadsheet.Message();
-            m.receive_message(s, messg);
-            string m2 = m.get_messg();
-            Assert.IsTrue(m2.Equals("CREATE:a_test_file"));
-        }
-
-        // Test that the Message class retains the filename from the OPEN command
-        [TestMethod()]
-        public void TestMessageClass02()
-        {
-            string messg = "OPEN:test_file";
-            SS.Spreadsheet s = new SS.Spreadsheet();
-            Spreadsheet.Message m = new Spreadsheet.Message();
-            m.receive_message(s, messg);
-            Assert.IsTrue(m.get_filename().Equals("test_file"));
-        }
-
-        // Test that the Message class retains the filename from the CREATE command
-        [TestMethod()]
-        public void TestMessageClass03()
-        {
-            string messg = "CREATE:a_test_file";
-            SS.Spreadsheet s = new SS.Spreadsheet();
-            Spreadsheet.Message m = new Spreadsheet.Message();
-            m.receive_message(s, messg);
-            Assert.IsTrue(m.get_filename().Equals("a_test_file"));
-        }
-
-        // Test that the Message class retains the filename from the CREATE command
-        [TestMethod()]
-        public void TestMessageClass04()
-        {
-            SS.Spreadsheet s = new SS.Spreadsheet();
-            string messg = "OPEN:testfile\n";
-            string messg1 = "SAVE:testfile\n";
-            Spreadsheet.Message m = new Spreadsheet.Message();
-            m.receive_message(s, messg);
-            m.receive_message(s, messg1);
-            string m2 = m.get_filename();
-            Assert.IsTrue(m2.Equals("testfile"));
-          //  string messg2 = "OPEN:testfile\n"; 
-          //  m.receive_message(s, messg2); 
-          //  Assert.IsTrue(m.get_version().Equals("1.0"));
-        } */
     }
+
 }

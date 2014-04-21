@@ -28,19 +28,20 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToUseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.selectedCellText = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.contentsTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.valueTextBox = new System.Windows.Forms.TextBox();
-            this.newToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToUseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UndoBtn = new System.Windows.Forms.Button();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,67 +90,6 @@
             this.fileToolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem1.Text = "File";
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.howToUseToolStripMenuItem});
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
-            this.toolStripMenuItem1.Text = "Help";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Cell:";
-            // 
-            // selectedCellText
-            // 
-            this.selectedCellText.Enabled = false;
-            this.selectedCellText.Location = new System.Drawing.Point(46, 21);
-            this.selectedCellText.Name = "selectedCellText";
-            this.selectedCellText.Size = new System.Drawing.Size(100, 20);
-            this.selectedCellText.TabIndex = 4;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(501, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Contents:";
-            // 
-            // contentsTextBox
-            // 
-            this.contentsTextBox.Location = new System.Drawing.Point(559, 21);
-            this.contentsTextBox.Name = "contentsTextBox";
-            this.contentsTextBox.Size = new System.Drawing.Size(300, 20);
-            this.contentsTextBox.TabIndex = 6;
-            this.contentsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cellContentsText_KeyDown);
-            this.contentsTextBox.Leave += new System.EventHandler(this.cellContentsText_Leave);
-            this.contentsTextBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.contentsTextBox_PreviewKeyDown);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(152, 24);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Value:";
-            // 
-            // valueTextBox
-            // 
-            this.valueTextBox.Enabled = false;
-            this.valueTextBox.Location = new System.Drawing.Point(195, 21);
-            this.valueTextBox.Name = "valueTextBox";
-            this.valueTextBox.Size = new System.Drawing.Size(300, 20);
-            this.valueTextBox.TabIndex = 9;
-            // 
             // newToolStripMenuItem1
             // 
             this.newToolStripMenuItem1.Image = global::SpreadsheetGUI.Properties.Resources.new_file_icon;
@@ -196,19 +136,91 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.howToUseToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
+            this.toolStripMenuItem1.Text = "Help";
+            // 
             // howToUseToolStripMenuItem
             // 
             this.howToUseToolStripMenuItem.Image = global::SpreadsheetGUI.Properties.Resources.Help_icon;
             this.howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.howToUseToolStripMenuItem.Text = "How to use";
             this.howToUseToolStripMenuItem.Click += new System.EventHandler(this.howToUseToolStripMenuItem_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Cell:";
+            // 
+            // selectedCellText
+            // 
+            this.selectedCellText.Enabled = false;
+            this.selectedCellText.Location = new System.Drawing.Point(46, 21);
+            this.selectedCellText.Name = "selectedCellText";
+            this.selectedCellText.Size = new System.Drawing.Size(100, 20);
+            this.selectedCellText.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(501, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Contents:";
+            // 
+            // contentsTextBox
+            // 
+            this.contentsTextBox.Location = new System.Drawing.Point(559, 21);
+            this.contentsTextBox.Name = "contentsTextBox";
+            this.contentsTextBox.Size = new System.Drawing.Size(242, 20);
+            this.contentsTextBox.TabIndex = 6;
+            this.contentsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cellContentsText_KeyDown);
+            this.contentsTextBox.Leave += new System.EventHandler(this.cellContentsText_Leave);
+            this.contentsTextBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.contentsTextBox_PreviewKeyDown);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(152, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Value:";
+            // 
+            // valueTextBox
+            // 
+            this.valueTextBox.Enabled = false;
+            this.valueTextBox.Location = new System.Drawing.Point(195, 21);
+            this.valueTextBox.Name = "valueTextBox";
+            this.valueTextBox.Size = new System.Drawing.Size(300, 20);
+            this.valueTextBox.TabIndex = 9;
+            // 
+            // UndoBtn
+            // 
+            this.UndoBtn.Location = new System.Drawing.Point(807, 21);
+            this.UndoBtn.Name = "UndoBtn";
+            this.UndoBtn.Size = new System.Drawing.Size(75, 23);
+            this.UndoBtn.TabIndex = 10;
+            this.UndoBtn.Text = "UNDO";
+            this.UndoBtn.UseVisualStyleBackColor = true;
+            this.UndoBtn.Click += new System.EventHandler(this.UndoBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(887, 445);
+            this.Controls.Add(this.UndoBtn);
             this.Controls.Add(this.valueTextBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.contentsTextBox);
@@ -249,6 +261,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox valueTextBox;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.Button UndoBtn;
     }
 }
 
