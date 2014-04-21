@@ -121,11 +121,11 @@ void Messages::edit(set<int> & clients, string version, string name, string cont
   */
 void Messages::sync(int client, string version, map<string, string> &sheet) {
 	string message = "UPDATE";
+	message.append(delimiter);
+	message.append(version);	// version
 
 	typedef map<string, string>::iterator it_type;
 	for(it_type it = sheet.begin(); it != sheet.end(); it++) {
-		message.append(delimiter);
-		message.append(version);	// version
 		message.append(delimiter);
 		message.append(it->first);	// cell name
 		message.append(delimiter);

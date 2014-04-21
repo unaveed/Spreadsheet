@@ -123,15 +123,10 @@ void server::message_received(int client, string input) {
 			// Create a new spreadsheet, add client to spreadsheet
 			// and add it to the list of spreadsheets
 
-			// GREG
 			message.insert(0, path);
 			message.erase(message.size()-1);
 			message.append(".ss");
-			// END GREG
-
-			//const char * cstr = message.c_str(); 
 			
-			//spreadsheet *ss = new spreadsheet(cstr, new Messages(*this), false);
 			spreadsheet *ss = new spreadsheet(message, new Messages(*this), false);
 			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );

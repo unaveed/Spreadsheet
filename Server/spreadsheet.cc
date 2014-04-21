@@ -94,7 +94,9 @@ void spreadsheet::save() {
 		for (map<string, string>::iterator it = cells->begin(); it != cells->end(); ++it) {
 			file << "<cell>\n";
 			file << "<name>\n" << it->first << "\n" << "</name>\n";
-			file << "<contents>\n" << it->second  << "</contents>\n";
+			if (it->second.find("\n") >= 0)
+				it->second.erase(it->second.size()-1);
+			file << "<contents>\n" << it->second << "\n" << "</contents>\n";
 			file << "</cell>\n";
 		}
 		file << "</spreadsheet>";
