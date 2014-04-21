@@ -286,38 +286,3 @@ vector<string> & Messages::split(const string &s, char delim, vector<string> &el
         elems.push_back(item);
     return elems;
 }
-
-/** DELETE AFTER SUCCESSFUL INTEGRETION WITH SEVER 
-int main(){
-	Messages *m3 = new Messages();
-	string command, message;
-	m3->receive_message("INVALID\n", command, message);
-	cout << "Command should == INVALID: " << command << endl;
-	cout << "Message should == Place Holder: " << message << endl;
-
-	string comm = "BOFFIN";
-	string cont = "[esc]spreadsheet_name\n";
-	string line = comm.append(cont);
-	Messages *msg = new Messages();
-	command = "";
-	message = "";
-    msg->receive_message(line, command, message);
-	cout << "Command should be error: " << command << endl;
-
-	Messages *m1 = new Messages();
-	command = "";
-	message = "";
-	m1->receive_message("ERROR[esc]error_message\n", command, message);
-	cout << "Command should be ERROR: " << command << endl;
-	cout << "Message should be error_message: " << message << endl;
-    
-	Messages *m2 = new Messages();
-	command = "";
-	message = "";
-	m2->receive_message("ENTER[esc]cell_name[esc]cell_content[esc]spreadsheet_name\n", command, message);
-	cout << "ENTER command: " << command << endl;
-	cout << "Message should have cell names and contents: " << message << endl;
-
-	return 0;
-}
-**/

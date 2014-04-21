@@ -214,7 +214,6 @@ void mainloop(int server_fd) {
 
         if (rfd >= 0) {
             cout << "Client connected. Using file desciptor " << rfd << endl;
-			cout << "Server address: " << &main_server << endl;
 			// Add client to the list of clients
 			main_server->add_client(rfd);
 	

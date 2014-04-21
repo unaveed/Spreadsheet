@@ -95,7 +95,6 @@ void CircularDependency::Visit(std::string start, std::string name, std::set<std
 	for(std::set<std::string>::iterator n = DirectDependents->begin(); n != DirectDependents->end(); ++n) {
 		if(*n == start) {
 			//throw CircularException;
-			std::cout << "CircularDependency.cc:Throwing exception" << std::endl;
 			throw -1;
 		}
 		else if(visited->find(*n) == visited->end()) {
