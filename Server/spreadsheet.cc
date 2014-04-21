@@ -84,28 +84,6 @@ void spreadsheet::undo() {
 	}
 }
 
-void spreadsheet::save() {
-	ofstream file(filename.c_str());
-	if (file.is_open()) {
-		file << "<spreadsheet>\n";
-		file << "<version>\n";
-		file << version << "\n";
-		file << "</version>\n";
-		for (map<string, string>::iterator it = cells->begin(); it != cells->end(); ++it) {
-			file << "<cell>\n";
-			file << "<name>\n" << it->first << "\n" << "</name>\n";
-			if (it->second.find("\n") >= 0)
-				it->second.erase(it->second.size()-1);
-			file << "<contents>\n" << it->second << "\n" << "</contents>\n";
-			file << "</cell>\n";
-		}
-		file << "</spreadsheet>";
-		file.close();
-	}
-	else
-		cout << "Unable to open file." << endl;
-}
-
 void spreadsheet::sync(int client) {
 	message->sync(client, getVersion(), *cells);
 }
@@ -244,6 +222,27 @@ vector<string> & spreadsheet::split(const string &s, char delim, vector<string> 
 }
 // End cite
 
+void spreadsheet::save() {
+	ofstream file(filename.c_str());
+	if (file.is_open()) {
+		file << "<spreadsheet>\n";
+		file << "<version>\n";
+		file << version << "\n";
+		file << "</version>\n";
+		for (map<string, string>::iterator it = cells->begin(); it != cells->end(); ++it) {
+			file << "<cell>\n";
+			file << "<name>\n" << it->first << "\n" << "</name>\n";
+			if (it->second.find("\n") >= 0)
+				it->second.erase(it->second.size()-1);
+			file << "<contents>\n" << it->second << "\n" << "</contents>\n";
+			file << "</cell>\n";
+		}
+		file << "</spreadsheet>";
+		file.close();
+	}
+	else
+		cout << "Unable to open file." << endl;
+}
 
 void spreadsheet::open() {
 	string line;
