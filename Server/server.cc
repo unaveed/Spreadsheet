@@ -85,6 +85,7 @@ void server::send_message(set<int> & client, string message) {
 void server::message_received(int client, string input) {
 	string command, message;
 	
+	cout << "Incoming message: " << input << endl;
 	Messages *m = new Messages(*this);
 	m->receive_message(input, command, message);
 
@@ -140,17 +141,29 @@ void server::message_received(int client, string input) {
 	else if(command == "OPEN") {
 		filelist = get_files(true);
 		string sheetFiles = get_files(false);
+
+
 		// Check if file exists
 		if(filelist.find(message) >= 0) {
-			// Create a spreadsheet and add spreadsheet to the
-			// map and client to the spreadsheet
-			message.insert(0, path);
-			message.erase(message.size()-1);
-			
-			spreadsheet *ss = new spreadsheet(message, new Messages(*this), true);
-			ss->add_client(client);
-			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
-			clientSpreadsheets->insert(pair<int, string> (client, message) );
+
+			// Check if file is not open
+			if(spreadsheets->find(message) == spreadsheets->end()){
+				// Create a spreadsheet and add spreadsheet to the
+				// map and client to the spreadsheet
+				message.insert(0, path);
+				message.erase(message.size()-1);
+				
+				spreadsheet *ss = new spreadsheet(message, new Messages(*this), true);
+				ss->add_client(client);
+				spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
+				clientSpreadsheets->insert(pair<int, string> (client, message) );
+			}
+			else {
+				// if open add clients
+				spreadsheet *s = (*spreadsheets)[message];
+				s->add_client(client);
+				(*spreadsheets)[message] = s;
+			}
 		}
 		// Send error message to client requesting file that does exist
 		else 
@@ -236,6 +249,8 @@ void server::remove_client(int client) {
  * based on the command. 
  */
 void server::execute_command(int client, string command, string message) {
+	cout << "Execute command is: " << command << endl;	
+	
 	Messages *m = new Messages(*this);	
 	string sheet = get_spreadsheet(client);
 	spreadsheet *s = (*spreadsheets)[sheet];
@@ -253,6 +268,11 @@ void server::execute_command(int client, string command, string message) {
 	}
 	if(command == "RESYNC") {
 		s->sync(client);	
+	}
+	if(command == "DISCONNECT") {
+		s->remove_client(client);
+		clients->erase(client);
+		clientSpreadsheets->erase(client);
 	}
 	(*spreadsheets)[sheet] = s;
 }
