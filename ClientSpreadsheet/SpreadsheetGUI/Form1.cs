@@ -703,7 +703,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
         /// <returns></returns>
         private String makeProtocolContent(List<string> tokens) {
             string protocolFormula = "";
-            if (tokens.Count == 1 || tokens[0].Equals('=')) {
+            if (tokens.Count == 1 || !tokens[0].Equals('=')) {
                 return tokens[0];
             } else {
                 //foreach (string s in tokens) {
