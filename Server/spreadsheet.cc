@@ -15,18 +15,19 @@
 
 using namespace std;
 
-spreadsheet::spreadsheet(const char * _filename, Messages * _message) {
+spreadsheet::spreadsheet(const char * _filename, Messages * _message, bool exists) {
 	clients    = new set<int>;
 	cells      = new map<string, string>;
 	undo_stack_cells    = new stack<string>;
 	undo_stack_contents = new stack<string>;
-	version    = 1;
+	version    = 0;
 	filename   = _filename;
 	message	   = _message;
 	dg         = new DependencyGraph();
 
 
-	open();
+	if (exists)
+		open();
 }
 
 spreadsheet::~spreadsheet() {
@@ -40,8 +41,10 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	// TODO: Check if version is current
 	stringstream sv;
 	sv << version;
-	if (sv.str() != vers)
+	if (sv.str() != vers) {
 		cout << "make_change: need to sync" << endl;
+		cout << "serverVersion:" << sv.str() << " clientVersion:" << vers << endl;
+	}
 
 	// Check if contents is a formula
 	if (contents[0] == '=') {
@@ -144,6 +147,9 @@ void spreadsheet::remove_client(int client) {
  * causes a circular dependency.
  */
 bool spreadsheet::SetCellContents(string name, string contents) {
+	// Remove the trailing \n
+	contents = contents.substr(0, contents.size()-1);
+
 	// Store old contents and clear previous dependencies
 	string oldContents = (*cells)[name];
 	if (oldContents != "") {
@@ -158,13 +164,14 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 	set<string> *temp = new set<string>;
 
 	// Check for circular dependency
+	temp->insert(name);
+	CircularDependency *c = new CircularDependency(dg);
+
 	try {
-		temp->insert(name);
-		CircularDependency *c = new CircularDependency(dg);
 		c->GetCellsToRecalculate(temp);
-		delete c;
 	}
-	catch (char * e) {
+	catch (int e) {
+		cout << "spreadsheet.cc: Caught exception" << endl;
 		// Revert to old contents
 
 		// Check if old contents was a formula
@@ -175,6 +182,7 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 
 		return false;
 	}
+	delete c;
 	delete temp;
 	return true;
 }
@@ -260,18 +268,5 @@ void spreadsheet::open() {
 		}
 
 		file.close();
-	}
-	// File doesn't exist, create it
-	else {
-		ofstream newfile(filename);
-		if (newfile.is_open()) {
-			newfile << "<spreadsheet>\n";
-			newfile << "<version>\n";
-			newfile << version << "\n";
-			newfile << "</version>\n";
-			newfile << "</spreadsheet>";
-
-			newfile.close();
-		}
 	}
 }

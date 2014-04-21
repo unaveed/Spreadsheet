@@ -49,10 +49,11 @@ int main() {
 }
 
 server::server() {
-	password = "12345";
+	password  = "12345";
+	path      = "files/";
 	delimiter = "\e";
-	clients = new set<int>;
-	spreadsheets = new map<string, spreadsheet* >;
+	clients   = new set<int>;
+	spreadsheets       = new map<string, spreadsheet* >;
 	clientSpreadsheets = new map<int, string>;
 }
 
@@ -120,9 +121,14 @@ void server::message_received(int client, string input) {
 		else {
 			// Create a new spreadsheet, add client to spreadsheet
 			// and add it to the list of spreadsheets
+
+			// GREG
+			message.insert(0, path);
+			// END GREG
+
 			const char * cstr = message.c_str(); 
 			
-			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
+			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this), false);
 			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
@@ -137,7 +143,7 @@ void server::message_received(int client, string input) {
 			// map and client to the spreadsheet
 			const char * cstr = message.c_str(); 
 			
-			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this));
+			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this), true);
 			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );

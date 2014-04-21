@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <exception>
+#include <iostream>
 
 CircularDependency::CircularDependency(DependencyGraph* DG) {
 	dg = DG;
@@ -76,9 +77,8 @@ std::vector<std::string>* CircularDependency::GetCellsToRecalculate(std::set<std
 	//foreach (String name in names)
 	for(std::set<std::string>::iterator name = names->begin(); name != names->end(); ++name) {
 		//if (!visited.Contains(name))
-		if(visited->find(*name) != visited->end()) {
+		if(visited->find(*name) == visited->end())
 			Visit(*name, *name, visited, changed);
-		}
 	}
 	return changed;
 }
@@ -95,6 +95,7 @@ void CircularDependency::Visit(std::string start, std::string name, std::set<std
 	for(std::set<std::string>::iterator n = DirectDependents->begin(); n != DirectDependents->end(); ++n) {
 		if(*n == start) {
 			//throw CircularException;
+			std::cout << "CircularDependency.cc:Throwing exception" << std::endl;
 			throw -1;
 		}
 		else if(visited->find(*n) == visited->end()) {

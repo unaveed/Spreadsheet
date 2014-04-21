@@ -24,6 +24,7 @@ class server {
 		std::string get_spreadsheet(int);
 		void execute_command(int, std::string, std::string);
 		void save_spreadsheets();
+		std::string path;
 	public:
 		server();
 		~server();

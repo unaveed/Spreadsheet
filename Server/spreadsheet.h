@@ -35,7 +35,7 @@ class spreadsheet {
 		bool SetCellContents(std::string, std::string);	// Sets the contents of the cell to the contents
 
 	public:
-		spreadsheet(const char *, Messages *);	// Takes the name of the file to open
+		spreadsheet(const char *, Messages *, bool exists);	// Takes the name of the file to open
 		~spreadsheet();
 		void make_change(int client, std::string name, std::string contents, std::string vers);	// Make change to spreadsheet, making all of the necessary checks
 		void add_client(int);			// Add a client to the working spreadsheet
