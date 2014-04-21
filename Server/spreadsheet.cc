@@ -15,16 +15,23 @@
 
 using namespace std;
 
-spreadsheet::spreadsheet(const char * _filename, Messages * _message, bool exists) {
+spreadsheet::spreadsheet(string _filename, Messages * _message, bool exists) {
 	clients    = new set<int>;
 	cells      = new map<string, string>;
 	undo_stack_cells    = new stack<string>;
 	undo_stack_contents = new stack<string>;
 	version    = 0;
-	filename   = _filename;
+	//filename   = _filename;
 	message	   = _message;
 	dg         = new DependencyGraph();
 
+	// Toss newline and add extension
+	/*
+	_filename.erase(_filename.size()-1);
+	_filename.append(".ss");
+	*/
+
+	filename = _filename;
 
 	if (exists)
 		open();
@@ -38,7 +45,6 @@ spreadsheet::~spreadsheet() {
 }
 
 void spreadsheet::make_change(int client, string name, string contents, string vers) {
-	// TODO: Check if version is current
 	stringstream sv;
 	sv << version;
 	if (sv.str() != vers) {
@@ -88,7 +94,7 @@ void spreadsheet::undo() {
 }
 
 void spreadsheet::save() {
-	ofstream file(filename);
+	ofstream file(filename.c_str());
 	if (file.is_open()) {
 		file << "<spreadsheet>\n";
 		file << "<version>\n";
@@ -241,7 +247,7 @@ vector<string> & spreadsheet::split(const string &s, char delim, vector<string> 
 void spreadsheet::open() {
 	string line;
 	string name, contents;
-	ifstream file(filename);
+	ifstream file(filename.c_str());
 	// File already exists
 	if (file.is_open()) {
 		getline(file, line);	// <spreadsheet>

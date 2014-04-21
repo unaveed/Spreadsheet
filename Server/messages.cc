@@ -111,10 +111,6 @@ void Messages::edit(set<int> & clients, string version, string name, string cont
 		message.append(delimiter);
 	}
 
-	// GREG
-	cout << "Change: " << message << endl;
-	// END GREG
-
 	main_server->send_message(clients, message);
 }
 

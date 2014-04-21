@@ -124,11 +124,14 @@ void server::message_received(int client, string input) {
 
 			// GREG
 			message.insert(0, path);
+			message.erase(message.size()-1);
+			message.append(".ss");
 			// END GREG
 
-			const char * cstr = message.c_str(); 
+			//const char * cstr = message.c_str(); 
 			
-			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this), false);
+			//spreadsheet *ss = new spreadsheet(cstr, new Messages(*this), false);
+			spreadsheet *ss = new spreadsheet(message, new Messages(*this), false);
 			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );
@@ -141,9 +144,10 @@ void server::message_received(int client, string input) {
 		if(filelist.find(message) >= 0) {
 			// Create a spreadsheet and add spreadsheet to the
 			// map and client to the spreadsheet
-			const char * cstr = message.c_str(); 
+			message.insert(0, path);
+			message.erase(message.size()-1);
 			
-			spreadsheet *ss = new spreadsheet(cstr, new Messages(*this), true);
+			spreadsheet *ss = new spreadsheet(message, new Messages(*this), true);
 			ss->add_client(client);
 			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
 			clientSpreadsheets->insert(pair<int, string> (client, message) );

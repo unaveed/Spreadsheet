@@ -24,7 +24,8 @@ class spreadsheet {
 		std::stack<std::string> *undo_stack_contents;		// All changes that have been made (cell name)
 		std::stack<std::string> *undo_stack_cells;			// All changes that have been made (cell contents)
 		int version;		// Version of the spreadsheet
-		const char * filename;	// Current name of the file
+		//const char * filename;	// Current name of the file
+		std::string filename;	// Current name of the file
 		Messages * message;	// Object used to communicate with the clients
 		DependencyGraph * dg;	// Dependency graph used to detect circular dependencies
 
@@ -35,7 +36,7 @@ class spreadsheet {
 		bool SetCellContents(std::string, std::string);	// Sets the contents of the cell to the contents
 
 	public:
-		spreadsheet(const char *, Messages *, bool exists);	// Takes the name of the file to open
+		spreadsheet(std::string filename, Messages *, bool exists);	// Takes the name of the file to open
 		~spreadsheet();
 		void make_change(int client, std::string name, std::string contents, std::string vers);	// Make change to spreadsheet, making all of the necessary checks
 		void add_client(int);			// Add a client to the working spreadsheet
