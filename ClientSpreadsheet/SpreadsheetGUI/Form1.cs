@@ -302,7 +302,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
                 } catch {
                     //TODO:Handle this properly.
                     MessageBox.Show(
-                    e.Message,
+                    "Error",
                     "Protocol was not sent properly. No version number was sent",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
