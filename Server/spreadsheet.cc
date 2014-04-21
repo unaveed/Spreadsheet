@@ -137,6 +137,7 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 
 	// Store old contents and clear previous dependencies
 	string oldContents = (*cells)[name];
+	(*cells)[name] = contents;
 	if (oldContents != "") {
 		remove_dependency(name);
 	}
