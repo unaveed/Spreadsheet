@@ -704,7 +704,11 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
         private String makeProtocolContent(List<string> tokens) {
             string protocolFormula = "";
             if (tokens.Count == 1 || !tokens[0].Equals('=')) {
-                return tokens[0];
+                foreach (string s in tokens)
+                {
+                    protocolFormula += s;
+                }
+                return protocolFormula;
             } else {
                 //foreach (string s in tokens) {
                 for (int i = 0; i < tokens.Count; i++) {
