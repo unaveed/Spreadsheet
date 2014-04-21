@@ -25,12 +25,6 @@ spreadsheet::spreadsheet(string _filename, Messages * _message, bool exists) {
 	message	   = _message;
 	dg         = new DependencyGraph();
 
-	// Toss newline and add extension
-	/*
-	_filename.erase(_filename.size()-1);
-	_filename.append(".ss");
-	*/
-
 	filename = _filename;
 
 	if (exists)
@@ -48,7 +42,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	stringstream sv;
 	sv << version;
 	if (sv.str() != vers) {
-		cout << "make_change: need to sync" << endl;
+		cout << "spreadsheet.cc: make_change: need to sync" << endl;
 		cout << "serverVersion:" << sv.str() << " clientVersion:" << vers << endl;
 	}
 
@@ -67,10 +61,9 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 
 	// Increment the version (and convert to a string for the message)
 	version++;
-	stringstream ss;
-	ss << version;
+	cout << "spreadsheet.cc: version=" << getVersion() << endl;
 
-	message->edit(*clients, ss.str(), name, buildString(contents));
+	message->edit(*clients, getVersion(), name, buildString(contents));
 }
 
 /*
@@ -86,10 +79,8 @@ void spreadsheet::undo() {
 		undo_stack_contents->pop();
 
 		version++;
-		stringstream ss;
-		ss << version;
 
-		message->undo(*clients, ss.str(), name, buildString(contents));
+		message->undo(*clients, getVersion(), name, buildString(contents));
 	}
 }
 
@@ -114,9 +105,7 @@ void spreadsheet::save() {
 }
 
 void spreadsheet::sync(int client) {
-	stringstream ss;
-	ss << version;
-	message->sync(client, ss.str(), *cells);
+	message->sync(client, getVersion(), *cells);
 }
 
 /*
@@ -139,6 +128,7 @@ string spreadsheet::buildString(string contents) {
  */
 void spreadsheet::add_client(int client) {
 	clients->insert(client);
+	sync(client);
 }
 
 /*
@@ -146,6 +136,15 @@ void spreadsheet::add_client(int client) {
  */
 void spreadsheet::remove_client(int client) {
 	clients->erase(client);
+}
+
+/*
+ * Returns the version as a string.
+ */
+string spreadsheet::getVersion() {
+	stringstream ss;
+	ss << version;
+	return ss.str();
 }
 
 /*

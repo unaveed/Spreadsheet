@@ -34,6 +34,7 @@ class spreadsheet {
 		std::vector<std::string> GetVariables(std::string formula);
 		void remove_dependency(std::string name);
 		bool SetCellContents(std::string, std::string);	// Sets the contents of the cell to the contents
+		std::string getVersion();
 
 	public:
 		spreadsheet(std::string filename, Messages *, bool exists);	// Takes the name of the file to open
