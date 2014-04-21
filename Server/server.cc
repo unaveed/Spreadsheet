@@ -130,8 +130,8 @@ void server::message_received(int client, string input) {
 			
 			spreadsheet *ss = new spreadsheet(message, new Messages(*this), false);
 			ss->add_client(client);
-			spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
-			clientSpreadsheets->insert(pair<int, string> (client, message) );
+			(*spreadsheets)[message] = ss;
+			(*clientSpreadsheets)[client] = message;
 		}
 	}
 	else if(command == "OPEN") {
@@ -141,24 +141,22 @@ void server::message_received(int client, string input) {
 
 		// Check if file exists
 		if(filelist.find(message) >= 0) {
+			message.insert(0, path);
+			message.erase(message.size()-1);
 
 			// Check if file is not open
-			if(spreadsheets->find(message) == spreadsheets->end()){
+			if((*spreadsheets)[message] == NULL) {
 				// Create a spreadsheet and add spreadsheet to the
 				// map and client to the spreadsheet
-				message.insert(0, path);
-				message.erase(message.size()-1);
 				
 				spreadsheet *ss = new spreadsheet(message, new Messages(*this), true);
 				ss->add_client(client);
-				spreadsheets->insert(pair<string, spreadsheet*> (message, ss) );
-				clientSpreadsheets->insert(pair<int, string> (client, message) );
+				(*spreadsheets)[message] = ss;
+				(*clientSpreadsheets)[client] = message;
 			}
 			else {
 				// if open add clients
-				spreadsheet *s = (*spreadsheets)[message];
-				s->add_client(client);
-				(*spreadsheets)[message] = s;
+				(*spreadsheets)[message]->add_client(client);
 			}
 		}
 		// Send error message to client requesting file that does exist
@@ -269,7 +267,6 @@ void server::execute_command(int client, string command, string message) {
 		clients->erase(client);
 		clientSpreadsheets->erase(client);
 	}
-	(*spreadsheets)[sheet] = s;
 }
 
 /*
