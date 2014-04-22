@@ -26,6 +26,8 @@ namespace AvailableFiles {
         String SSName;
         String defaultText;
 
+		private string[] filelist;
+
         public Form1() {
             InitializeComponent();
             this.Text = "Available Files";
@@ -57,6 +59,7 @@ namespace AvailableFiles {
         /// </summary>
         /// <param name="s"></param>
         public void AddSS(string[] s) {
+			filelist = s;
             for (int i = 1; i < s.Length; i++) {
                 btnAdd_Click(s[i]);
             }
@@ -114,6 +117,13 @@ namespace AvailableFiles {
                   MessageBoxIcon.Error);
                 return;
             }
+
+			foreach (string str in filelist) {
+				if (str.Equals(ssName + ".ss")) {
+					newSSName.Text = "Name already exists";
+					return;
+				}
+			}
 
             SSName = newSSName.Text;
 

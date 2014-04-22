@@ -118,7 +118,6 @@ void server::message_received(int client, string input) {
 		message.erase(message.size()-1);
 		message.append(".ss");
 
-		cout << "server.cc: filename=" << message << endl;
 		size_t found = filelist.find(message);
 		// File with the given name already exists
 		if(found != std::string::npos) 
