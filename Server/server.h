@@ -23,7 +23,6 @@ class server {
 		std::map<int, std::string> *clientSpreadsheets;
 		std::string get_spreadsheet(int);
 		void execute_command(int, std::string, std::string);
-		void save_spreadsheets();
 		std::string path;
 	public:
 		server();
@@ -37,6 +36,7 @@ class server {
 		std::string get_files(bool);	
 		void add_client(int);
 		void remove_client(int);
+		void save_spreadsheets();
 };
 
 extern int start(server &);
@@ -44,6 +44,7 @@ extern int server_start_listen();
 extern int server_establish_connection(int server_fd);
 extern int server_send(int fd, std::string data);
 extern void *tcp_server_read(void *arg);
+extern void *listen_local(void *arg);
 extern void mainloop(int server_fd);
 
 #endif

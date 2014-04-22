@@ -16,6 +16,7 @@
 #include <sstream>
 #include <unistd.h>
 
+#include <iostream>
 #include <errno.h>
 
 #include "globals.h"
@@ -30,12 +31,10 @@ int server_start_listen();
 int server_establish_connection(int server_fd);
 int server_send(int fd, std::string data);
 void *tcp_server_read(void *arg);
+void *listen_local(void *arg);
 void mainloop(int server_fd);
 
 server * main_server;
-
-
-
 
 int start(server & svr) {
 	main_server = &svr;
@@ -65,7 +64,8 @@ int server_start_listen() {
 	int yes = 1;
 
 	// first, load up address structs with getaddrinfo():
-
+	
+	
 	memset(&hostinfo, 0, sizeof(hostinfo));
 
 	hostinfo.ai_family = AF_UNSPEC;  // use IPv4 or IPv6, whichever
@@ -197,10 +197,20 @@ void *tcp_server_read(void *arg) {
     return NULL;
 }
 
+void *listen_local(void *arg){
+	std::string name;
+	
+	std::getline(std::cin, name);
+	if(name == "stop" || name == "exit"){
+		main_server->save_spreadsheets();		
+	}
+}
+
 // This loop will wait for a client to connect. When the client connects, it creates a
 // new thread for the client and starts waiting again for a new client.
 void mainloop(int server_fd) {
     pthread_t threads[MAXFD]; //create handles for threads.
+	pthread_t t_thread[1];
 
     FD_ZERO(&the_state); // FD_ZERO clears all the filedescriptors in the file descriptor set fds.
 
@@ -235,6 +245,9 @@ void mainloop(int server_fd) {
 
             // now create a thread for this client to intercept all incoming data from it.
             pthread_create(&threads[rfd], NULL, tcp_server_read, arg);
+
+			pthread_create(&t_thread[0], NULL, listen_local, arg);
+			std::cout << "Got this far" << std::endl;
         }
     }
 }

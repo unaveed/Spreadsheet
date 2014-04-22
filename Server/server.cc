@@ -276,7 +276,8 @@ void server::save_spreadsheets() {
 	map<string, spreadsheet*>::iterator it;
 	for(it = spreadsheets->begin(); it != spreadsheets->end(); ++it){
 		// Calls the save method for every spreadsheet
-		// it->second.save();				
+		// it->second.save();
+		cout << "It's happening!!\n" << endl;
 	}
 }
 
