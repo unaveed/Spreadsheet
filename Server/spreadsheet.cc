@@ -238,8 +238,9 @@ void spreadsheet::save() {
 		file << "</spreadsheet>";
 		file.close();
 	}
-	else
+	else {
 		cout << "Unable to open file." << endl;
+	}
 }
 
 void spreadsheet::open() {

@@ -157,6 +157,7 @@ void server::message_received(int client, string input) {
 			else {
 				// if open add clients
 				(*spreadsheets)[message]->add_client(client);
+				(*clientSpreadsheets)[client] = message;
 			}
 		}
 		// Send error message to client requesting file that does exist
@@ -246,6 +247,7 @@ void server::execute_command(int client, string command, string message) {
 	
 	Messages *m = new Messages(*this);	
 	string sheet = get_spreadsheet(client);
+	cout << "server.cc: sheet=" << sheet << endl;
 	spreadsheet *s = (*spreadsheets)[sheet];
 	
 	if(command == "ENTER") {

@@ -17,7 +17,7 @@ all:
 	g++ -o server $(CCFILES) $(LIBS) $(TEMP)
 
 debug:
-	g++ -g -o server $(CCFILES) $(LIBS)
+	g++ -g -o server $(CCFILES) $(LIBS) $(TEMP)
 
 clean:
 	rm server
