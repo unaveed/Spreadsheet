@@ -139,7 +139,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
             //Hide spreadsheet until the login has been verified.
             spreadsheetPanel1.Hide();
 
-            time.Interval = 3000; // Set to 30000 for 30 seconds!!
+            time.Interval = 30000; // Set to 30000 for 30 seconds!!
             time.Elapsed += new ElapsedEventHandler(time_elapsed);
 
             // This could also be done graphically in the designer, as has been
@@ -363,6 +363,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
                     ShowSSCallback d = new ShowSSCallback(CloseSS);
                     this.Invoke(d, new object[] { });
                 } else {
+					CloseServerSocket();
                     Close();
                 }
             }
@@ -394,6 +395,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
         /// Method that is called for closing a spreadsheet located on a different thread.
         /// </summary>
         private void CloseSS() {
+			CloseServerSocket();
             this.Close();
         }
 

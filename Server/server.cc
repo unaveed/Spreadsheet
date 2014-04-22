@@ -244,9 +244,18 @@ void server::remove_client(int client) {
 void server::execute_command(int client, string command, string message) {
 	cout << "Executed command: " << command << endl;	
 	
+	bool onSheet = true;	// True if client is connected to a spreadsheet
+
 	Messages *m = new Messages(*this);	
-	string sheet = get_spreadsheet(client);
-	spreadsheet *s = (*spreadsheets)[sheet];
+	if ((*clientSpreadsheets)[client] == "") {
+		onSheet = false;
+	}
+
+	spreadsheet *s;
+	if (onSheet) {
+		string sheet = get_spreadsheet(client);
+		s = (*spreadsheets)[sheet];
+	}
 	
 	if(command == "ENTER") {
 		string cellName, contents, version;
@@ -263,9 +272,11 @@ void server::execute_command(int client, string command, string message) {
 		s->sync(client);	
 	}
 	if(command == "DISCONNECT") {
-		s->remove_client(client);
+		if (onSheet) {
+			s->remove_client(client);
+			clientSpreadsheets->erase(client);
+		}
 		clients->erase(client);
-		clientSpreadsheets->erase(client);
 	}
 }
 
