@@ -171,21 +171,29 @@ void Messages::error(int client, string content) {
 
 void Messages::split_edit(string message, string &version, string &name, string &contents) {
 	size_t index = 0;
+	int escCount = delimiter_count(message, delimiter);
 	for(int i = 0; i < 3; i++) {
 		if(i == 0) {
 			index = message.find(delimiter);
 			version = message.substr(0, index);
 			message.erase(0, index + delimiter.length());
+			cout << "messages.cc: message=" << message << endl;
 		}
 		if(i == 1) {
 			index = message.find(delimiter);
 			name = message.substr(0, index);
 			message.erase(0, index + delimiter.length());
+			cout << "messages.cc: message=" << message << endl;
 		}
-		else 
-			contents = message;	
+		else {
+			if (escCount == 1)
+				contents = "";
+			else
+				contents = message;	
+		}
 	}
-
+	cout << "messages.cc: name=" << name << endl;
+	cout << "messages.cc: contents=" << contents << endl;
 }
 
  /* 

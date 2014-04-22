@@ -49,7 +49,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	// Check if contents is a formula
 	if (contents[0] == '=') {
 		if (!SetCellContents(name, contents)) {
-			message->error(client, contents);
+			message->error(client, "Circular dependency exception has occured.");
 			return;
 		}
 	}
