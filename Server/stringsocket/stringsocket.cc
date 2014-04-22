@@ -33,6 +33,7 @@ int server_send(int fd, std::string data);
 void *tcp_server_read(void *arg);
 void *listen_local(void *arg);
 void mainloop(int server_fd);
+void close_client(int fd);
 
 server * main_server;
 
@@ -198,9 +199,9 @@ void *tcp_server_read(void *arg) {
 }
 
 void *listen_local(void *arg){
-	std::string name;
+	string name;
 	
-	std::getline(std::cin, name);
+	getline(cin, name);
 	if(name == "stop" || name == "exit"){
 		main_server->save_spreadsheets();		
 	}
@@ -214,6 +215,8 @@ void mainloop(int server_fd) {
 
     FD_ZERO(&the_state); // FD_ZERO clears all the filedescriptors in the file descriptor set fds.
 
+	pthread_create(&t_thread[0], NULL, listen_local, NULL);
+
 	// start looping here
     while(1) {
         int rfd;
@@ -226,8 +229,6 @@ void mainloop(int server_fd) {
             cout << "Client connected. Using file desciptor " << rfd << endl;
 			// Add client to the list of clients
 			main_server->add_client(rfd);
-	
-			//main_server->add_client(rfd);
 
             if (rfd > MAXFD) {
                 cout << "To many clients trying to connect." << endl;
@@ -245,9 +246,10 @@ void mainloop(int server_fd) {
 
             // now create a thread for this client to intercept all incoming data from it.
             pthread_create(&threads[rfd], NULL, tcp_server_read, arg);
-
-			pthread_create(&t_thread[0], NULL, listen_local, arg);
-			std::cout << "Got this far" << std::endl;
         }
     }
+}
+
+void close_client(int fd) {
+	close(fd);
 }

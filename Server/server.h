@@ -43,6 +43,7 @@ extern int start(server &);
 extern int server_start_listen();
 extern int server_establish_connection(int server_fd);
 extern int server_send(int fd, std::string data);
+extern void close_client(int fd);
 extern void *tcp_server_read(void *arg);
 extern void *listen_local(void *arg);
 extern void mainloop(int server_fd);
