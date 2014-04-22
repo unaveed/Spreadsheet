@@ -697,7 +697,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
             }
 
             //Send the edit to the server
-            //ENTER[esc]version_number[esc]cell_name[esc]cell_content\n 
+            //ENTER[esc]version_number[esc]cell_name[esc]cell_content\n
             client.SendMessage("ENTER" + esc + versionNumber + esc + name + esc + CellCont + "\n");
 
             //Set the spreadsheet edited flag to true.s
@@ -713,7 +713,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
         /// <returns></returns>
         private String makeProtocolContent(List<string> tokens) {
             string protocolFormula = "";
-            if (tokens.Count == 1 || !tokens[0].Equals('=')) {
+            if (tokens.Count == 1 || !tokens[0].Equals("=")) {
                 foreach (string s in tokens)
                 {
                     protocolFormula += s;
