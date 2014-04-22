@@ -61,7 +61,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(249, 24);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Enter Server\'s iP Address";
+            this.label2.Text = "Enter Server\'s IP Address";
             // 
             // ServerIPAddress
             // 
