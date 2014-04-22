@@ -101,7 +101,7 @@ namespace ClientModel
         /// </summary>
         public void CloseSocket()
         {
-			if (!ReferenceEquals(socket, null)
+			if (!ReferenceEquals(socket, null))
 				socket.CloseSocket();
             receiving = false;
         }

@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetGUITests", "Spre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "ClientServer\Client.csproj", "{E2523481-2BB2-4240-9923-6AC5F0D306E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication", "Comm\Communication.csproj", "{3AC7B38D-BB0E-4E28-9166-DFF8B0201AA4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{9CCEAE75-FE60-4372-8AF0-10FF8E570BB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "Login\Login.csproj", "{D9A2D558-B0E5-49DB-9A71-F5BF825618F0}"
