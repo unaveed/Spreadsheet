@@ -8,6 +8,7 @@
 #include <string>
 #include <cstring>
 #include <pthread.h>
+#include <cstdlib>
 
 #include "server.h"
 #include "messages.h"
@@ -273,11 +274,15 @@ void server::execute_command(int client, string command, string message) {
  * spreadsheets map to save their files
  */
 void server::save_spreadsheets() {
-	map<string, spreadsheet*>::iterator it;
-	for(it = spreadsheets->begin(); it != spreadsheets->end(); ++it){
-		// Calls the save method for every spreadsheet
-		// it->second.save();				
+	cout << "It's happening!!\n" << endl;
+	// Calls the save method for every spreadsheet
+	for(map<string, spreadsheet*>::iterator it = spreadsheets->begin(); it != spreadsheets->end(); ++it) {
+		it->second->save();
+		for (set<int>::iterator c = clients->begin(); c != clients->end(); ++c) {
+			close_client(*c);
+		}
 	}
+	exit(1);
 }
 
 /* 

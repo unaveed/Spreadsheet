@@ -17,6 +17,7 @@
 #include <sstream>
 #include <unistd.h>
 
+#include <iostream>
 #include <errno.h>
 
 #include "globals.h"
@@ -31,12 +32,11 @@ int server_start_listen();
 int server_establish_connection(int server_fd);
 int server_send(int fd, std::string data);
 void *tcp_server_read(void *arg);
+void *listen_local(void *arg);
 void mainloop(int server_fd);
+void close_client(int fd);
 
 server * main_server;
-
-
-
 
 int start(server & svr) {
 	main_server = &svr;
@@ -66,10 +66,6 @@ int server_start_listen() {
 	int yes = 1;
 
 	// first, load up address structs with getaddrinfo():
-
-	string input;
-	cin >> input;
-	cout << "stringsocket.cc: INPUT FROM SERVER: " << input << endl;
 
 	memset(&hostinfo, 0, sizeof(hostinfo));
 
@@ -185,12 +181,24 @@ void *tcp_server_read(void *arg) {
     return NULL;
 }
 
+void *listen_local(void *arg){
+	string name;
+	
+	getline(cin, name);
+	if(name == "stop" || name == "exit"){
+		main_server->save_spreadsheets();		
+	}
+}
+
 // This loop will wait for a client to connect. When the client connects, it creates a
 // new thread for the client and starts waiting again for a new client.
 void mainloop(int server_fd) {
     pthread_t threads[MAXFD]; //create handles for threads.
+	pthread_t t_thread[1];
 
     FD_ZERO(&the_state); // FD_ZERO clears all the filedescriptors in the file descriptor set fds.
+
+	pthread_create(&t_thread[0], NULL, listen_local, NULL);
 
 	// start looping here
     while(1) {
@@ -204,8 +212,6 @@ void mainloop(int server_fd) {
             cout << "Client connected. Using file desciptor " << rfd << endl;
 			// Add client to the list of clients
 			main_server->add_client(rfd);
-	
-			//main_server->add_client(rfd);
 
             if (rfd > MAXFD) {
                 cout << "To many clients trying to connect." << endl;
@@ -227,3 +233,7 @@ void mainloop(int server_fd) {
     }
 }
 // End cite
+
+void close_client(int fd) {
+	close(fd);
+}
