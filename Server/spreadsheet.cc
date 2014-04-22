@@ -49,7 +49,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	// Check if contents is a formula
 	if (contents[0] == '=') {
 		if (!SetCellContents(name, contents)) {
-			message->error(client, buildString(contents));
+			message->error(client, contents);
 			return;
 		}
 	}
@@ -62,7 +62,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 
 	version++;
 
-	message->edit(*clients, getVersion(), name, buildString(contents));
+	message->edit(*clients, getVersion(), name, contents);
 }
 
 /*
@@ -79,27 +79,12 @@ void spreadsheet::undo() {
 
 		version++;
 
-		message->undo(*clients, getVersion(), name, buildString(contents));
+		message->undo(*clients, getVersion(), name, contents);
 	}
 }
 
 void spreadsheet::sync(int client) {
 	message->sync(client, getVersion(), *cells);
-}
-
-/*
- * Takes the contents of a cell and puts it together in regular format.  For example, if
- * the contents are a formula delimited by colons, it will put it back to regular format
- * without the colons.
- */
-string spreadsheet::buildString(string contents) {
-	if (contents[0] != '=')
-		return contents;
-	string s;
-	vector<string> tokens = GetTokens(contents, ':');
-	for (vector<string>::iterator it = tokens.begin(); it != tokens.end(); ++it)
-		s.append(*it);
-	return s;
 }
 
 /*
@@ -186,40 +171,31 @@ void spreadsheet::remove_dependency(string name) {
  * Takes a formula and breaks it into a list of cells.  Each token in the formula must
  * have a colon in between every other token.
  */
-vector<string> spreadsheet::GetVariables(string formula) {
-    boost::regex expression("^[_a-zA-Z][a-zA-Z0-9_]*$");
-    boost::cmatch what;
-
-    vector<string> v = GetTokens(formula, ':');
-    vector<string> vars;
-
-    for (vector<string>::iterator it = v.begin(); it != v.end(); ++it) {
-        if(regex_match((*it).c_str(), what, expression))
-            vars.push_back(*it);
-        else
-            continue;
-    }   
-
-    return vars;
+vector<string> spreadsheet::GetVariables(string s) {
+	vector<string> result;
+	
+	int i = 0;
+	// Loop through entire formula
+	while (i < s.size()) {
+		// Find where variables start
+		if (s[i] >= 'A' && s[i] <= 'z') {
+			string temp = "";
+			int j = 0;
+			// Add each character of the variable to a string and add that to the list
+			while ((s[i] >= 'A' && s[i] <= 'z') || (s[i] >= '0' && s[i] <= '9')) {
+				stringstream ss;
+				string t;
+				ss << s[i++];
+				ss >> t;
+				temp.append(t);
+			}
+			result.push_back(temp);
+		}
+		i++;
+	}
+	
+    return result;
 }
-
-
-
-// Cite: http://stackoverflow.com/questions/236129/how-to-split-a-string-in-c
-vector<string> spreadsheet::GetTokens(const string &formula, char delim) {
-        vector<string> elems;
-        split(formula, delim, elems);
-        return elems;
-}
-
-vector<string> & spreadsheet::split(const string &s, char delim, vector<string> &elems) {
-    stringstream ss(s);
-    string item;
-    while (getline(ss, item, delim))
-        elems.push_back(item);
-    return elems;
-}
-// End cite
 
 void spreadsheet::save() {
 	ofstream file(filename.c_str());

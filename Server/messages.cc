@@ -131,7 +131,7 @@ void Messages::sync(int client, string version, map<string, string> &sheet) {
 		message.append(delimiter);
 		message.append(it->first);	// cell name
 		message.append(delimiter);
-		message.append(buildString(it->second));	// contents
+		message.append(it->second);	// contents
 	}
 	message.append("\n");
 	
@@ -260,33 +260,4 @@ int Messages::delimiter_count(string input, string delimiter){
 		result++;
 	}
 	return result;
-}
-
-/*
- * Takes the contents of a cell and puts it together in regular format.  For example, if
- * the contents are a formula delimited by colons, it will put it back to regular format
- * without the colons.
- */
-string Messages::buildString(string contents) {
-	if (contents[0] != '=')
-		return contents;
-	string s;
-	vector<string> tokens = GetTokens(contents, ':');
-	for (vector<string>::iterator it = tokens.begin(); it != tokens.end(); ++it)
-		s.append(*it);
-	return s;
-}
-
-vector<string> Messages::GetTokens(const string &formula, char delim) {
-	vector<string> elems;
-	split(formula, delim, elems);
-	return elems;
-}
-
-vector<string> & Messages::split(const string &s, char delim, vector<string> &elems) {
-    stringstream ss(s);
-    string item;
-    while (getline(ss, item, delim))
-        elems.push_back(item);
-    return elems;
 }

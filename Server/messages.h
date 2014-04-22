@@ -18,9 +18,6 @@ class Messages {
 		server *main_server;
 		bool valid_protocol(std::string);
 		int delimiter_count(std::string, std::string);
-		std::string buildString(std::string contents);
-		std::vector<std::string> GetTokens(const std::string &formula, char delim);
-		std::vector<std::string> & split(const std::string &s, char delim, std::vector<std::string> &elems);
 	public:
 		Messages(server &);
 		void receive_message(std::string, std::string &, std::string &);

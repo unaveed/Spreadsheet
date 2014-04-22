@@ -29,8 +29,6 @@ class spreadsheet {
 		Messages * message;	// Object used to communicate with the clients
 		DependencyGraph * dg;	// Dependency graph used to detect circular dependencies
 
-		std::vector<std::string> GetTokens(const std::string &formula, char delim);
-		std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems);
 		std::vector<std::string> GetVariables(std::string formula);
 		void remove_dependency(std::string name);
 		bool SetCellContents(std::string, std::string);	// Sets the contents of the cell to the contents
@@ -46,7 +44,6 @@ class spreadsheet {
 		void save();		// Saves the spreadsheet to the file with the stored filename in xml format
 		void open();		// Fills the data structures and variables with the spreadsheet information
 		void sync(int client);
-		std::string buildString(std::string formula);
 };
 
 #endif
