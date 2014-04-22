@@ -44,6 +44,7 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	if (sv.str() != vers) {
 		cout << "spreadsheet.cc: make_change: need to sync" << endl;
 		sync(client);
+		return;
 	}
 
 	// Check if contents is a formula
@@ -53,11 +54,13 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 			return;
 		}
 	}
-	else
+	else {
+		cout << "spreadsheet.cc: adding to stack..." << endl;
+		undo_stack_cells->push(name);
+		undo_stack_contents->push((*cells)[name]);
 		(*cells)[name] = contents;
+	}
 
-	undo_stack_cells->push(name);
-	undo_stack_contents->push(contents);
 
 	version++;
 

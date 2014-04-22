@@ -75,10 +75,8 @@ void server::send_message_client(string message, int client) {
 }
 
 void server::send_message(set<int> & client, string message) {
-	for (set<int>::iterator it = client.begin(); it != client.end(); ++it) {
+	for (set<int>::iterator it = client.begin(); it != client.end(); ++it)
 		server_send(*it, message);
-		cout << "Client: " << *it << endl;
-	}
 }
 
 /*
@@ -247,7 +245,6 @@ void server::execute_command(int client, string command, string message) {
 	
 	Messages *m = new Messages(*this);	
 	string sheet = get_spreadsheet(client);
-	cout << "server.cc: sheet=" << sheet << endl;
 	spreadsheet *s = (*spreadsheets)[sheet];
 	
 	if(command == "ENTER") {
