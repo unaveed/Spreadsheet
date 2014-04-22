@@ -154,7 +154,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
 
             SetTitle();
 
-            InsertMode = false;
+            InsertMode = true;
 
         }
 
@@ -217,7 +217,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
 
             SetTitle();
 
-            InsertMode = false;
+            InsertMode = true;
         }
 
         /// <summary>
