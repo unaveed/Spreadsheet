@@ -5,3 +5,10 @@ C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServ
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\obj\Debug\Client.csprojResolveAssemblyReference.cache
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\obj\Debug\ClientServer.dll
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\ClientServer\obj\Debug\ClientServer.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\ClientServer\bin\Debug\ClientServer.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\ClientServer\bin\Debug\ClientServer.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\ClientServer\bin\Debug\StringSocket.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\ClientServer\bin\Debug\StringSocket.xml
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\ClientServer\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\ClientServer\obj\Debug\ClientServer.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\ClientServer\obj\Debug\ClientServer.pdb

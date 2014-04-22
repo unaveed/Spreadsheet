@@ -11,3 +11,16 @@ C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableF
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.csproj.GenerateResource.Cache
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.exe
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\AvailableFiles\obj\Debug\AvailableFiles.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\bin\Debug\AvailableFiles.exe.config
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\bin\Debug\AvailableFiles.exe
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\bin\Debug\AvailableFiles.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\bin\Debug\ClientServer.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\bin\Debug\StringSocket.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\bin\Debug\ClientServer.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\bin\Debug\StringSocket.xml
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\obj\Debug\AvailableFiles.csprojResolveAssemblyReference.cache
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\obj\Debug\AvailableFiles.Form1.resources
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\obj\Debug\AvailableFiles.Properties.Resources.resources
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\obj\Debug\AvailableFiles.csproj.GenerateResource.Cache
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\obj\Debug\AvailableFiles.exe
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\AvailableFiles\obj\Debug\AvailableFiles.pdb

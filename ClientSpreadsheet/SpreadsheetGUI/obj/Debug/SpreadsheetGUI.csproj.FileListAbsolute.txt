@@ -24,3 +24,29 @@ C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\Spreadshee
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
 C:\Users\Jesus Zarate\Documents\GitHub\Spreadsheet\Client Spreadsheet\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe.config
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.exe
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.exe
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\SpreadsheetGUI.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\AvailableFiles.exe
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\ClientServer.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\Formula.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\Login.exe
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\Spreadsheet.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\StringSocket.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\DependencyGraph.dll
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\AvailableFiles.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\ClientServer.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\Login.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\Spreadsheet.pdb
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\Spreadsheet.xml
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\Formula.xml
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\SpreadsheetPanel.xml
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\StringSocket.xml
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\bin\Debug\DependencyGraph.xml
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csprojResolveAssemblyReference.cache
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Form1.resources
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.Properties.Resources.resources
+C:\Users\Celeste\Spreadsheet\ClientSpreadsheet\SpreadsheetGUI\obj\Debug\SpreadsheetGUI.csproj.GenerateResource.Cache

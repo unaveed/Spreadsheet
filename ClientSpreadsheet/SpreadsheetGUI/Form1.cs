@@ -684,9 +684,16 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
 
             List<string> tokens = new List<string>(GetTokens(CellCont));
 
-            if (CellCont[0].Equals('='))
+            if (CellCont.Length <= 0)
             {
-                CellCont = makeProtocolContent(tokens);
+                CellCont = " ";
+            }
+            else
+            {
+                if (CellCont[0].Equals('='))
+                {
+                    CellCont = makeProtocolContent(tokens);
+                }
             }
 
             //Send the edit to the server
@@ -1056,7 +1063,7 @@ Here is a list of extra features I added for the assignment (you know, the 'abov
         /// </summary>
         private void SendSaveCmd() {
             //SAVE[esc]version_number\n 
-            client.SendMessage("SAVE" + esc + versionNumber);
+            client.SendMessage("SAVE" + esc + versionNumber + "\n");
         }
 
         /// <summary>
