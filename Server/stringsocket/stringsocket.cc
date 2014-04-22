@@ -3,6 +3,7 @@
 // ********************************************************************************
 
 
+// Cite: http://codebase.eu/source/code-cplusplus/multithreaded-socket-server/
 
 #include <iostream>
 #include <cstring> 	// used for memset.
@@ -65,6 +66,10 @@ int server_start_listen() {
 	int yes = 1;
 
 	// first, load up address structs with getaddrinfo():
+
+	string input;
+	cin >> input;
+	cout << "stringsocket.cc: INPUT FROM SERVER: " << input << endl;
 
 	memset(&hostinfo, 0, sizeof(hostinfo));
 
@@ -165,23 +170,6 @@ void *tcp_server_read(void *arg) {
         // send the data to the other connected clients
         pthread_mutex_lock(&mutex_state);
 
-		/*
-		// Send message out to all users
-		for (wfd = 3; wfd < MAXFD; ++wfd) {
-			if (FD_ISSET(wfd, &the_state) && (rfd != wfd)) {
-				// add the users FD to the message to give it an unique ID.
-				string userfd;
-				stringstream out;
-				out << wfd;
-				userfd = out.str();
-				userfd = userfd + ": ";
-
-                server_send(wfd, userfd);
-                server_send(wfd, buf);
-            }
-        }
-		*/
-
 		// Create the message to send
 		string message;
 		for (int i = 0; i < buflen; i++)
@@ -238,3 +226,4 @@ void mainloop(int server_fd) {
         }
     }
 }
+// End cite
