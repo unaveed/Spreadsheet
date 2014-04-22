@@ -241,7 +241,7 @@ void server::remove_client(int client) {
  * based on the command. 
  */
 void server::execute_command(int client, string command, string message) {
-	cout << "Executed command is: " << command << endl;	
+	cout << "Executed command: " << command << endl;	
 	
 	Messages *m = new Messages(*this);	
 	string sheet = get_spreadsheet(client);

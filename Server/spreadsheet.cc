@@ -42,7 +42,6 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 	stringstream sv;
 	sv << version;
 	if (sv.str() != vers) {
-		cout << "spreadsheet.cc: make_change: need to sync" << endl;
 		sync(client);
 		return;
 	}
@@ -55,7 +54,6 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 		}
 	}
 	else {
-		cout << "spreadsheet.cc: adding to stack..." << endl;
 		undo_stack_cells->push(name);
 		undo_stack_contents->push((*cells)[name]);
 		(*cells)[name] = contents;
@@ -133,15 +131,15 @@ string spreadsheet::getVersion() {
  * causes a circular dependency.
  */
 bool spreadsheet::SetCellContents(string name, string contents) {
+	bool flag = true;
 	// Remove the trailing \n
 	contents = contents.substr(0, contents.size()-1);
 
 	// Store old contents and clear previous dependencies
 	string oldContents = (*cells)[name];
 	(*cells)[name] = contents;
-	if (oldContents != "") {
+	if (oldContents != "")
 		remove_dependency(name);
-	}
 
 	vector<string> cellNames = GetVariables(contents);
 
@@ -166,11 +164,11 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 		else
 			(*cells)[name] = oldContents;
 
-		return false;
+		flag = false;
 	}
 	delete c;
 	delete temp;
-	return true;
+	return flag;
 }
 
 /*

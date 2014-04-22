@@ -96,6 +96,7 @@ void Messages::receive_message(string input,
   * be sent to all clients.
   */
 void Messages::edit(set<int> & clients, string version, string name, string contents) {
+	cout << "Sending command: UPDATE" << endl;
 	string message = "UPDATE";
 	for(int i = 0; i < 4; i++) {
 		if(i == 1)
@@ -120,6 +121,7 @@ void Messages::edit(set<int> & clients, string version, string name, string cont
   * contents the the client.
   */
 void Messages::sync(int client, string version, map<string, string> &sheet) {
+	cout << "Sending command: UPDATE" << endl;
 	string message = "UPDATE";
 	message.append(delimiter);
 	message.append(version);	// version
@@ -150,6 +152,7 @@ void Messages::undo(set<int> & clients, string version, string name, string cont
   * save was successful.
   */
 void Messages::save(set<int> & clients) {
+	cout << "Sending command: SAVED" << endl;
 	main_server->send_message(clients, "SAVED\n");
 }
 
@@ -157,6 +160,7 @@ void Messages::save(set<int> & clients) {
  * Sends error message to the the client
  */
 void Messages::error(int client, string content) {
+	cout << "Sending command: ERROR" << endl;
 	string message = "ERROR";
 	message.append(delimiter);
 	message.append(content);
