@@ -114,6 +114,11 @@ void server::message_received(int client, string input) {
 	else if(command == "CREATE") {
 		filelist = get_files(false);
 		
+		message.insert(0, path);
+		message.erase(message.size()-1);
+		message.append(".ss");
+
+		cout << "server.cc: filename=" << message << endl;
 		size_t found = filelist.find(message);
 		// File with the given name already exists
 		if(found != std::string::npos) 
@@ -123,9 +128,6 @@ void server::message_received(int client, string input) {
 			// Create a new spreadsheet, add client to spreadsheet
 			// and add it to the list of spreadsheets
 
-			message.insert(0, path);
-			message.erase(message.size()-1);
-			message.append(".ss");
 			
 			spreadsheet *ss = new spreadsheet(message, new Messages(*this), false);
 			ss->add_client(client);

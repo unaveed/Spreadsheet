@@ -212,13 +212,9 @@ void spreadsheet::save() {
 		file << "<version>\n";
 		file << version << "\n";
 		file << "</version>\n";
-		cout << "spreadsheet.cc: cells.size()=" << cells->size() << endl;
-		cout << "spreadsheet.cc: this=" << this << endl;
 		for (map<string, string>::iterator it = cells->begin(); it != cells->end(); ++it) {
 			file << "<cell>\n";
-			cout << "spreadsheet.cc: got here 9" << endl;
 			file << "<name>\n" << it->first << "\n" << "</name>\n";
-			cout << "spreadsheet.cc: got here 10" << endl;
 			if (it->second.find("\n") != string::npos) {
 				it->second.erase(it->second.size()-1);
 			}
