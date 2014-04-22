@@ -46,6 +46,8 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 		return;
 	}
 
+	string oldContents = (*cells)[name];
+
 	// Check if contents is a formula
 	if (contents[0] == '=') {
 		if (!SetCellContents(name, contents)) {
@@ -61,6 +63,10 @@ void spreadsheet::make_change(int client, string name, string contents, string v
 
 
 	version++;
+
+	// If old contents were a formula, then remove it's dependencies
+	if (oldContents[0] == '=')
+		remove_dependency(name);
 
 	message->edit(*clients, getVersion(), name, contents);
 }
@@ -142,12 +148,14 @@ bool spreadsheet::SetCellContents(string name, string contents) {
 	}
 	catch (int e) {
 		// Revert to old contents
+		remove_dependency(name);
 
 		// Check if old contents was a formula
 		if (oldContents[0] == '=')
 			SetCellContents(name, oldContents);
-		else
+		else {
 			(*cells)[name] = oldContents;
+		}
 
 		flag = false;
 	}
